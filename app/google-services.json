@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "858148277745",
+    "project_id": "swipe-n-borrow-5cdff",
+    "storage_bucket": "swipe-n-borrow-5cdff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858148277745:android:f8b46fde1dc070bc2b8850",
+        "android_client_info": {
+          "package_name": "com.example.swipe_n_borrow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBivnOjSCd4K9GPvcpJOViCCKAEJkdgb6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
