@@ -115,6 +115,11 @@ public class RegisterAdmin extends AppCompatActivity {
                                     Toast.makeText(RegisterAdmin.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
 
+                                    // Navigate to AdminHome activity after successful registration
+                                    Intent intent2 = new Intent(getApplicationContext(), AdminHome.class);
+                                    startActivity(intent2);
+                                    finish();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(RegisterAdmin.this, "Authentication failed.",
