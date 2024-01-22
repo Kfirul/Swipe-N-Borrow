@@ -11,6 +11,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
+/**
+ * The {@code UserHome} class represents the main activity for the regular user.
+ * It provides functionality for searching, viewing borrowed books, reissuing books, and logging out.
+ * The user can navigate to different sections of the application by clicking on the corresponding buttons.
+ * Additionally, the user has the ability to log out of the application.
+ */
 public class UserHome extends AppCompatActivity implements View.OnClickListener {
 
     private Button searchBook, seeBook, logOut, buttonReissue;
@@ -22,10 +28,14 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
+        // Initialize Firebase Authentication and Firestore instances
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        // Initialize UI elements
         initializeViews();
+
+        // Set click listeners for UI element
         setClickListeners();
     }
 
@@ -42,7 +52,11 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
         logOut.setOnClickListener(this);
         buttonReissue.setOnClickListener(this);
     }
-
+    /**
+     * Handles the click event for buttons in the UserHome activity.
+     * @param view The view that was clicked.
+     * @throws IllegalArgumentException If the clicked view is not one of the expected buttons.
+     */
     @Override
     public void onClick(View view) {
         if (view == logOut){
@@ -60,6 +74,13 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
+    /**
+     * Handles the logout process for the regular user.
+     * This method updates the Firebase Cloud Messaging (FCM) token to null in the Firestorm
+     * database for the current user, signs out the user, and navigates to the Login activity.
+     * If the update fails, it displays a Toast message indicating the logout failure.
+     */
+
     private void handleLogout() {
         db.document("User/" + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).update("fcmToken", null)
                 .addOnCompleteListener(task ->  {
@@ -72,7 +93,10 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
                         }
                 });
     }
-
+    /**
+     * Navigates to the specified activity class.
+     * @param destinationClass The class of the activity to navigate to.
+     */
     private void navigateTo(Class<?> destinationClass) {
         startActivity(new Intent(getApplicationContext(), destinationClass));
     }
