@@ -18,6 +18,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUser extends AppCompatActivity {
 
@@ -51,10 +53,11 @@ public class RegisterUser extends AppCompatActivity {
         buttonReg =findViewById(R.id.BTN_Register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.LoginNow);
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Login.class);
+                Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
                 finish();
             }
@@ -102,21 +105,48 @@ public class RegisterUser extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterUser.this, "Account created.",
-                                            Toast.LENGTH_SHORT).show();
 
+                                if (task.isSuccessful()) {
+//                                    FirebaseUser fireBaseUser = mAuth.getCurrentUser();
+//
+//                                    if (fireBaseUser != null) {
+//                                        ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(fullName, id, address, phoneNumber);
+//
+//                                        DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
+//
+//                                        referenceProfile.child(fireBaseUser.getUid()).setValue(writeUserDetails)
+//                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                    @Override
+//                                                    public void onComplete(@NonNull Task<Void> task) {
+//                                                        if (task.isSuccessful()) {
+
+                                                            Toast.makeText(RegisterUser.this, "Account created.", Toast.LENGTH_SHORT).show();
+
+                                                            Intent intent2 = new Intent(getApplicationContext(), UserHome.class);
+//                                                            intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                            startActivity(intent2);
+                                                            finish();
+//                                                        } else {
+//
+//                                                            // If write to database fails
+//                                                            Toast.makeText(RegisterUser.this, "Failed to write user details to database.", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    }
+//                                                });
+//                                    } else {
+//
+//                                        // Firebase user is null
+//                                        Toast.makeText(RegisterUser.this, "Firebase user is null.", Toast.LENGTH_SHORT).show();
+//                                    }
                                 } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(RegisterUser.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+
+                                    // If sign up fails
+                                    Toast.makeText(RegisterUser.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
-
             }
         });
-
     }
+
 }

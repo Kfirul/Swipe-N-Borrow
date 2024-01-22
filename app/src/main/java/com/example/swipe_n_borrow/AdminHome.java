@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 /**
@@ -22,7 +22,7 @@ public class AdminHome extends Activity implements View.OnClickListener {
 
     private Button searchBook, addBook, removeBook, updateBook, issueBook, returnBook, logOut, collect1, reissueButton;
     private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db;
+//    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class AdminHome extends Activity implements View.OnClickListener {
         // Initialize Firebase
         FirebaseApp.initializeApp(this);
         firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+//        db = FirebaseFirestore.getInstance();
 
         // Initialize UI elements
         searchBook = findViewById(R.id.searchBook);
@@ -104,15 +104,15 @@ public class AdminHome extends Activity implements View.OnClickListener {
      */
 
     private void handleLogout() {
-        db.document("User/" + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).update("fcmToken", null).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                firebaseAuth.signOut();
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
-            } else {
-                Toast.makeText(AdminHome.this, "Logout failed. Please try again", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        db.document("User/" + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).update("fcmToken", null).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                firebaseAuth.signOut();
+//                startActivity(new Intent(getApplicationContext(), Login.class));
+//                finish();
+//            } else {
+//                Toast.makeText(AdminHome.this, "Logout failed. Please try again", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 

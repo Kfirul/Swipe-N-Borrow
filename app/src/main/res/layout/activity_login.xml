@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:text="Login"
+        android:text="Login 1"
         android:textSize="40sp"
         android:textStyle="bold"
         android:gravity="center"

@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
 
     private Button searchBook, seeBook, logOut, buttonReissue;
     private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db;
+//    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
 
         // Initialize Firebase Authentication and Firestore instances
         firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+//        db = FirebaseFirestore.getInstance();
 
         // Initialize UI elements
         initializeViews();
@@ -82,16 +82,16 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
      */
 
     private void handleLogout() {
-        db.document("User/" + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).update("fcmToken", null)
-                .addOnCompleteListener(task ->  {
-                        if (task.isSuccessful()) {
-                            firebaseAuth.signOut();
-                            startActivity(new Intent(getApplicationContext(), Login.class));
-                            finish();
-                        } else {
-                            Toast.makeText(UserHome.this, "Logout failed. Please try again", Toast.LENGTH_SHORT).show();
-                        }
-                });
+//        db.document("User/" + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).update("fcmToken", null)
+//                .addOnCompleteListener(task ->  {
+//                        if (task.isSuccessful()) {
+//                            firebaseAuth.signOut();
+//                            startActivity(new Intent(getApplicationContext(), Login.class));
+//                            finish();
+//                        } else {
+//                            Toast.makeText(UserHome.this, "Logout failed. Please try again", Toast.LENGTH_SHORT).show();
+//                        }
+//                });
     }
     /**
      * Navigates to the specified activity class.
