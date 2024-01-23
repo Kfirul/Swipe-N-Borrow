@@ -28,14 +28,13 @@
                 />
 
             <Button
+                android:id="@+id/searchBook"
                 android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchBook"
-                android:text="Search"
-                />
+                android:text="Search" />
 
             <Button
                 android:layout_width="200dp"
@@ -97,13 +96,12 @@
                 />
 
             <Button
-                android:layout_width="200dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
                 android:id="@+id/logOut"
-                android:text="Log Out"
-                />
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Log Out" />
 
         </LinearLayout>
     </ScrollView>

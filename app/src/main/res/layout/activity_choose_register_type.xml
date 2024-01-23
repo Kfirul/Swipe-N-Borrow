@@ -3,36 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <Button
         android:id="@+id/userRegisterButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User Register"
-        android:textSize="20sp"
         android:layout_marginBottom="20dp"
         android:background="#4CAF50"
+        android:padding="16dp"
+        android:text="User Register"
         android:textColor="#FFFFFF"
-        android:padding="16dp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/adminRegisterButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Admin Register"
-        android:textSize="20sp"
         android:background="#4CAF50"
+        android:padding="16dp"
+        android:text="Admin Register"
         android:textColor="#FFFFFF"
-        android:padding="16dp" />
+        android:textSize="20sp" />
+
     <TextView
         android:id="@+id/LoginNow"
-        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Already registered? Click to log in"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 </LinearLayout>
