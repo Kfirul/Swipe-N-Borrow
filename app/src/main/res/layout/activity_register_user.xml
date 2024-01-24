@@ -89,13 +89,13 @@
 
             <!-- Your other terms of usage TextViews can be added here -->
             <TextView
-                android:id="@+id/termsAndConditions"
+                android:id="@+id/UserTermsAndConditions"
                 android:text="Click here to view the Terms and Conditions."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#0000FF"
                 android:clickable="true"
-                android:onClick="openTermsActivityUser" />
+                android:onClick="openActivityTermsUser" />
 
             <CheckBox
                 android:id="@+id/checkBoxTerms"

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="380dp"
+        android:layout_height="639dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/termsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Administrator Terms and Conditions\n\n
+
+1. Account Security:\n
+
+Administrators are responsible for maintaining the security of their administrator credentials.\n
+Any unauthorized access or use of administrator accounts must be reported immediately to the appropriate authorities.\n\n
+2. Data Handling:\n
+
+Administrators have access to sensitive user data and must handle it with the utmost confidentiality and integrity.\n
+Personal information of users should not be disclosed or shared without proper authorization.\n\n
+3. System Integrity:\n
+
+Administrators must refrain from any actions that may compromise the integrity, availability, or security of the application and its data.\n
+Unauthorized modifications to the application, its database, or any related systems are strictly prohibited.\n\n
+4. User Interaction:\n
+
+Administrators should maintain a professional and respectful demeanor when interacting with users.
+Responses to user queries or support requests should be prompt, helpful, and courteous.\n\n
+5. Book Management:\n
+
+Administrators are responsible for managing the catalog of available books.\n
+Adding, updating, or removing books should be done accurately, reflecting the actual availability and status of each book.\n\n
+6. User Support:\n
+
+Administrators are expected to provide support to users who may encounter issues with the application.\n
+Timely resolution of user concerns and inquiries is essential to ensure a positive user experience.\n\n
+7. Compliance with Policies:\n
+
+Administrators must adhere to the terms and conditions outlined in the application's policies and guidelines.\n
+Any updates or changes to policies will be communicated to administrators, and compliance is mandatory.\n\n
+8. Reporting Issues:\n
+
+Administrators should promptly report any technical issues, security vulnerabilities, or suspicious activities to the appropriate channels within the organization.
+\n\n9. Collaboration:\n
+
+Administrators are encouraged to collaborate with other administrators and relevant stakeholders for the continuous improvement of the application.\n
+Sharing best practices and contributing to the enhancement of features is welcomed.\n\n
+10. Termination of Access:\n
+
+The application reserves the right to terminate or suspend administrator access immediately, without prior notice or liability, for any breach of these terms and conditions.
+\n\n11. Changes to Terms:\n
+
+The application reserves the right to revise these terms and conditions at any time. Administrators are expected to review such terms regularly to ensure understanding and compliance.
+\n\n12. Contact Information:\n
+
+Administrators should provide accurate and up-to-date contact information for communication purposes.\n
+Notifications regarding system updates, policy changes, or other relevant information will be sent to the provided contact details.\n
+By continuing to use the administrator account in the application, administrators agree to abide by these terms and conditions.\n
+
+"
+            android:textSize="18sp" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/scrollView"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:onClick="goBack" />
+    </LinearLayout>
+</RelativeLayout>

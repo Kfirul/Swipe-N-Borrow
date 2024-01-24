@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ public class RegisterUser extends AppCompatActivity {
     TextView textView;
     FirebaseFirestore fstore;
     String userID;
+    boolean acceptedTerms=false;
+
 
     public void onStart() {
         super.onStart();
@@ -49,8 +53,8 @@ public class RegisterUser extends AppCompatActivity {
             finish();
         }
     }
-    public void openTermsActivityUser(View view) {
-        Intent intent = new Intent(this, TermsActivityUser.class);
+    public void openActivityTermsUser(View view) {
+        Intent intent = new Intent(this, ActivityTermsUser.class);
         startActivity(intent);
     }
 
@@ -69,6 +73,15 @@ public class RegisterUser extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.LoginNow);
         fstore = FirebaseFirestore.getInstance();
+        CheckBox checkBoxTerms = findViewById(R.id.checkBoxTerms);
+
+        checkBoxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Update the acceptedTerms variable based on the CheckBox state
+                 acceptedTerms = isChecked;
+            }
+        });
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +103,8 @@ public class RegisterUser extends AppCompatActivity {
                 fullName = String.valueOf(editTextFullName.getText());
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
                 address = String.valueOf(editTextAddress.getText());
+
+
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(RegisterUser.this,"Enter Email", Toast.LENGTH_SHORT).show();
@@ -113,6 +128,11 @@ public class RegisterUser extends AppCompatActivity {
                 }
                 if(TextUtils.isEmpty(address)){
                     Toast.makeText(RegisterUser.this,"Enter Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!acceptedTerms) {
+                    Toast.makeText(RegisterUser.this, "Please accept the terms and conditions", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 

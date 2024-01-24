@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ public class RegisterAdmin extends AppCompatActivity {
     TextView textView;
     FirebaseFirestore fstore;
     String adminID;
+    boolean acceptedTerms=false;
+
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -46,6 +50,10 @@ public class RegisterAdmin extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+    public void openActivityTermsAdmin(View view) {
+        Intent intent = new Intent(this, ActivityTermsAdmin.class);
+        startActivity(intent);
     }
 
 
@@ -65,6 +73,16 @@ public class RegisterAdmin extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.LoginNow);
         fstore = FirebaseFirestore.getInstance();
+
+        CheckBox checkBoxTerms = findViewById(R.id.checkBoxTermsAdmin);
+
+        checkBoxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Update the acceptedTerms variable based on the CheckBox state
+                acceptedTerms = isChecked;
+            }
+        });
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +133,11 @@ public class RegisterAdmin extends AppCompatActivity {
                 }
                 if(TextUtils.isEmpty(library)){
                     Toast.makeText(RegisterAdmin.this,"Enter Library", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!acceptedTerms) {
+                    Toast.makeText(RegisterAdmin.this, "Please accept the terms and conditions", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
