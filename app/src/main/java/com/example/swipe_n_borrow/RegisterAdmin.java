@@ -138,7 +138,7 @@ public class RegisterAdmin extends AppCompatActivity {
                                     documentReference.set(admin).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d(TAG,"onSuccess: user Profile is created for "+adminעדכנתID);
+                                            Log.d(TAG,"onSuccess: user Profile is created for "+adminID);
                                         }
                                     });
 
