@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="380dp"
+        android:layout_height="639dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/termsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to Swipe-N-Borrow! These Terms of Service outline the rules and regulations for the use of our book borrowing application.
+
+By accessing this application, you agree to these terms. Do not use Swipe-N-Borrow if you do not agree to all of the terms and conditions stated on this page.
+
+Book Borrowing
+\n\n
+Eligibility:\n
+Users must be 18 years or older to use this service.
+Users must provide accurate and complete information during the registration process.\n\n
+Book Requests:
+\n
+Users can request to borrow books available in the application's catalog.
+Book availability is subject to the discretion of Swipe-N-Borrow.\n\n
+Borrowing Period:
+\n
+Books can be borrowed for a maximum period of 21 days.
+Extensions may be allowed based on availability and application policies.\n\n
+Late Returns:\n
+
+Users are responsible for returning books on time.
+Late returns may result in penalties or restrictions on borrowing privileges.
+User Responsibilities\n\n
+Account Security:\n
+
+Users are responsible for maintaining the security of their account credentials.
+Any unauthorized use of accounts must be reported immediately.\n\n
+Communication:\n
+
+Users must keep their contact information up-to-date for communication purposes.
+Notifications regarding book requests, returns, or other relevant information will be sent to the provided contact details.\n\n
+Respect for Others:\n
+
+Users must respect the rights and privacy of other users.
+Inappropriate behavior, including harassment or misuse of the application, will not be tolerated.
+Privacy Policy\n\n
+Information Collection:\n
+
+Swipe-N-Borrow collects and stores user information as outlined in our Privacy Policy.
+Users are encouraged to review the Privacy Policy to understand how their data is handled.\n\n
+Data Security:\n
+
+Swipe-N-Borrow employs industry-standard security measures to protect user data.
+Termination\n
+Swipe-N-Borrow reserves the right to terminate or suspend access to the application immediately, without prior notice or liability, for any reason, including without limitation if you breach the Terms.
+\n\n
+Changes to Terms:\n
+Swipe-N-Borrow reserves the right to revise these Terms at any time. By using this application, you are expected to review such terms regularly to ensure you understand all terms and conditions governing the use of this application.
+\n\n
+Contact Us:\n
+If you have any questions or concerns about these Terms, please contact us at royofer123@gmail.com.
+
+
+"
+            android:textSize="18sp" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/scrollView"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:onClick="goBack" />
+    </LinearLayout>
+</RelativeLayout>

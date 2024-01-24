@@ -49,6 +49,10 @@ public class RegisterUser extends AppCompatActivity {
             finish();
         }
     }
+    public void openTermsActivityUser(View view) {
+        Intent intent = new Intent(this, TermsActivityUser.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
