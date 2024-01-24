@@ -18,6 +18,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
 
@@ -26,6 +30,9 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
+    FirebaseFirestore fstore;
+    String currentLoginId;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -46,6 +53,7 @@ public class Login extends AppCompatActivity {
         buttonLog =findViewById(R.id.BTN_Login);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.RegisterNow);
+        fstore = FirebaseFirestore.getInstance();
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,14 +84,38 @@ public class Login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent= new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    currentLoginId = mAuth.getCurrentUser().getUid();
+
+                                    // Check in "Admins" collection
+                                    CollectionReference adminsCollection = fstore.collection("Admins");
+                                    adminsCollection.document(currentLoginId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> adminTask) {
+                                            if (adminTask.isSuccessful()) {
+                                                DocumentSnapshot adminDocument = adminTask.getResult();
+                                                if (adminDocument.exists()) {
+                                                    // Admin user
+                                                    Intent intent = new Intent(getApplicationContext(), AdminHome.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    // Regular user
+                                                    Intent intent = new Intent(getApplicationContext(), UserHome.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            } else {
+                                                // Handle errors while fetching the document
+                                                Toast.makeText(Login.this, "Error fetching document: " + adminTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                 } else {
-                                    Toast.makeText(Login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
+
+
                         });
 
             }

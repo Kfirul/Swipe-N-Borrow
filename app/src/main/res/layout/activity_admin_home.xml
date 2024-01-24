@@ -73,8 +73,8 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:id="@+id/returnBook"
-                android:text="Return Book from User"
+                android:id="@+id/booksList"
+                android:text="Books List"
                 />
 
             <Button
