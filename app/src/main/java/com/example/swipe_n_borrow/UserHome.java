@@ -1,17 +1,12 @@
 package com.example.swipe_n_borrow;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Objects;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * The {@code UserHome} class represents the main activity for the regular user.
@@ -19,90 +14,46 @@ import java.util.Objects;
  * The user can navigate to different sections of the application by clicking on the corresponding buttons.
  * Additionally, the user has the ability to log out of the application.
  */
-public class UserHome extends AppCompatActivity implements View.OnClickListener {
+public class UserHome extends AppCompatActivity {
 
-    private Button searchBook, seeBook, logOut, buttonReissue;
-    private FirebaseAuth firebaseAuth;
-
-
-//    private FirebaseFirestore db;
+    TabLayout tabLayout;
+    ViewPager2 viewPager2;
+    ViewPagerAdapter viewPagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
-        // Initialize Firebase Authentication and Firestore instances
-        firebaseAuth = FirebaseAuth.getInstance();
-//        db = FirebaseFirestore.getInstance();
+        tabLayout=findViewById(R.id.tabLayout);
+        viewPager2=findViewById(R.id.viewpager);
+        viewPagerAdapter=new ViewPagerAdapter(this);
+        viewPager2.setAdapter(viewPagerAdapter);
 
-        // Initialize UI elements
-        initializeViews();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
 
-        // Set click listeners for UI element
-        setClickListeners();
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
+            }
+        });
 
     }
 
-    private void initializeViews() {
-        searchBook = findViewById(R.id.searchBook1);
-        seeBook = findViewById(R.id.seeBook);
-        logOut = findViewById(R.id.logOut1);
-        buttonReissue = findViewById(R.id.buttonReissue);
-    }
-
-    private void setClickListeners() {
-        searchBook.setOnClickListener(this);
-        seeBook.setOnClickListener(this);
-        logOut.setOnClickListener(this);
-        buttonReissue.setOnClickListener(this);
-    }
-    /**
-     * Handles the click event for buttons in the UserHome activity.
-     * @param view The view that was clicked.
-     * @throws IllegalArgumentException If the clicked view is not one of the expected buttons.
-     */
-    @Override
-    public void onClick(View view) {
-        if (view == logOut){
-             handleLogout();
-        }
-        else if (view == searchBook) {
-            navigateTo(SearchBookSet.class);
-        } else if (view == seeBook) {
-            navigateTo(UserSeeMyBooks.class);
-        } else if (view == buttonReissue) {
-            navigateTo(UserReissueBook.class);
-        } else {
-            // Throw an exception if none of the expected cases is matched
-            throw new IllegalArgumentException("Unhandled view ID: " + view);
-        }
-    }
-
-    /**
-     * Handles the logout process for the regular user.
-     * This method updates the Firebase Cloud Messaging (FCM) token to null in the Firestorm
-     * database for the current user, signs out the user, and navigates to the Login activity.
-     * If the update fails, it displays a Toast message indicating the logout failure.
-     */
-
-    private void handleLogout() {
-//        db.document("User/" + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).update("fcmToken", null)
-//                .addOnCompleteListener(task ->  {
-//                        if (task.isSuccessful()) {
-//                            firebaseAuth.signOut();
-//                            startActivity(new Intent(getApplicationContext(), Login.class));
-//                            finish();
-//                        } else {
-//                            Toast.makeText(UserHome.this, "Logout failed. Please try again", Toast.LENGTH_SHORT).show();
-//                        }
-//                });
-    }
-    /**
-     * Navigates to the specified activity class.
-     * @param destinationClass The class of the activity to navigate to.
-     */
-    private void navigateTo(Class<?> destinationClass) {
-        startActivity(new Intent(getApplicationContext(), destinationClass));
-    }
 }

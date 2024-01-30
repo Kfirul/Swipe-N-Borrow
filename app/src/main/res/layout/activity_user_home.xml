@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,67 +9,42 @@
     android:layout_margin="20dp"
     tools:context=".UserHome">
 
-    <ScrollView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        >
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Home"
+            android:icon="@drawable/house" />
 
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:icon="@drawable/search">
 
-            <TextView
-                android:id="@+id/title1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="USER HOME"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
+        </com.google.android.material.tabs.TabItem>
 
-            <Button
-                android:layout_width="200dp"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchBook1"
-                android:text="Search"
-                />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Books"
+            android:icon="@drawable/books" />
 
-            <Button
-                android:layout_width="200dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/seeBook"
-                android:text="See My Books"
-                />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Re-issue"
+            android:icon="@drawable/business" />
+    </com.google.android.material.tabs.TabLayout>
 
-            <Button
-                android:layout_width="200dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonReissue"
-                android:text="Re-issue Books "
-                />
-
-            <Button
-                android:layout_width="200dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/logOut1"
-                android:text="Log Out"
-                />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewpager"
+        android:layout_below="@id/tabLayout"
+        />
 </RelativeLayout>

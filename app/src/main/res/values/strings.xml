@@ -15,6 +15,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="no_results">No Results Found</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -105,4 +106,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="sreach">SREACH</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="discover">DISCOVER</string>
+    <string name="show_only_available_books">Show only available books</string>
+    <string name="title">Title</string>
 </resources>
