@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".AdminAddBook"
+            android:exported="false" />
+        <activity
             android:name=".Slider"
             android:exported="true">
             <intent-filter>
@@ -54,7 +57,6 @@
             android:theme="@style/Theme.Material3.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
         </activity>
         <activity

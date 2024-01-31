@@ -42,7 +42,15 @@ public class AdminHome extends AppCompatActivity {
        collectFine = findViewById(R.id.collect1);
        logOut = findViewById(R.id.logOut);
 
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AdminAddBook.class);
+                startActivity(intent);
+                finish();
 
+            }
+        });
 
        logOut.setOnClickListener(new View.OnClickListener() {
            @Override
