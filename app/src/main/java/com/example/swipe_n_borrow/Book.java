@@ -6,7 +6,7 @@ public class Book {
     private String authors;
     private String language;
     private int num_pages;
-    // private int number_of_books;
+    private String genre;
 
     @Override
     public String toString() {
@@ -16,6 +16,7 @@ public class Book {
                 ", authors='" + authors + '\'' +
                 ", language=" + language +
                 ",num_pages=" + num_pages +
+                ",genre=" + genre +
                 '}';
     }
 
@@ -24,12 +25,13 @@ public class Book {
         // Default constructor required by Firebase
     }
 
-    public Book( String title, String authors, String language, int num_pages) {
+    public Book( String title, String authors, String language, int num_pages,String genre) {
 //        this.bookID = bookID;
         this.title = title;
         this.authors = authors;
         this.language = language;
         this.num_pages = num_pages;
+        this.genre = genre;
     }
 
 
@@ -61,7 +63,7 @@ public class Book {
         return language;
     }
 
-    public void setLanguage(float average_rating) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
@@ -71,6 +73,13 @@ public class Book {
 
     public void setNum_pages(int num_pages) {
         this.num_pages = num_pages;
+    }
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
 

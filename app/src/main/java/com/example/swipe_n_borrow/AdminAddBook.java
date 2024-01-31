@@ -1,5 +1,7 @@
 package com.example.swipe_n_borrow;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,11 +25,14 @@ public class AdminAddBook extends AppCompatActivity {
     private EditText authorEditText;
     private EditText languageEditText;
     private EditText numPagesEditText;
+    private EditText genreEditText;
+
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button buttonAddBook;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,9 @@ public class AdminAddBook extends AppCompatActivity {
         authorEditText = findViewById(R.id.author);
         languageEditText = findViewById(R.id.language);
         numPagesEditText = findViewById(R.id.numPages);
+        genreEditText = findViewById(R.id.genre);
+
+
 
         buttonAddBook = findViewById(R.id.BTN_Add_Book);
 
@@ -51,8 +59,10 @@ public class AdminAddBook extends AppCompatActivity {
                 String title = titleEditText.getText().toString().trim();
                 String author = authorEditText.getText().toString().trim();
                 String language = languageEditText.getText().toString().trim();
+                String genre = genreEditText.getText().toString().trim();
 
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language)) {
+
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language) || TextUtils.isEmpty(genre) ) {
                     Toast.makeText(AdminAddBook.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -65,7 +75,7 @@ public class AdminAddBook extends AppCompatActivity {
                     return;
                 }
 
-                Book book = new Book(title, author, language, numPages);
+                Book book = new Book(title, author, language, numPages,genre);
 
                 // Add the book to the admin's collection of books
                 adminBooksCollection.add(book)
@@ -78,6 +88,17 @@ public class AdminAddBook extends AppCompatActivity {
                         })
                         .addOnFailureListener(e ->
                                 Toast.makeText(AdminAddBook.this, "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
+
+        // Set up the back button
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminAddBook.this, AdminHome.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

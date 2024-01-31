@@ -42,9 +42,20 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/viewpager"
-        android:layout_below="@id/tabLayout"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@id/tabLayout" />
+
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewpager"
+        android:layout_gravity="center"
+        android:layout_marginTop="338dp"
+        android:gravity="center"
+        android:text="Log Out" />
+
 </RelativeLayout>
