@@ -19,7 +19,7 @@ public class ViewPagerAdapter2 extends FragmentStateAdapter {
             case 1:
                 return new EditBooksFragment();
             case 2:
-                return new BookListFragment();
+                return new AdminAddNewBook();
             case 3:
                 return new IssueFragment();
             case 4:

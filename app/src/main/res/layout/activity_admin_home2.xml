@@ -9,6 +9,12 @@
     android:layout_margin="20dp"
     tools:context=".AdminHome">
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
@@ -32,7 +38,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Books"
+            android:text="+Book"
             android:icon="@drawable/books" />
 
         <com.google.android.material.tabs.TabItem
@@ -55,14 +61,6 @@
         android:layout_weight="1"
         android:layout_below="@id/tabLayout" />
 
-    <Button
-        android:id="@+id/logOut"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/viewpager"
-        android:layout_gravity="center"
-        android:layout_marginTop="338dp"
-        android:gravity="center"
-        android:text="Log Out" />
+
 
 </RelativeLayout>

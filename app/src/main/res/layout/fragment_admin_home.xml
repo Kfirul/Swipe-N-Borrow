@@ -6,9 +6,31 @@
     tools:context=".AdminHomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/bookListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Book titles will be added dynamically here -->
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewpager"
+        android:layout_gravity="center"
+        android:layout_marginTop="350dp"
+        android:gravity="center"
+        android:text="Log Out" />
+
+
 
 </FrameLayout>
