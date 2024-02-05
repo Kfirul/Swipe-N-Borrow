@@ -97,19 +97,6 @@ public class AdminHome extends AppCompatActivity {
             }
         });
 
-//        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                tabLayout.getTabAt(position).select();
-//
-//                // Show the "Log Out" button only when the "Home" tab is selected
-//                if (position == 0) {
-//                    logOutButton.setVisibility(View.VISIBLE);
-//                } else {
-//                    logOutButton.setVisibility(View.GONE);
-//                }
-//            }
-//        });
+
     }
 }

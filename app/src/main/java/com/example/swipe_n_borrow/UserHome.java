@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -38,6 +40,23 @@ public class UserHome extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
+
+                // Check if the "Books" tab is selected and launch AdminAddBook activity
+                // Replace the fragment when "Books" tab is selected
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                if (tab.getPosition() == 1) {
+                    // Replace the fragmentContainer with the UserFragmentSearch
+                    UserFragmentSearch userFragmentSearch = new UserFragmentSearch();
+                    fragmentTransaction.replace(R.id.fragmentContainer, userFragmentSearch);
+
+                    // Add the transaction to the back stack (optional)
+                    fragmentTransaction.addToBackStack(null);
+
+                    // Commit the transaction
+                    fragmentTransaction.commit();
+                }
             }
 
             @Override

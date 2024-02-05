@@ -79,7 +79,7 @@ public class RegisterUser extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Update the acceptedTerms variable based on the CheckBox state
-                 acceptedTerms = isChecked;
+                acceptedTerms = isChecked;
             }
         });
 
@@ -104,30 +104,52 @@ public class RegisterUser extends AppCompatActivity {
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
                 address = String.valueOf(editTextAddress.getText());
 
-
-
-                if(TextUtils.isEmpty(email)){
-                    Toast.makeText(RegisterUser.this,"Enter Email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    Toast.makeText(RegisterUser.this,"Enter Password", Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(fullName)){
+                    Toast.makeText(RegisterUser.this,"Enter Full Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(TextUtils.isEmpty(id)){
                     Toast.makeText(RegisterUser.this,"Enter ID", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(fullName)){
-                    Toast.makeText(RegisterUser.this,"Enter Full Name", Toast.LENGTH_SHORT).show();
+                if (!isAllDigits(id)){
+                    Toast.makeText(RegisterUser.this,"ID must be made of digits only", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (id.length()<4){
+                    Toast.makeText(RegisterUser.this,"ID must be at least a 4 digit number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(address)){
+                    Toast.makeText(RegisterUser.this,"Enter Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(email)){
+                    Toast.makeText(RegisterUser.this,"Enter Email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!email.contains("@")){
+                    Toast.makeText(RegisterUser.this,"Email address is badly formatted", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(TextUtils.isEmpty(phoneNumber)){
                     Toast.makeText(RegisterUser.this,"Enter Phone Number", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(address)){
-                    Toast.makeText(RegisterUser.this,"Enter Address", Toast.LENGTH_SHORT).show();
+                if (!isAllDigits(phoneNumber)||!(phoneNumber.length()==10)){
+                    Toast.makeText(RegisterUser.this,"Phone Number must be a 10 digit number.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!(phoneNumber.startsWith("05"))){
+                    Toast.makeText(RegisterUser.this,"Phone Number is not legal, must start with 05.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(password)){
+                    Toast.makeText(RegisterUser.this,"Enter Password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(password.length()<6){
+                    Toast.makeText(RegisterUser.this,"Password must be at least 6 characters ", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!acceptedTerms) {
@@ -163,7 +185,7 @@ public class RegisterUser extends AppCompatActivity {
                                     startActivity(intent2);
                                     finish();
                                 }
-                             else {
+                                else {
 
                                     // If sign up fails
                                     Toast.makeText(RegisterUser.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -173,5 +195,7 @@ public class RegisterUser extends AppCompatActivity {
             }
         });
     }
-
+    static boolean isAllDigits(String s) {
+        return s.matches("\\d+");
+    }
 }

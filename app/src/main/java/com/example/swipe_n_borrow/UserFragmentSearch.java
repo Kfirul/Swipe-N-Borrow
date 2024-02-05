@@ -20,10 +20,10 @@ public class UserFragmentSearch extends Fragment {
 //    private List<Book> books =new ArrayList<>();
 //
 //    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_search, container, false);
-//    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_search, container, false);
+    }
 //
 //    private void readBookData(){
 //        InputStream inputStream = getResources().openRawResource(R.raw.books);
