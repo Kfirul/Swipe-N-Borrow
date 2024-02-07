@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".UserHome3"
+            android:exported="false" />
+        <activity
             android:name=".TestFragment"
             android:exported="false" />
         <activity
