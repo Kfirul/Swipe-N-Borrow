@@ -1,29 +1,88 @@
 package com.example.swipe_n_borrow;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserFragmentSearch extends Fragment {
-//    private List<Book> books =new ArrayList<>();
-//
-//    @Override
+    private SearchView searchView;
+    private RecyclerView recyclerView;
+    private ArrayList<Book> bookArrayList = new ArrayList<>();
+    private ArrayList<Book> searchList;
+
+    String[] bookList = new String[]{"Harry Potter", "Donald"};
+    String[] genreList = new String[]{"Fantasy", "Science"};
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_search, container, false);
+
+        recyclerView = view.findViewById(R.id.recycleView);
+        searchView = view.findViewById(R.id.searchView);
+        searchView.setIconified(false);
+        searchView.clearFocus();
+
+        for (int i = 0; i < bookList.length; i++) {
+            Book book = new Book();
+            book.setTitle(bookList[i]);
+            book.setGenre(genreList[i]);
+            bookArrayList.add(book);
+        }
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookArrayList);
+        recyclerView.setAdapter(bookAdapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                performSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                performSearch(newText);
+                return false;
+            }
+        });
+
+        return view;
     }
+
+    private void performSearch(String query) {
+        searchList = new ArrayList<>();
+        if (query.length() > 0) {
+            for (int i = 0; i < bookArrayList.size(); i++) {
+                if (bookArrayList.get(i).getTitle().toUpperCase().contains(query.toUpperCase())
+                        || bookArrayList.get(i).getGenre().toUpperCase().contains(query.toUpperCase())) {
+                    Book book = new Book();
+                    book.setTitle(bookArrayList.get(i).getTitle());
+                    book.setGenre(bookArrayList.get(i).getGenre());
+                    searchList.add(book);
+                }
+            }
+        } else {
+            searchList.addAll(bookArrayList);
+        }
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), searchList);
+        recyclerView.setAdapter(bookAdapter);
+    }
+}
+
 //
 //    private void readBookData(){
 //        InputStream inputStream = getResources().openRawResource(R.raw.books);
@@ -109,4 +168,4 @@ public class UserFragmentSearch extends Fragment {
 //            e.printStackTrace();
 //        }
 //    }
-}
+//}

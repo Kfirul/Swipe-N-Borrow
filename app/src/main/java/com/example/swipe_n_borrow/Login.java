@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity {
                                                 DocumentSnapshot adminDocument = adminTask.getResult();
                                                 if (adminDocument.exists()) {
                                                     // Admin user
-                                                    Intent intent = new Intent(getApplicationContext(), AdminHome.class);
+                                                    Intent intent = new Intent(getApplicationContext(), TestFragment.class);
                                                     startActivity(intent);
                                                     finish();
                                                 } else {

@@ -51,38 +51,14 @@ public class AdminAddNewBook extends Fragment {
         buttonAddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = titleEditText.getText().toString().trim();
-                String author = authorEditText.getText().toString().trim();
-                String language = languageEditText.getText().toString().trim();
-                String genre = genreEditText.getText().toString().trim();
+                // ... (your existing code for adding a book)
 
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language) || TextUtils.isEmpty(genre)) {
-                    Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                int numPages;
-                try {
-                    numPages = Integer.parseInt(numPagesEditText.getText().toString().trim());
-                } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), "Invalid number of pages", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Book book = new Book(title, author, language, numPages, genre);
-
-                // Add the book to the admin's collection of books
-                adminBooksCollection.add(book)
-                        .addOnSuccessListener(documentReference -> {
-                            Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
-                            // You can add additional actions here, e.g., navigate to another fragment
-                            // FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                            // fragmentTransaction.replace(R.id.fragmentContainer, new YourFragment());
-                            // fragmentTransaction.addToBackStack(null);
-                            // fragmentTransaction.commit();
-                        })
-                        .addOnFailureListener(e ->
-                                Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                // Example: Navigating to another fragment
+                // You can uncomment and modify this part based on your requirements
+                // FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                // fragmentTransaction.replace(R.id.fragmentContainer, new YourFragment());
+                // fragmentTransaction.addToBackStack(null);
+                // fragmentTransaction.commit();
             }
         });
 

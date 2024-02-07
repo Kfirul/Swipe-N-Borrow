@@ -1,5 +1,6 @@
 package com.example.swipe_n_borrow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +21,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class AdminHomeFragment extends Fragment {
-//    private Button logOut;
-//    private LinearLayout bookListLayout;
-//    private TextView textViewAddress, textViewFullName, textViewLibrary, textViewPhoneNumber;
-//    private FirebaseAuth mAuth;
+    private Button logOut;
+    private LinearLayout bookListLayout;
+    private TextView textViewAddress, textViewFullName, textViewLibrary, textViewPhoneNumber;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -32,17 +33,29 @@ public class AdminHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_home, container, false);
 
-//        // Find the TextView elements
-//        textViewAddress = view.findViewById(R.id.profileAddress);
-//        textViewFullName = view.findViewById(R.id.profilelName);
-//        textViewLibrary = view.findViewById(R.id.profileLibrary);
+        // Find the TextView elements
+        textViewAddress = view.findViewById(R.id.profileAddress);
+        textViewFullName = view.findViewById(R.id.profilelName);
+        textViewLibrary = view.findViewById(R.id.profileLibrary);
 //        textViewPhoneNumber = view.findViewById(R.id.phoneNumber);
-//
+
 //        // Fetch and display admin data
 //        showAdminData();
 
+        logOut = view.findViewById(R.id.logOut);
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
         return view;
     }
+}
 
 //    private void showAdminData() {
 //        // Replace "your_collection_path" with the actual path to your Firestore collection
@@ -73,7 +86,7 @@ public class AdminHomeFragment extends Fragment {
 //                    Log.e("AdminHomeFragment", "Error fetching admin data: " + e.getMessage());
 //                });
 //    }
-}
+//}
 
 
 //
