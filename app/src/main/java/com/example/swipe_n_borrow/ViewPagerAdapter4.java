@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class ViewPagerAdapter extends FragmentStateAdapter {
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+public class ViewPagerAdapter4 extends FragmentStateAdapter {
+    public ViewPagerAdapter4(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -15,20 +15,17 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new UserFragmentHome();
+                return new UserHomeFragment();
             case 1:
-                return new UserFragmentSearch();
-            case 2:
-                return new UserFragmentMyBooks();
-            case 3:
-                return new UserFragmentReIssue();
+                return new AdminHomeFragment();
+
             default:
-                return new UserFragmentHome();
+                return new UserBooksSearch();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 }

@@ -1,67 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="20dp"
-    tools:context=".UserHome">
-
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+    android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="373dp">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            android:icon="@drawable/house" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:icon="@drawable/search">
-
-        </com.google.android.material.tabs.TabItem>
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Books"
-            android:icon="@drawable/books" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Re-issue"
-            android:icon="@drawable/business" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_below="@id/tabLayout" />
-
-    <Button
-        android:id="@+id/logOut"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/viewpager"
-        android:layout_gravity="center"
-        android:layout_marginTop="338dp"
-        android:gravity="center"
-        android:text="Log Out" />
-
-</RelativeLayout>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="500dp" />
+</LinearLayout>

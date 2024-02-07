@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link page3#newInstance} factory method to
+ * Use the {@link AdminBooks#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class page3 extends Fragment {
+public class AdminBooks extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +37,7 @@ public class page3 extends Fragment {
     String[] bookList = new String[]{"Harry Potter", "Donald"};
     String[] genreList = new String[]{"Fantasy", "Science"};
 
-    public page3() {
+    public AdminBooks() {
         // Required empty public constructor
     }
 
@@ -50,8 +50,8 @@ public class page3 extends Fragment {
      * @return A new instance of fragment page3.
      */
     // TODO: Rename and change types and number of parameters
-    public static page3 newInstance(String param1, String param2) {
-        page3 fragment = new page3();
+    public static AdminBooks newInstance(String param1, String param2) {
+        AdminBooks fragment = new AdminBooks();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,7 +72,7 @@ public class page3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_books, container, false);
 
         recyclerView = view.findViewById(R.id.recycleView);
         searchView = view.findViewById(R.id.searchView);

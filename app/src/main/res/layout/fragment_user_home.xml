@@ -215,7 +215,7 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
-            android:id="@+id/phonenumber"
+            android:id="@+id/phoneNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -228,41 +228,7 @@
 
     </LinearLayout>
 
-    <!-- Second Phone Number Section -->
-    <LinearLayout
-        android:id="@+id/library"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneSection">
 
-        <!-- Phone Number Section -->
-        <TextView
-            android:id="@+id/libraryname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="Library Name"
-            android:textColor="@color/lavender"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/profileLibrary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="library name"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/grey"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
 
     <!-- Rest of Your Code -->
 

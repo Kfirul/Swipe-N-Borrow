@@ -16,10 +16,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link page2#newInstance} factory method to
+ * Use the {@link UserHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class page2 extends Fragment {
+public class UserHomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +30,13 @@ public class page2 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public page2() {
+    private Button logOut;
+    private LinearLayout bookListLayout;
+    private TextView textViewAddress, textViewFullName, textViewPhoneNumber;
+    private FirebaseAuth mAuth;
+
+
+    public UserHomeFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +46,11 @@ public class page2 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment page2.
+     * @return A new instance of fragment UserHomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static page2 newInstance(String param1, String param2) {
-        page2 fragment = new page2();
+    public static UserHomeFragment newInstance(String param1, String param2) {
+        UserHomeFragment fragment = new UserHomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,17 +70,13 @@ public class page2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_page2, container, false);
-        Button logOut;
-        LinearLayout bookListLayout;
-        TextView textViewAddress, textViewFullName, textViewLibrary, textViewPhoneNumber;
-        FirebaseAuth mAuth;
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_user_home, container, false);
 
         // Find the TextView elements
         textViewAddress = view.findViewById(R.id.profileAddress);
         textViewFullName = view.findViewById(R.id.profilelName);
-        textViewLibrary = view.findViewById(R.id.profileLibrary);
-//      textViewPhoneNumber = view.findViewById(R.id.phoneNumber);
+        textViewPhoneNumber = view.findViewById(R.id.phoneNumber);
 
 //        // Fetch and display admin data
 //        showAdminData();
@@ -90,9 +92,6 @@ public class page2 extends Fragment {
                 getActivity().finish();
             }
         });
-
-
-        // Inflate the layout for this fragment
         return view;
     }
 }

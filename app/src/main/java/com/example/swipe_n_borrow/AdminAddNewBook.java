@@ -16,7 +16,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link AdminAddNewBook#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class AdminAddNewBook extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     private EditText titleEditText;
     private EditText authorEditText;
@@ -29,10 +43,53 @@ public class AdminAddNewBook extends Fragment {
     private Button buttonAddBook;
     private FirebaseAuth mAuth;
 
+
+    public AdminAddNewBook() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment page1.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static AdminAddNewBook newInstance(String param1, String param2) {
+        AdminAddNewBook fragment = new AdminAddNewBook();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_add_new_book, container, false);
+
+         EditText titleEditText;
+         EditText authorEditText;
+         EditText languageEditText;
+         EditText numPagesEditText;
+         EditText genreEditText;
+
+         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+         Button buttonAddBook;
+         FirebaseAuth mAuth;
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -51,25 +108,42 @@ public class AdminAddNewBook extends Fragment {
         buttonAddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // ... (your existing code for adding a book)
 
-                // Example: Navigating to another fragment
-                // You can uncomment and modify this part based on your requirements
-                // FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                // fragmentTransaction.replace(R.id.fragmentContainer, new YourFragment());
-                // fragmentTransaction.addToBackStack(null);
-                // fragmentTransaction.commit();
+
+                String title = titleEditText.getText().toString().trim();
+                String author = authorEditText.getText().toString().trim();
+                String language = languageEditText.getText().toString().trim();
+                String genre = genreEditText.getText().toString().trim();
+
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language) || TextUtils.isEmpty(genre)) {
+                    Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int numPages;
+                try {
+                    numPages = Integer.parseInt(numPagesEditText.getText().toString().trim());
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getActivity(), "Invalid number of pages", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Book book = new Book(title, author, language, numPages, genre);
+
+                // Add the book to the admin's collection of books
+                adminBooksCollection.add(book)
+                        .addOnSuccessListener(documentReference -> {
+                            Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
+                            // You can add additional actions here, e.g., navigate to another fragment
+                            // FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                            // fragmentTransaction.replace(R.id.fragmentContainer, new YourFragment());
+                            // fragmentTransaction.addToBackStack(null);
+                            // fragmentTransaction.commit();
+                        })
+                        .addOnFailureListener(e ->
+                                Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
-
-        // Set up the back button
-//        Button backButton = view.findViewById(R.id.backButton);
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // You can add code here to navigate to another fragment or perform other actions
-//            }
-//        });
 
         return view;
     }
