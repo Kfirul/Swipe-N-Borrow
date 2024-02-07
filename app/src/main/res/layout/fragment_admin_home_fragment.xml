@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/purple_white_background"
     tools:context=".AdminHomeFragment">
 
 
@@ -14,6 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="500dp"
+        android:background="@drawable/white_background"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +125,7 @@
     <!-- Full Name Section -->
     <LinearLayout
         android:id="@+id/fullNameSection"
-        android:layout_width="0dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -139,7 +141,7 @@
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:text="Full Name"
-            android:textColor="@color/lavender"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
@@ -150,7 +152,7 @@
             android:layout_marginTop="10dp"
             android:text="name"
             android:textAlignment="viewEnd"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="18sp"
             />
 
@@ -159,7 +161,7 @@
     <!-- Second Full Name Section -->
     <LinearLayout
         android:id="@+id/fullNameSection2"
-        android:layout_width="0dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -175,7 +177,7 @@
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:text="Address"
-            android:textColor="@color/lavender"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
@@ -186,7 +188,7 @@
             android:layout_marginTop="10dp"
             android:text="address"
             android:textAlignment="viewEnd"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="18sp"
             />
 
@@ -195,7 +197,7 @@
     <!-- Phone Number Section -->
     <LinearLayout
         android:id="@+id/phoneSection"
-        android:layout_width="0dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -211,7 +213,7 @@
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:text="Phone Number"
-            android:textColor="@color/lavender"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
@@ -222,7 +224,7 @@
             android:layout_marginTop="10dp"
             android:text="phone number"
             android:textAlignment="viewEnd"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="18sp"
             />
 
@@ -231,7 +233,7 @@
     <!-- Second Phone Number Section -->
     <LinearLayout
         android:id="@+id/library"
-        android:layout_width="0dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -247,7 +249,7 @@
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:text="Library Name"
-            android:textColor="@color/lavender"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
@@ -258,7 +260,7 @@
             android:layout_marginTop="10dp"
             android:text="library name"
             android:textAlignment="viewEnd"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="18sp"
             />
 
@@ -285,8 +287,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Edit Profile"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/logOut"
