@@ -25,7 +25,7 @@ public class Book {
         // Default constructor required by Firebase
     }
 
-    public Book( String title, String authors, String language, int num_pages,String genre) {
+    public Book(String title, String authors, String language, int num_pages, String genre) {
 //        this.bookID = bookID;
         this.title = title;
         this.authors = authors;
@@ -81,6 +81,7 @@ public class Book {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
 }
 
 

@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHolder> {
+public class BookAdapterUserBorrow extends RecyclerView.Adapter<BookAdapterUserBorrow.MyHolder> {
     private Context context;
     private ArrayList<Book> arrayList;
     private LayoutInflater layoutInflater;
     private OnSelectButtonClickListener onSelectButtonClickListener;  // Add this interface
 
-    public BookAdapterUser(Context context, ArrayList<Book> arrayList, OnSelectButtonClickListener listener) {
+    public BookAdapterUserBorrow(Context context, ArrayList<Book> arrayList, OnSelectButtonClickListener listener) {
         this.context = context;
         this.arrayList = arrayList;
         this.layoutInflater = LayoutInflater.from(context);
@@ -27,7 +27,7 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.book_file_user, parent, false);
+        View view = layoutInflater.inflate(R.layout.book_file_borrow_user, parent, false);
         return new MyHolder(view);
     }
 
@@ -51,7 +51,7 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
             bookGenre = itemView.findViewById(R.id.txt2);
 
             // Set click listener for selectButton
-            itemView.findViewById(R.id.BTN_Return).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.BTN_Borrow).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Call the listener method when the button is clicked

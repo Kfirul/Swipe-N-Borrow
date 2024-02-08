@@ -134,6 +134,10 @@ public class AdminAddNewBook extends Fragment {
                 adminBooksCollection.add(book)
                         .addOnSuccessListener(documentReference -> {
                             Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
+
+                            // Set the book ID in the Book object
+
+
                             // You can add additional actions here, e.g., navigate to another fragment
                             // FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                             // fragmentTransaction.replace(R.id.fragmentContainer, new YourFragment());

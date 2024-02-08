@@ -17,10 +17,10 @@ public class ViewPagerAdapter4 extends FragmentStateAdapter {
             case 0:
                 return new UserHomeFragment();
             case 1:
-                return new UserHomeFragment();
+                return new UserLibrarySearch();
 
             default:
-                return new UserLibrarySearch();
+                return new UserBooks();
         }
     }
 

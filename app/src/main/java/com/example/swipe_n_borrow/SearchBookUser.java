@@ -4,22 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class SearchBookUser extends AppCompatActivity implements BookAdapterUser.OnSelectButtonClickListener {
+public class SearchBookUser extends AppCompatActivity implements BookAdapterUserBorrow.OnSelectButtonClickListener {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
@@ -27,6 +26,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
     private ArrayList<Book> searchList;
 
     String selectedLibrary = "";
+    String adminId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapterUser bookAdapterUser = new BookAdapterUser(this, bookArrayList, this);
+        BookAdapterUserBorrow bookAdapterUser = new BookAdapterUserBorrow(this, bookArrayList, this);
         recyclerView.setAdapter(bookAdapterUser);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -90,7 +90,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapterUser bookAdapterUser = new BookAdapterUser(this, searchList, this);
+        BookAdapterUserBorrow bookAdapterUser = new BookAdapterUserBorrow(this, searchList, this);
         recyclerView.setAdapter(bookAdapterUser);
     }
 
@@ -103,7 +103,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             // Get the adminID when the library matches
-                            String adminId = document.getId();
+                            adminId = document.getId();
                             Log.d("Firestore", "Admin ID: " + adminId);
 
                             // Fetch books for the specific admin
@@ -136,6 +136,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     book.setLanguage(language);
                     book.setAuthors(author);
 
+
                     // Add the book to the list
                     bookArrayList.add(book);
                 }
@@ -152,6 +153,83 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
 
     @Override
     public void onSelectButtonClick(Book book) {
-        // Handle the selection of a book
+        // Get the current user ID
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Create a reference to the "borrowedBooksUser" collection for the current user
+        CollectionReference borrowedBooksUserCollection = FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(userId)
+                .collection("borrowedBooksUser");
+
+        // Add the selected book to the "borrowedBooksUser" collection for the current user
+        borrowedBooksUserCollection.add(book)
+                .addOnSuccessListener(documentReference -> {
+                    // Handle success, for example, show a success message
+                    Toast.makeText(SearchBookUser.this, "Book borrowed successfully.", Toast.LENGTH_SHORT).show();
+
+                    // Optionally, you can add logic here to update the UI or perform other actions
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure, for example, show an error message
+                    Toast.makeText(SearchBookUser.this, "Failed to borrow book.", Toast.LENGTH_SHORT).show();
+                    Log.e("FirestoreError", "Error borrowing book: " + e.getMessage(), e);
+                });
+
+
+        // Create a reference to the "borrowedBooksAdmin" collection for the admin
+        CollectionReference borrowedBooksAdminCollection = FirebaseFirestore.getInstance()
+                .collection("Admins")
+                .document(adminId)
+                .collection("borrowedBooksAdmin");
+
+        // Add the selected book to the "borrowedBooksAdmin" collection for the admin
+        borrowedBooksAdminCollection.add(book)
+                .addOnSuccessListener(documentReference -> {
+                    // Handle success, for example, log a message
+                    Log.d("Firestore", "Book added to borrowedBooksAdmin collection for admin: " + adminId);
+
+                    // Delete the book from the "books" collection in the admin
+                    deleteBookFromAdminCollection(adminId, book);
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure, for example, log an error message
+                    Log.e("FirestoreError", "Error adding book to borrowedBooksAdmin collection: " + e.getMessage(), e);
+                });
     }
+
+    private void deleteBookFromAdminCollection(String adminId, Book book) {
+        // Create a reference to the "books" collection for the admin
+        CollectionReference adminBooksCollection = FirebaseFirestore.getInstance()
+                .collection("Admins")
+                .document(adminId)
+                .collection("books");
+
+        // Query to find the specific book document in the "books" collection
+        adminBooksCollection.whereEqualTo("title", book.getTitle())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Delete the book document from the "books" collection
+                            document.getReference().delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Handle success, for example, log a message
+                                        Log.d("Firestore", "Book deleted from admin's books collection.");
+
+                                        // Optionally, you can add more logic here
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Handle failure, for example, log an error message
+                                        Log.e("FirestoreError", "Error deleting book from admin's books collection: " + e.getMessage(), e);
+                                    });
+                        }
+                    } else {
+                        // Handle the failure to retrieve data from Firestore
+                        Exception e = task.getException();
+                        Log.e("FirestoreError", "Error getting documents: " + e.getMessage(), e);
+                    }
+                });
+    }
+
 }
