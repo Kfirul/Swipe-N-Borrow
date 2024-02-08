@@ -74,6 +74,7 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
         // Handle the button click for the selected library
         // Example: Open a new activity or perform any other action
         Intent intent = new Intent(getActivity(), SearchBookUser.class);
+        intent.putExtra("selectedLibrary", library);
         startActivity(intent);
         getActivity().finish();
     }
