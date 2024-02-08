@@ -65,7 +65,7 @@ public class AdminHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_home_fragment, container, false);
-        Button logOut;
+        Button logOut, EditAdmin;
         LinearLayout bookListLayout;
         TextView textViewAddress, textViewFullName, textViewLibrary, textViewPhoneNumber;
         FirebaseAuth mAuth;
@@ -90,7 +90,25 @@ public class AdminHomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        EditAdmin = view.findViewById(R.id.editButton);
 
+        EditAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditAdminProfile.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+//        EditAdmin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent intent = new Intent(getActivity(), EditAdminProfile.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//            }
+//        });
 
         // Inflate the layout for this fragment
         return view;

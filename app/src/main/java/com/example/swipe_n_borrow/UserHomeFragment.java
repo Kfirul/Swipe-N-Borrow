@@ -30,7 +30,7 @@ public class UserHomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button logOut;
+    private Button logOut, EditUser;
     private LinearLayout bookListLayout;
     private TextView textViewAddress, textViewFullName, textViewPhoneNumber;
     private FirebaseAuth mAuth;
@@ -88,6 +88,16 @@ public class UserHomeFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        EditUser= view.findViewById(R.id.editButton);
+        EditUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditUserProfile.class);
                 startActivity(intent);
                 getActivity().finish();
             }
