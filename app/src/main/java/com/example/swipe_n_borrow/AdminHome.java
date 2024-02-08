@@ -10,12 +10,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class AdminHome extends AppCompatActivity {
+    private static final String[] TAB_TITLES = {"Profile", "Add book", "My Library"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
+
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
@@ -28,7 +30,7 @@ public class AdminHome extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText("Tab " + (position  +1));
+                tab.setText(TAB_TITLES[position]);
             }
         }).attach();
 

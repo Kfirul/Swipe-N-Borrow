@@ -77,6 +77,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         // Handle the button click for the selected library
         // Example: Open a new activity or perform any other action
         Intent intent = new Intent(getActivity(), EditBookAdmin.class);
+        intent.putExtra("bookTitle", book.getTitle());
         startActivity(intent);
     }
 

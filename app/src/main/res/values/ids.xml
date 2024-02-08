@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="fragmentContainer" type="id" />
+    <item name="titleEditText" type="id" />
+    <item name="authorEditText" type="id" />
+    <item name="languageEditText" type="id" />
+    <item name="numPagesEditText" type="id" />
+    <item name="genreEditText" type="id" />
 </resources>

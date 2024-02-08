@@ -15,9 +15,9 @@ public class ViewPagerAdapter3 extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new AdminAddNewBook();
-            case 1:
                 return new AdminHomeFragment();
+            case 1:
+                 return new AdminAddNewBook();
 
             default:
                 return new AdminBooks();
