@@ -1,5 +1,6 @@
 package com.example.swipe_n_borrow;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -7,9 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -18,7 +25,7 @@ import java.util.ArrayList;
  * Use the {@link AdminBooks#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdminBooks extends Fragment {
+public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +41,6 @@ public class AdminBooks extends Fragment {
     private ArrayList<Book> bookArrayList = new ArrayList<>();
     private ArrayList<Book> searchList;
 
-    String[] bookList = new String[]{"Harry Potter", "Donald"};
-    String[] genreList = new String[]{"Fantasy", "Science"};
 
     public AdminBooks() {
         // Required empty public constructor
@@ -68,6 +73,13 @@ public class AdminBooks extends Fragment {
         }
     }
 
+    public void onSelectButtonClick(Book book) {
+        // Handle the button click for the selected library
+        // Example: Open a new activity or perform any other action
+        Intent intent = new Intent(getActivity(), EditBookAdmin.class);
+        startActivity(intent);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,17 +91,12 @@ public class AdminBooks extends Fragment {
         searchView.setIconified(false);
         searchView.clearFocus();
 
-        for (int i = 0; i < bookList.length; i++) {
-            Book book = new Book();
-            book.setTitle(bookList[i]);
-            book.setGenre(genreList[i]);
-            bookArrayList.add(book);
-        }
+        setBooksFirebase();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookArrayList);
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookArrayList,this);
         recyclerView.setAdapter(bookAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -128,7 +135,46 @@ public class AdminBooks extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), searchList);
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), searchList,this);
         recyclerView.setAdapter(bookAdapter);
     }
+
+    public void setBooksFirebase() {
+        String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        CollectionReference adminBooksCollection = FirebaseFirestore.getInstance().collection("Admins").document(adminId).collection("books");
+
+        adminBooksCollection.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    // Get the book title
+                    String title = document.getString("title");
+                    String genre = document.getString("genre");
+                    String language = document.getString("language");
+//                String numberOfPagesString = documentSnapshot.getString("num_pages");
+//                int numberOfPages = Integer.parseInt(numberOfPagesString);
+                    String author = document.getString("authors");
+
+                    // Create a Book object using the retrieved data
+                    Book book = new Book();
+                    book.setTitle(title);
+                    book.setGenre(genre);
+                    book.setLanguage(language);
+//                book.setNum_pages(numberOfPages);
+                    book.setAuthors(author);
+
+                    // Add the book to the list
+                    bookArrayList.add(book);
+                }
+
+                // Now you can use the bookArrayList with the created Book objects
+                // Display the books or perform other actions as needed
+            } else {
+                // Handle the failure to retrieve data from Firestore
+                Exception e = task.getException();
+                Log.e("FirestoreError", "Error retrieving data from Firestore: " + e.getMessage(), e);
+            }
+        });
+    }
+
+
 }

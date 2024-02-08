@@ -5,10 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserFragmentSearch">
+    tools:context=".UserLibrarySearch">
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/house">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/img"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="Library Name"
+            android:textColor="@color/black"
+            android:textSize="15dp"/>
+
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
+        android:layout_below="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -26,11 +55,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/card"
-        />
-
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>
+

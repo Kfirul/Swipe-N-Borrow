@@ -52,6 +52,22 @@
             android:textColor="@color/black"
             android:textSize="15dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/BTN_Select"
+            android:layout_below="@+id/txt2"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="Edit"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            >
+
+        </Button>
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.example.swipe_n_borrow;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -7,18 +8,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserBooksSearch#newInstance} factory method to
+ * Use the {@link UserLibrarySearch#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserBooksSearch extends Fragment {
+public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.OnSelectButtonClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,12 +36,10 @@ public class UserBooksSearch extends Fragment {
     private String mParam2;
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private ArrayList<Book> bookArrayList = new ArrayList<>();
-    private ArrayList<Book> searchList;
+    private ArrayList<String> libraryArrayList = new ArrayList<>();
+    private ArrayList<String> searchList;
 
-    String[] bookList = new String[]{"Harry Potter", "Donald"};
-    String[] genreList = new String[]{"Fantasy", "Science"};
-    public UserBooksSearch() {
+    public UserLibrarySearch() {
         // Required empty public constructor
     }
 
@@ -48,8 +52,8 @@ public class UserBooksSearch extends Fragment {
      * @return A new instance of fragment UserBooksSearch.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserBooksSearch newInstance(String param1, String param2) {
-        UserBooksSearch fragment = new UserBooksSearch();
+    public static UserLibrarySearch newInstance(String param1, String param2) {
+        UserLibrarySearch fragment = new UserLibrarySearch();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,28 +70,34 @@ public class UserBooksSearch extends Fragment {
         }
     }
 
+    public void onSelectButtonClick(String library) {
+        // Handle the button click for the selected library
+        // Example: Open a new activity or perform any other action
+        Intent intent = new Intent(getActivity(), SearchBookUser.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_books_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_library_search, container, false);
 
         recyclerView = view.findViewById(R.id.recycleView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setIconified(false);
         searchView.clearFocus();
+// Inflate the item layout to access its components
+        View itemLayout = inflater.inflate(R.layout.library_file_user, container, false);
 
-        for (int i = 0; i < bookList.length; i++) {
-            Book book = new Book();
-            book.setTitle(bookList[i]);
-            book.setGenre(genreList[i]);
-            bookArrayList.add(book);
-        }
+        setBooksFirebase();
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookArrayList);
-        recyclerView.setAdapter(bookAdapter);
+        LibraryAdapterUser bookAdapterUser = new LibraryAdapterUser(getActivity(), libraryArrayList,this);
+        recyclerView.setAdapter(bookAdapterUser);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -103,29 +113,53 @@ public class UserBooksSearch extends Fragment {
             }
         });
 
+
         return view;
     }
 
     private void performSearch(String query) {
         searchList = new ArrayList<>();
         if (query.length() > 0) {
-            for (int i = 0; i < bookArrayList.size(); i++) {
-                if (bookArrayList.get(i).getTitle().toUpperCase().contains(query.toUpperCase())
-                        || bookArrayList.get(i).getGenre().toUpperCase().contains(query.toUpperCase())) {
-                    Book book = new Book();
-                    book.setTitle(bookArrayList.get(i).getTitle());
-                    book.setGenre(bookArrayList.get(i).getGenre());
-                    searchList.add(book);
+            for (int i = 0; i < libraryArrayList.size(); i++) {
+                if (libraryArrayList.get(i).toUpperCase().contains(query.toUpperCase()))
+                       {
+
+                    searchList.add(libraryArrayList.get(i));
                 }
             }
         } else {
-            searchList.addAll(bookArrayList);
+            searchList.addAll(libraryArrayList);
         }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), searchList);
-        recyclerView.setAdapter(bookAdapter);
+        LibraryAdapterUser bookAdapterUser = new LibraryAdapterUser(getActivity(), searchList,this);
+        recyclerView.setAdapter(bookAdapterUser);
+    }
+
+    public void setBooksFirebase() {
+
+        CollectionReference adminsCollection = FirebaseFirestore.getInstance().collection("Admins");
+
+        adminsCollection.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    // Get the book title
+                    String library = document.getString("library");
+
+
+                    // Add the book to the list
+                    libraryArrayList.add(library);
+                }
+
+                // Now you can use the bookArrayList with the created Book objects
+                // Display the books or perform other actions as needed
+            } else {
+                // Handle the failure to retrieve data from Firestore
+                Exception e = task.getException();
+                Log.e("FirestoreError", "Error retrieving data from Firestore: " + e.getMessage(), e);
+            }
+        });
     }
 }

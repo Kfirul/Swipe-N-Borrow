@@ -15,6 +15,12 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".EditBookAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".SearchBookUser"
+            android:exported="false" />
+        <activity
             android:name=".UserHome"
             android:exported="false" />
         <activity
