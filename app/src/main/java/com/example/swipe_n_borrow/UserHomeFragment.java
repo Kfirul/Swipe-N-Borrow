@@ -45,8 +45,7 @@ public class UserHomeFragment extends Fragment {
     private Button logOut, EditUser;
     private LinearLayout bookListLayout;
     private TextView textViewAddress, textViewFullName, textViewPhoneNumber;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+
 
 
     public UserHomeFragment() {

@@ -1,8 +1,11 @@
 package com.example.swipe_n_borrow;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,7 +15,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +35,10 @@ public class AdminHomeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private TextView profilelName, profileAddress, phonenumber ,profileLibrary;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -62,6 +75,16 @@ public class AdminHomeFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        profilelName = getActivity().findViewById(R.id.profilelName);
+        profileAddress = getActivity().findViewById(R.id.profileAddress);
+        phonenumber = getActivity().findViewById(R.id.phonenumber);
+        profileLibrary = getActivity().findViewById(R.id.profileLibrary);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_home_fragment, container, false);
@@ -69,15 +92,6 @@ public class AdminHomeFragment extends Fragment {
         LinearLayout bookListLayout;
         TextView textViewAddress, textViewFullName, textViewLibrary, textViewPhoneNumber;
         FirebaseAuth mAuth;
-
-        // Find the TextView elements
-        textViewAddress = view.findViewById(R.id.profileAddress);
-        textViewFullName = view.findViewById(R.id.profilelName);
-        textViewLibrary = view.findViewById(R.id.profileLibrary);
-//      textViewPhoneNumber = view.findViewById(R.id.phoneNumber);
-
-//        // Fetch and display admin data
-//        showAdminData();
 
         logOut = view.findViewById(R.id.logOut);
 
@@ -112,5 +126,44 @@ public class AdminHomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentId = user.getUid();
+
+        DocumentReference reference;
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        reference=firestore.collection("Admins").document(currentId);
+
+        reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.getResult().exists()){
+
+                    String nameResult = task.getResult().getString("fullName");
+                    String phoneResult = task.getResult().getString("phoneNumber");
+                    String addressResult = task.getResult().getString("address");
+                    String libraryResult = task.getResult().getString("library");
+
+                    profileAddress.setText(addressResult);
+                    profilelName.setText(nameResult);
+                    phonenumber.setText(phoneResult);
+                    profileLibrary.setText(libraryResult);
+
+                }else{
+                    profileAddress.setText("Null");
+                    profilelName.setText("Null");
+                    phonenumber.setText("Null");
+                    profileLibrary.setText("Null");
+
+                }
+            }
+        });
+
     }
 }
