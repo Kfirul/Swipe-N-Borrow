@@ -4,24 +4,11 @@ Swipe-N-Borrow is an Android app designed to streamline the process of borrowing
 
 For a detailed project description and screenshots, please refer to the [project documentation](#project-description-and-screenshots).
 
-## Usage
-
-**Note:** The app is not live currently and requires setup.
-
-1. Create a new Firebase Project (with Firestore Database) on [Firebase Console](https://console.firebase.google.com/) and configure it with the app.
-2. Set up a Node.js and Firebase CLI environment to deploy the Cloud Functions.
-3. Set up a cron job to trigger the "updateFine" function daily through an HTTPS request.
-
-Refer to YouTube tutorials, online guides, and official documentation for assistance in project setup. A recommended starting point is the [Cloud Firestore Android Tutorial](https://youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD).
-
 ## Tools Used
 
 * [Android Studio](https://developer.android.com/studio) : Primary IDE for Android App Development using Java.
 * [Cloud Firestore](https://firebase.google.com/products/firestore) : The Database used for storing data in the form of Collections and Documents.
-* [Firebase Cloud Messaging](https://firebase.google.com/products/cloud-messaging) : Used for sending Push Notifications to specified users using FCM Tokens.
-* [Cloud Functions](https://firebase.google.com/products/functions) : Used for real-time monitoring of the database and listening to certain triggers for taking required actions.
 * [Firebase Authentication](https://firebase.google.com/products/auth) : Used to maintain Accounts and perform Login and Signup Actions.
-* [cron-job.org](https://cron-job.org/en/): Used for scheduling Cloud Functions through HTTPS Requests.
 
 ## Contributing
 You are welcome to contribute :
@@ -35,60 +22,36 @@ You are welcome to contribute :
 ## Future Work
 * UI Improvement and Optimization
 * New Features/Functionalities
-* Generalization for Flexible Usage. This App was implemented specifically for my College's Library System:
-  * Books and Users are identified through unique Book IDs and Card No. respectively.
-  * While issuing/re-issuing/returning a Book, 2 digits need to be added at end of its Book ID (to specify the unit number). For example, copies of a Book with ID 14532 having 25 units would have the IDs 1453201, 1453202, 1453203 ... 1453225. Book IDs are displayed in the same way in User Account's end.
-  * Email ID for registration needs to be of the domain @iiitnr.edu.in.
-  * Books are issued for a duration of 14 days, after which a fine of Rs.1 per day is incurred (if the book is not re-issued or returned).
-  * A book can be re-issued only 1 time from the User's end.
-
-If you have any new ideas or suggestions to improve this project, feel free to contact me. Your valuable feedback is highly appreciated!
+* Generalization for Flexible Usage.
+* Login with Google account
 
 ## Project Description and Screenshots
 ### Features
 * Simple and minimal Layout Designs.
 * Interlinked Activities for different functions.
 * Text Views and Toasts for displaying info.
-* Interaction with the User with the help of Edit Text Views, Buttons, Checkboxes, Alert Dialogs, Card Views, etc.
-* Updates using Push Notifications.
+* Interaction with the User with the help of Edit Text Views, Buttons,Card Views, etc.
 * Real-time Synchronization with Online Database.
-* Auto Login on App launch if the user/admin is logged in.
 * Security Rules to protect the database from malicious activities.
 
 ### Functionalities
 **Admin Account :**
 
 * Add new Book to the Library.
-* Update details of an existing Book.
-* Remove a Book from the Library.
-* Issue a Book to a User.
-* Return a Book from User.
-* Re-Issue a Book to a User.
-* Collect Fine from a User.
+* Update details of an existing account.
 * Search for a particular Book.
 
 **User Account :**
 
-* See Issued Books with Due Dates.
-* Re-issue a Book one time.
+* Borrow Books.
+* return Book.
 * Search for a particular Book.
-
-**Push Notifications to Users when :**
-
-* New Book added to the Library.
-* Fine of the User increases.
-* Deadline for a particular Book is nearby (3 days).
-
-**Cloud Functions to :**
-
-* Increase Fine of the user if the deadline is crossed, once in a day.
-* Trigger Notifications based on events.
 
 ### Screenshots
 
-|![Log In Page](Screenshots/Log_In_Page.png)|![User Registration Page](Screenshots/User_Registration_Page.png)|![Admin Registration Page](Screenshots/Admin_Registration_Page.png)|
-|:---:|:---:|:---:|
-|**Log In Page**|**User Registration Page**|**Admin Registration Page**|
+| ![Log In Page](Screenshots/LoginPage.png) | ![User Registration Page](Screenshots/UserRegister.png) | ![Admin Registration Page](Screenshots/AdminRegister.png) |
+|:-----------------------------------------:|:-------------------------------------------------------:|:---------------------------------------------------------:|
+|              **Log In Page**              |               **User Registration Page**                |                **Admin Registration Page**                |
 
 |![User Home Page](Screenshots/User_Home_Page.png)|![Admin Home Page](Screenshots/Admin_Home_Page.png)|![Add Book Page](Screenshots/Add_Book_Page.png)|
 |:---:|:---:|:---:|
