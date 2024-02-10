@@ -19,9 +19,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.AggregateField;
+import com.google.firebase.firestore.AggregateQuery;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +42,7 @@ public class AdminHomeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private TextView profilelName, profileAddress, phonenumber ,profileLibrary;
+    private TextView profilelName, profileAddress, phonenumber ,profileLibrary ,borrowsNumber ,bookNumber;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -82,6 +89,8 @@ public class AdminHomeFragment extends Fragment {
         profileAddress = getActivity().findViewById(R.id.profileAddress);
         phonenumber = getActivity().findViewById(R.id.phonenumber);
         profileLibrary = getActivity().findViewById(R.id.profileLibrary);
+        borrowsNumber = getActivity().findViewById(R.id.borrowsNumber);
+        bookNumber = getActivity().findViewById(R.id.bookNumber);
     }
 
     @Override
@@ -134,10 +143,39 @@ public class AdminHomeFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentId = user.getUid();
 
+
+
         DocumentReference reference;
+        CollectionReference borrowsNumberReference ;
+        CollectionReference AvailableBooksReference ;
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        reference=firestore.collection("Admins").document(currentId);
+        reference =firestore.collection("Admins").document(currentId);
+        borrowsNumberReference = firestore.collection("Admins").document(currentId).collection("borrowedBooksAdmin");
+        AvailableBooksReference =firestore.collection("Admins").document(currentId).collection("books");
+
+        AvailableBooksReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int AvailableBook = task.getResult().size();
+                    bookNumber.setText(String.valueOf(AvailableBook));
+                } else {
+                    bookNumber.setText("Null");
+                }
+            }
+        });
+        borrowsNumberReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int borrowsCount = task.getResult().size();
+                    borrowsNumber.setText(String.valueOf(borrowsCount));
+                } else {
+                    borrowsNumber.setText("Null");
+                }
+            }
+        });
 
         reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
