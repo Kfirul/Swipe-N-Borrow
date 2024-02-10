@@ -53,29 +53,21 @@ You are welcome to contribute :
 |:-------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
 |               **Log In Page**               |            **User Registration Page**             |             **Admin Registration Page**             |
 
-|![User Home Page](Screenshots/User_Home_Page.png)|![Admin Home Page](Screenshots/Admin_Home_Page.png)|![Add Book Page](Screenshots/Add_Book_Page.png)|
-|:---:|:---:|:---:|
-|**User Home Page**|**Admin Home Page**|**Add Book Page**|
+| ![UserHomePage.png](Screenshots/UserHomePage.png) | ![AdminHome.png](Screenshots/AdminHome.png) | ![AdminAddBook.png](Screenshots/AdminAddBook.png) |
+|:-------------------------------------------------:|:-------------------------------------------:|:-------------------------------------------------:|
+|                **User Home Page**                 |             **Admin Home Page**             |                 **Add Book Page**                 |
 
-|![Remove Book Page](Screenshots/Remove_Book_Page.png)|![Update Book Page](Screenshots/Update_Book_Page.png)|![Issue Book Page](Screenshots/Issue_Book_Page.png)|
-|:---:|:---:|:---:|
-|**Remove Book Page**|**Update Book Page**|**Issue Book Page**|
+| ![AdminEditProfile.png](Screenshots/AdminEditProfile.png) | ![EditProfileUser.png](Screenshots/EditProfileUser.png) | ![BookSearch.png](Screenshots%2FBookSearch.png) |
+|:---------------------------------------------------------:|:-------------------------------------------------------:|:-----------------------------------------------:|
+|                **Admin Edit Profile Page**                |               **User Edit Profile Page**                |              **Book Search Page**               |
 
-|![Return Book Page](Screenshots/Return_Book_Page.png)|![Reissue Book Page](Screenshots/Reissue_Book_Page.png)|![Collect Fine Page](Screenshots/Collect_Fine_Page.png)|
-|:---:|:---:|:---:|
-|**Return Book Page**|**Reissue Book Page**|**Collect Fine Page**|
+| ![BooksOfUser.png](Screenshots/BooksOfUser.png) | ![BorrowBookPage.png](Screenshots%2FBorrowBookPage.png) | ![ChooseRegisterType.png](Screenshots%2FChooseRegisterType.png) |
+|:-----------------------------------------------:|:-------------------------------------------------------:|:---------------------------------------------------------------:|
+|             **User Book List Page**             |                  **User Borrow Book**                   |                    **Choose Register Type**                     |
 
-|![Collect Fine Confirmation Page](Screenshots/Collect_Fine_Confirmation_Page.png)|![Search Book Page](Screenshots/Search_Book_Page.png)|![Search Book Results](Screenshots/Search_Book_Results.png)|
-|:---:|:---:|:---:|
-|**Collect Fine Confirmation**|**Search Book Page**|**Search Book Results**|
-
-|![See Issued Books Page](Screenshots/See_Issued_Books_Page.png)|![User Reissue Book Page](Screenshots/User_Reissue_Book_Page.png)|![New Book Added Notification](Screenshots/New_Book_Added_Notification.png)|
-|:---:|:---:|:---:|
-|**See Issued Books Page**|**User Reissue Book Page**|**New Book Added Notification**|
-
-|![Deadline Approaching Notification](Screenshots/Deadline_Approaching_Notification.png)|![Fine Increased Notification](Screenshots/Fine_Increased_Notification.png)|
-|:---:|:---:|
-|**Deadline Approaching Notification**|**Fine Increased Notification**|
+| ![appLogoStarted.png](Screenshots/appLogoStarted.png) | ![SplashScreen.png](Screenshots/SplashScreen.png) |
+|:-----------------------------------------------------:|:-------------------------------------------------:|
+|                 **Started App Logo**                  |                 **Splash Screen**                 |
 
 ## Final Notes
 **Thanks for exploring this repository! Have a great day.**
