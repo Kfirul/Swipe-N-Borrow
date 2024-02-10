@@ -26,7 +26,7 @@ Refer to YouTube tutorials, online guides, and official documentation for assist
 ## Contributing
 You are welcome to contribute :
 
-1. Fork it ([https://github.com/rohanrao619/Library_Management_Android_App/fork](https://github.com/rohanrao619/Library_Management_Android_App/fork))
+1. Fork it ([https://github.com/kfirul/Swipe-N-Borrow/fork](https://github.com/kfirul/Swipe-N-Borrow/fork))
 2. Create new branch : `git checkout -b new_feature`
 3. Commit your changes : `git commit -am 'Added new_feature'`
 4. Push to the branch : `git push origin new_feature`
@@ -43,9 +43,6 @@ You are welcome to contribute :
   * A book can be re-issued only 1 time from the User's end.
 
 If you have any new ideas or suggestions to improve this project, feel free to contact me. Your valuable feedback is highly appreciated!
-
-## License
-This Project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
 
 ## Project Description and Screenshots
 ### Features
@@ -120,10 +117,4 @@ This Project is licensed under the MIT License, see the [LICENSE](LICENSE) file 
 ## Final Notes
 **Thanks for exploring this repository! Have a great day.**
 
-If you have any queries, feel free to contact me.
-
-Saini Rohan Rao
-- [Email](mailto:rohanrao619@gmail.com)
-- [GitHub](https://github.com/rohanrao619)
-- [LinkedIn](https://www.linkedin.com/in/rohanrao619)
-- [Portfolio Website](https://rohanrao619.github.io/)
+If you have any queries, feel free to contact us.
