@@ -65,6 +65,12 @@ You are welcome to contribute :
 |:-----------------------------------------------:|:-------------------------------------------------------:|:---------------------------------------------------------------:|
 |             **User Book List Page**             |                  **User Borrow Book**                   |                    **Choose Register Type**                     |
 
+
+| ![Slider1.png](Screenshots/Slider1.png) | ![Slider2.png](Screenshots/Slider2.png) | ![Slider3.png](Screenshots/Slider3.png) |
+|:---------------------------------------:|:---------------------------------------:|:---------------------------------------:|
+|        **Introduction Slider 1**         |        **Introduction Slider 2**        |        **Introduction Slider 3**        |
+
+
 | ![appLogoStarted.png](Screenshots/appLogoStarted.png) | ![SplashScreen.png](Screenshots/SplashScreen.png) |
 |:-----------------------------------------------------:|:-------------------------------------------------:|
 |                 **Started App Logo**                  |                 **Splash Screen**                 |
