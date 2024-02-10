@@ -2,7 +2,7 @@
 
 Swipe-N-Borrow is an Android app designed to streamline the process of borrowing and lending books, offering a convenient solution for both users and administrators. This app facilitates various operations such as adding, removing, updating books, searching for books, issuing, re-issuing, and returning books. The underlying Cloud Firestore database ensures efficient storage of book and user details. Firebase Cloud Messaging is utilized for real-time notifications, such as approaching return deadlines, fine increments, or the addition of new books. Cloud Functions are employed for continuous monitoring of the database, updating fines, and triggering relevant notifications. The app features a user-friendly and interactive interface.
 
-For a detailed project description and screenshots, please refer to the [project documentation](#).
+For a detailed project description and screenshots, please refer to the [Project Description and Screenshots](#).
 
 ## Usage
 
