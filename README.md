@@ -2,7 +2,7 @@
 
 Swipe-N-Borrow is an Android app designed to streamline the process of borrowing and lending books, offering a convenient solution for both users and administrators. This app facilitates various operations such as adding, removing, updating books, searching for books, issuing, re-issuing, and returning books. The underlying Cloud Firestore database ensures efficient storage of book and user details. Firebase Cloud Messaging is utilized for real-time notifications, such as approaching return deadlines, fine increments, or the addition of new books. Cloud Functions are employed for continuous monitoring of the database, updating fines, and triggering relevant notifications. The app features a user-friendly and interactive interface.
 
-For a detailed project description and screenshots, please refer to the [Project Description and Screenshots](#).
+For a detailed project description and screenshots, please refer to the [project documentation](#project-description-and-screenshots).
 
 ## Usage
 
@@ -12,100 +12,118 @@ For a detailed project description and screenshots, please refer to the [Project
 2. Set up a Node.js and Firebase CLI environment to deploy the Cloud Functions.
 3. Set up a cron job to trigger the "updateFine" function daily through an HTTPS request.
 
-Refer to YouTube tutorials, online guides, and official documentation for assistance in project setup. A recommended starting point is the [Cloud Firestore Android Tutorial](https://firebase.google.com/docs/firestore/quickstart).
+Refer to YouTube tutorials, online guides, and official documentation for assistance in project setup. A recommended starting point is the [Cloud Firestore Android Tutorial](https://youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD).
 
 ## Tools Used
 
-- **Android Studio:** Primary IDE for Android app development using Java.
-- **Cloud Firestore:** The database used for storing data in the form of collections and documents.
-- **Firebase Cloud Messaging:** Used for sending push notifications to specified users using FCM tokens.
-- **Cloud Functions:** Used for real-time monitoring of the database and listening to specific triggers for required actions.
-- **Firebase Authentication:** Used to maintain accounts and perform login and signup actions.
-- **cron-job.org:** Used for scheduling Cloud Functions through HTTPS requests.
+* [Android Studio](https://developer.android.com/studio) : Primary IDE for Android App Development using Java.
+* [Cloud Firestore](https://firebase.google.com/products/firestore) : The Database used for storing data in the form of Collections and Documents.
+* [Firebase Cloud Messaging](https://firebase.google.com/products/cloud-messaging) : Used for sending Push Notifications to specified users using FCM Tokens.
+* [Cloud Functions](https://firebase.google.com/products/functions) : Used for real-time monitoring of the database and listening to certain triggers for taking required actions.
+* [Firebase Authentication](https://firebase.google.com/products/auth) : Used to maintain Accounts and perform Login and Signup Actions.
+* [cron-job.org](https://cron-job.org/en/): Used for scheduling Cloud Functions through HTTPS Requests.
 
 ## Contributing
+You are welcome to contribute :
 
-Contributions are welcome! Follow these steps:
-
-1. Fork it ([https://github.com/your-username/Swipe-N-Borrow/fork](https://github.com/your-username/Swipe-N-Borrow/fork))
-2. Create a new branch: `git checkout -b new_feature`
-3. Commit your changes: `git commit -am 'Added new_feature'`
-4. Push to the branch: `git push origin new_feature`
-5. Submit a pull request!
+1. Fork it ([https://github.com/rohanrao619/Library_Management_Android_App/fork](https://github.com/rohanrao619/Library_Management_Android_App/fork))
+2. Create new branch : `git checkout -b new_feature`
+3. Commit your changes : `git commit -am 'Added new_feature'`
+4. Push to the branch : `git push origin new_feature`
+5. Submit a pull request !
 
 ## Future Work
+* UI Improvement and Optimization
+* New Features/Functionalities
+* Generalization for Flexible Usage. This App was implemented specifically for my College's Library System:
+  * Books and Users are identified through unique Book IDs and Card No. respectively.
+  * While issuing/re-issuing/returning a Book, 2 digits need to be added at end of its Book ID (to specify the unit number). For example, copies of a Book with ID 14532 having 25 units would have the IDs 1453201, 1453202, 1453203 ... 1453225. Book IDs are displayed in the same way in User Account's end.
+  * Email ID for registration needs to be of the domain @iiitnr.edu.in.
+  * Books are issued for a duration of 14 days, after which a fine of Rs.1 per day is incurred (if the book is not re-issued or returned).
+  * A book can be re-issued only 1 time from the User's end.
 
-- UI improvement and optimization.
-- Addition of new features and functionalities.
-- Generalization for flexible usage. The app was initially implemented for a specific use case and may require adjustments for broader applications.
-
-If you have new ideas or suggestions to improve this project, feel free to contact me. Your valuable feedback is highly appreciated!
+If you have any new ideas or suggestions to improve this project, feel free to contact me. Your valuable feedback is highly appreciated!
 
 ## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This Project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
 
 ## Project Description and Screenshots
-
 ### Features
-
-- Simple and minimal layout designs.
-- Interlinked activities for different functions.
-- Text views and toasts for displaying info.
-- Interaction with the user via edit text views, buttons, checkboxes, alert dialogs, card views, etc.
-- Updates using push notifications.
-- Real-time synchronization with an online database.
-- Auto-login on app launch if the user/admin is logged in.
-- Security rules to protect the database from malicious activities.
+* Simple and minimal Layout Designs.
+* Interlinked Activities for different functions.
+* Text Views and Toasts for displaying info.
+* Interaction with the User with the help of Edit Text Views, Buttons, Checkboxes, Alert Dialogs, Card Views, etc.
+* Updates using Push Notifications.
+* Real-time Synchronization with Online Database.
+* Auto Login on App launch if the user/admin is logged in.
+* Security Rules to protect the database from malicious activities.
 
 ### Functionalities
+**Admin Account :**
 
-**Admin Account:**
+* Add new Book to the Library.
+* Update details of an existing Book.
+* Remove a Book from the Library.
+* Issue a Book to a User.
+* Return a Book from User.
+* Re-Issue a Book to a User.
+* Collect Fine from a User.
+* Search for a particular Book.
 
-- Add new book to the library.
-- Update details of an existing book.
-- Remove a book from the library.
-- Issue a book to a user.
-- Return a book from user.
-- Re-issue a book to a user.
-- Collect fine from a user.
-- Search for a particular book.
+**User Account :**
 
-**User Account:**
+* See Issued Books with Due Dates.
+* Re-issue a Book one time.
+* Search for a particular Book.
 
-- See issued books with due dates.
-- Re-issue a book one time.
-- Search for a particular book.
+**Push Notifications to Users when :**
 
-**Push Notifications to Users when:**
+* New Book added to the Library.
+* Fine of the User increases.
+* Deadline for a particular Book is nearby (3 days).
 
-- New book added to the library.
-- Fine of the user increases.
-- Deadline for a particular book is nearby (3 days).
+**Cloud Functions to :**
 
-**Cloud Functions to:**
-
-- Increase fine of the user if the deadline is crossed, once a day.
-- Trigger notifications based on events.
+* Increase Fine of the user if the deadline is crossed, once in a day.
+* Trigger Notifications based on events.
 
 ### Screenshots
 
-![Log In Page](screenshots/login_page.png) ![User Registration Page](screenshots/user_registration_page.png) ![Admin Registration Page](screenshots/admin_registration_page.png)
+|![Log In Page](Screenshots/Log_In_Page.png)|![User Registration Page](Screenshots/User_Registration_Page.png)|![Admin Registration Page](Screenshots/Admin_Registration_Page.png)|
+|:---:|:---:|:---:|
+|**Log In Page**|**User Registration Page**|**Admin Registration Page**|
 
-![User Home Page](screenshots/user_home_page.png) ![Admin Home Page](screenshots/admin_home_page.png) ![Add Book Page](screenshots/add_book_page.png)
+|![User Home Page](Screenshots/User_Home_Page.png)|![Admin Home Page](Screenshots/Admin_Home_Page.png)|![Add Book Page](Screenshots/Add_Book_Page.png)|
+|:---:|:---:|:---:|
+|**User Home Page**|**Admin Home Page**|**Add Book Page**|
 
-![Remove Book Page](screenshots/remove_book_page.png) ![Update Book Page](screenshots/update_book_page.png) ![Issue Book Page](screenshots/issue_book_page.png)
+|![Remove Book Page](Screenshots/Remove_Book_Page.png)|![Update Book Page](Screenshots/Update_Book_Page.png)|![Issue Book Page](Screenshots/Issue_Book_Page.png)|
+|:---:|:---:|:---:|
+|**Remove Book Page**|**Update Book Page**|**Issue Book Page**|
 
-![Return Book Page](screenshots/return_book_page.png) ![Reissue Book Page](screenshots/reissue_book_page.png) ![Collect Fine Page](screenshots/collect_fine_page.png)
+|![Return Book Page](Screenshots/Return_Book_Page.png)|![Reissue Book Page](Screenshots/Reissue_Book_Page.png)|![Collect Fine Page](Screenshots/Collect_Fine_Page.png)|
+|:---:|:---:|:---:|
+|**Return Book Page**|**Reissue Book Page**|**Collect Fine Page**|
 
-![Collect Fine Confirmation](screenshots/collect_fine_confirmation.png) ![Search Book Page](screenshots/search_book_page.png) ![Search Book Results](screenshots/search_book_results.png)
+|![Collect Fine Confirmation Page](Screenshots/Collect_Fine_Confirmation_Page.png)|![Search Book Page](Screenshots/Search_Book_Page.png)|![Search Book Results](Screenshots/Search_Book_Results.png)|
+|:---:|:---:|:---:|
+|**Collect Fine Confirmation**|**Search Book Page**|**Search Book Results**|
 
-![See Issued Books Page](screenshots/see_issued_books_page.png) ![User Reissue Book Page](screenshots/user_reissue_book_page.png) ![New Book Added Notification](screenshots/new_book_added_notification.png)
+|![See Issued Books Page](Screenshots/See_Issued_Books_Page.png)|![User Reissue Book Page](Screenshots/User_Reissue_Book_Page.png)|![New Book Added Notification](Screenshots/New_Book_Added_Notification.png)|
+|:---:|:---:|:---:|
+|**See Issued Books Page**|**User Reissue Book Page**|**New Book Added Notification**|
 
-![Deadline Approaching Notification](screenshots/deadline_approaching_notification.png) ![Fine Increased Notification](screenshots/fine_increased_notification.png)
+|![Deadline Approaching Notification](Screenshots/Deadline_Approaching_Notification.png)|![Fine Increased Notification](Screenshots/Fine_Increased_Notification.png)|
+|:---:|:---:|
+|**Deadline Approaching Notification**|**Fine Increased Notification**|
 
 ## Final Notes
+**Thanks for exploring this repository! Have a great day.**
 
-Thank you for exploring this repository! Have a great day.
+If you have any queries, feel free to contact me.
 
-If you have any queries, feel
+Saini Rohan Rao
+- [Email](mailto:rohanrao619@gmail.com)
+- [GitHub](https://github.com/rohanrao619)
+- [LinkedIn](https://www.linkedin.com/in/rohanrao619)
+- [Portfolio Website](https://rohanrao619.github.io/)
