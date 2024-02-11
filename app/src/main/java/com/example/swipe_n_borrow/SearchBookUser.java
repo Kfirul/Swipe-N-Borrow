@@ -3,6 +3,8 @@ package com.example.swipe_n_borrow;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +71,19 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                 return false;
             }
         });
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), UserHome.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
+
+
 
     private void performSearch(String query) {
         searchList = new ArrayList<>();
@@ -167,6 +181,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                 .addOnSuccessListener(documentReference -> {
                     // Handle success, for example, show a success message
                     Toast.makeText(SearchBookUser.this, "Book borrowed successfully.", Toast.LENGTH_SHORT).show();
+                    // Remove the book from searchList on the main thread
 
                     // Optionally, you can add logic here to update the UI or perform other actions
                 })
@@ -191,11 +206,23 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
 
                     // Delete the book from the "books" collection in the admin
                     deleteBookFromAdminCollection(adminId, book);
+
+
                 })
                 .addOnFailureListener(e -> {
                     // Handle failure, for example, log an error message
                     Log.e("FirestoreError", "Error adding book to borrowedBooksAdmin collection: " + e.getMessage(), e);
+                })
+                .addOnCompleteListener(task -> {
+                    // Remove the book from searchList on the main thread
+                    runOnUiThread(() -> {
+                        searchList.remove(book);
+
+                        // Notify the adapter that the dataset has changed
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                    });
                 });
+
     }
 
     private void deleteBookFromAdminCollection(String adminId, Book book) {

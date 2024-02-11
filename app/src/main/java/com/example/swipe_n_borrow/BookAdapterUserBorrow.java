@@ -15,7 +15,7 @@ public class BookAdapterUserBorrow extends RecyclerView.Adapter<BookAdapterUserB
     private Context context;
     private ArrayList<Book> arrayList;
     private LayoutInflater layoutInflater;
-    private OnSelectButtonClickListener onSelectButtonClickListener;  // Add this interface
+    private OnSelectButtonClickListener onSelectButtonClickListener;
 
     public BookAdapterUserBorrow(Context context, ArrayList<Book> arrayList, OnSelectButtonClickListener listener) {
         this.context = context;
