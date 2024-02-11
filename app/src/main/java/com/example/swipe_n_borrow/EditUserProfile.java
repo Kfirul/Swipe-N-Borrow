@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class EditUserProfile extends AppCompatActivity {
     FirebaseFirestore fstore;
     ProgressBar progressBar;
 
-    TextInputEditText editTextFullName, editTextPhoneNumber, editTextAddress,editTextLibrary;
+    TextInputEditText editTextFullName, editTextPhoneNumber, editTextAddress, editTextLibrary;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -37,17 +38,38 @@ public class EditUserProfile extends AppCompatActivity {
         buttonEdit = findViewById(R.id.BTN_Edit);
         progressBar = findViewById(R.id.progressBar);
 
+        // Retrieve current user profile information from Firestore and populate EditText fields
+        String userId = mAuth.getCurrentUser().getUid();
+        db.collection("Users").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String fullName = documentSnapshot.getString("fullName");
+                        String phoneNumber = documentSnapshot.getString("phoneNumber");
+                        String address = documentSnapshot.getString("address");
+
+                        // Set the retrieved values to the EditText fields
+                        editTextFullName.setText(fullName);
+                        editTextPhoneNumber.setText(phoneNumber);
+                        editTextAddress.setText(address);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure to retrieve profile information
+                    Toast.makeText(EditUserProfile.this, "Failed to retrieve profile information.", Toast.LENGTH_SHORT).show();
+                });
+
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),UserHome.class);
+                Intent intent = new Intent(getApplicationContext(), UserHome.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        
+        // Add click listener for the edit button
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +79,7 @@ public class EditUserProfile extends AppCompatActivity {
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
                 address = String.valueOf(editTextAddress.getText());
 
-                if (!isAllDigits(phoneNumber)&& !phoneNumber.isEmpty() || (!(phoneNumber.length() == 10) && !phoneNumber.isEmpty())) {
+                if (!isAllDigits(phoneNumber) && !phoneNumber.isEmpty() || (!(phoneNumber.length() == 10) && !phoneNumber.isEmpty())) {
                     Toast.makeText(EditUserProfile.this, "Phone Number must be a 10-digit number.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
@@ -68,7 +90,6 @@ public class EditUserProfile extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
-
 
                 // Update the profile information in Firestore
                 String userId = mAuth.getCurrentUser().getUid();
@@ -85,8 +106,6 @@ public class EditUserProfile extends AppCompatActivity {
                 if (!address.isEmpty()) {
                     updates.put("address", address);
                 }
-
-
 
                 if (!updates.isEmpty()) {
                     db.collection("Users").document(userId)
@@ -106,17 +125,11 @@ public class EditUserProfile extends AppCompatActivity {
                     Toast.makeText(EditUserProfile.this, "No changes were made.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
-
-
-
-
             }
-
         });
     }
 
     static boolean isAllDigits(String s) {
         return s.matches("\\d+");
     }
-
 }

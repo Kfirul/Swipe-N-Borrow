@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -12,10 +11,11 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.Map;
-import java.util.HashMap;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditAdminProfile extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -23,7 +23,7 @@ public class EditAdminProfile extends AppCompatActivity {
     FirebaseFirestore fstore;
     ProgressBar progressBar;
 
-    TextInputEditText editTextFullName, editTextPhoneNumber, editTextAddress,editTextLibrary;
+    TextInputEditText editTextFullName, editTextPhoneNumber, editTextAddress, editTextLibrary;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -42,13 +42,35 @@ public class EditAdminProfile extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),AdminHome.class);
+                Intent intent = new Intent(getApplicationContext(), AdminHome.class);
                 startActivity(intent);
                 finish();
             }
         });
 
+        // Retrieve current admin profile information from Firestore and populate EditText fields
         String adminId = mAuth.getCurrentUser().getUid();
+        db.collection("Admins").document(adminId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String fullName = documentSnapshot.getString("fullName");
+                        String phoneNumber = documentSnapshot.getString("phoneNumber");
+                        String address = documentSnapshot.getString("address");
+                        String library = documentSnapshot.getString("library");
+
+                        // Set the retrieved values to the EditText fields
+                        editTextFullName.setText(fullName);
+                        editTextPhoneNumber.setText(phoneNumber);
+                        editTextAddress.setText(address);
+                        editTextLibrary.setText(library);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure to retrieve profile information
+                    Toast.makeText(EditAdminProfile.this, "Failed to retrieve profile information.", Toast.LENGTH_SHORT).show();
+                });
+
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +81,7 @@ public class EditAdminProfile extends AppCompatActivity {
                 address = String.valueOf(editTextAddress.getText());
                 library = String.valueOf(editTextLibrary.getText());
 
-                if (!isAllDigits(phoneNumber)&& !phoneNumber.isEmpty() || (!(phoneNumber.length() == 10) && !phoneNumber.isEmpty())) {
+                if (!isAllDigits(phoneNumber) && !phoneNumber.isEmpty() || (!(phoneNumber.length() == 10) && !phoneNumber.isEmpty())) {
                     Toast.makeText(EditAdminProfile.this, "Phone Number must be a 10-digit number.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
@@ -109,17 +131,11 @@ public class EditAdminProfile extends AppCompatActivity {
                     Toast.makeText(EditAdminProfile.this, "No changes were made.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
-
-
-
-
             }
-
         });
     }
 
     static boolean isAllDigits(String s) {
         return s.matches("\\d+");
     }
-
 }
