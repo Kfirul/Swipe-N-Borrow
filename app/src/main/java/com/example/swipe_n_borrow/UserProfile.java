@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +17,20 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserHomeFragment#newInstance} factory method to
+ * Use the {@link UserProfile#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserHomeFragment extends Fragment {
+public class UserProfile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,11 +43,11 @@ public class UserHomeFragment extends Fragment {
 
     private Button logOut, EditUser;
     private LinearLayout bookListLayout;
-    private TextView textViewAddress, textViewFullName, textViewPhoneNumber;
+    private TextView textViewAddress, textViewFullName, textViewPhoneNumber, borrowsNumber, bookNumber;
 
 
 
-    public UserHomeFragment() {
+    public UserProfile() {
         // Required empty public constructor
     }
 
@@ -61,8 +60,8 @@ public class UserHomeFragment extends Fragment {
      * @return A new instance of fragment UserHomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserHomeFragment newInstance(String param1, String param2) {
-        UserHomeFragment fragment = new UserHomeFragment();
+    public static UserProfile newInstance(String param1, String param2) {
+        UserProfile fragment = new UserProfile();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,13 +85,15 @@ public class UserHomeFragment extends Fragment {
         textViewAddress = getActivity().findViewById(R.id.profileAddress);
         textViewFullName = getActivity().findViewById(R.id.profilelName);
         textViewPhoneNumber = getActivity().findViewById(R.id.phoneNumber);
+        borrowsNumber = getActivity().findViewById(R.id.borrowsNumber);
+        bookNumber = getActivity().findViewById(R.id.bookNumber);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         // Find the TextView elements
 
@@ -121,13 +122,34 @@ public class UserHomeFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        updateProfileData();
+    }
+
+    private void updateProfileData() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentId = user.getUid();
 
         DocumentReference reference;
+        CollectionReference borrowsNumberReference;
+        CollectionReference AvailableBooksReference;
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        reference = firestore.collection("Users").document(currentId);
+        borrowsNumberReference = reference.collection("borrowedBooksUser");
+
+        borrowsNumberReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int borrowsCount = task.getResult().size();
+                    borrowsNumber.setText(String.valueOf(borrowsCount));
+                } else {
+                    borrowsNumber.setText("Null");
+                }
+            }
+        });
 
         reference=firestore.collection("Users").document(currentId);
 

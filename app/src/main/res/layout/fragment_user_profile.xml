@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/purple_white_background"
-    tools:context=".AdminHomeFragment">
+    tools:context=".AdminProfile">
 
 
     <!-- Books Section -->
@@ -15,8 +15,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="500dp"
-        android:background="@drawable/white_background"
         android:orientation="horizontal"
+        android:background="@drawable/white_background"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="Available Book"
+                android:text="Books Number"
                 android:textAlignment="center"
                 android:textColor="@color/lavender"
                 android:textSize="18sp"
@@ -70,7 +70,7 @@
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="25"
+                android:text="27"
                 android:textAlignment="center"
                 android:textColor="@color/lavender"
                 android:textSize="26sp"
@@ -217,7 +217,7 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
-            android:id="@+id/phonenumber"
+            android:id="@+id/phoneNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -230,41 +230,7 @@
 
     </LinearLayout>
 
-    <!-- Second Phone Number Section -->
-    <LinearLayout
-        android:id="@+id/library"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneSection">
 
-        <!-- Phone Number Section -->
-        <TextView
-            android:id="@+id/libraryname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="Library Name"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/profileLibrary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="library name"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
 
     <!-- Rest of Your Code -->
 

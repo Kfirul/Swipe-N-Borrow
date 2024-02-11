@@ -3,39 +3,26 @@ package com.example.swipe_n_borrow;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.AggregateField;
-import com.google.firebase.firestore.AggregateQuery;
-import com.google.firebase.firestore.AggregateQuerySnapshot;
-import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminHomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AdminHomeFragment extends Fragment {
+public class AdminProfile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,7 +37,7 @@ public class AdminHomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AdminHomeFragment() {
+    public AdminProfile() {
         // Required empty public constructor
     }
 
@@ -63,8 +50,8 @@ public class AdminHomeFragment extends Fragment {
      * @return A new instance of fragment page2.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdminHomeFragment newInstance(String param1, String param2) {
-        AdminHomeFragment fragment = new AdminHomeFragment();
+    public static AdminProfile newInstance(String param1, String param2) {
+        AdminProfile fragment = new AdminProfile();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -96,7 +83,7 @@ public class AdminHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_admin_home_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_profile, container, false);
         Button logOut, EditAdmin;
         LinearLayout bookListLayout;
         TextView textViewAddress, textViewFullName, textViewLibrary, textViewPhoneNumber;
@@ -123,85 +110,77 @@ public class AdminHomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
-//        EditAdmin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(getActivity(), EditAdminProfile.class);
-//                startActivity(intent);
-//                getActivity().finish();
-//            }
-//        });
 
         // Inflate the layout for this fragment
         return view;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        updateProfileData();
+    }
+
+    private void updateProfileData() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String currentId = user.getUid();
+        if (user != null) {
+            String currentId = user.getUid();
 
+            DocumentReference reference;
+            CollectionReference borrowsNumberReference;
+            CollectionReference AvailableBooksReference;
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
+            reference = firestore.collection("Admins").document(currentId);
+            borrowsNumberReference = firestore.collection("Admins").document(currentId).collection("borrowedBooksAdmin");
+            AvailableBooksReference = firestore.collection("Admins").document(currentId).collection("books");
 
-        DocumentReference reference;
-        CollectionReference borrowsNumberReference ;
-        CollectionReference AvailableBooksReference ;
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-        reference =firestore.collection("Admins").document(currentId);
-        borrowsNumberReference = firestore.collection("Admins").document(currentId).collection("borrowedBooksAdmin");
-        AvailableBooksReference =firestore.collection("Admins").document(currentId).collection("books");
-
-        AvailableBooksReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int AvailableBook = task.getResult().size();
-                    bookNumber.setText(String.valueOf(AvailableBook));
-                } else {
-                    bookNumber.setText("Null");
+            AvailableBooksReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        int AvailableBook = task.getResult().size();
+                        bookNumber.setText(String.valueOf(AvailableBook));
+                    } else {
+                        bookNumber.setText("Null");
+                    }
                 }
-            }
-        });
-        borrowsNumberReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int borrowsCount = task.getResult().size();
-                    borrowsNumber.setText(String.valueOf(borrowsCount));
-                } else {
-                    borrowsNumber.setText("Null");
+            });
+            borrowsNumberReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        int borrowsCount = task.getResult().size();
+                        borrowsNumber.setText(String.valueOf(borrowsCount));
+                    } else {
+                        borrowsNumber.setText("Null");
+                    }
                 }
-            }
-        });
+            });
 
-        reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.getResult().exists()){
+            reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.getResult().exists()) {
+                        String nameResult = task.getResult().getString("fullName");
+                        String phoneResult = task.getResult().getString("phoneNumber");
+                        String addressResult = task.getResult().getString("address");
+                        String libraryResult = task.getResult().getString("library");
 
-                    String nameResult = task.getResult().getString("fullName");
-                    String phoneResult = task.getResult().getString("phoneNumber");
-                    String addressResult = task.getResult().getString("address");
-                    String libraryResult = task.getResult().getString("library");
+                        profileAddress.setText(addressResult);
+                        profilelName.setText(nameResult);
+                        phonenumber.setText(phoneResult);
+                        profileLibrary.setText(libraryResult);
 
-                    profileAddress.setText(addressResult);
-                    profilelName.setText(nameResult);
-                    phonenumber.setText(phoneResult);
-                    profileLibrary.setText(libraryResult);
-
-                }else{
-                    profileAddress.setText("Null");
-                    profilelName.setText("Null");
-                    phonenumber.setText("Null");
-                    profileLibrary.setText("Null");
-
+                    } else {
+                        profileAddress.setText("Null");
+                        profilelName.setText("Null");
+                        phonenumber.setText("Null");
+                        profileLibrary.setText("Null");
+                    }
                 }
-            }
-        });
-
+            });
+        }
     }
 }

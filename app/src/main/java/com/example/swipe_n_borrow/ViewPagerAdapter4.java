@@ -15,7 +15,7 @@ public class ViewPagerAdapter4 extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new UserHomeFragment();
+                return new UserProfile();
             case 1:
                 return new UserLibrarySearch();
 
