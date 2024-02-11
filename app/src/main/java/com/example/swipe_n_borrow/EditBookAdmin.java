@@ -164,14 +164,14 @@ public class EditBookAdmin extends AppCompatActivity {
                             String title = document.getString("title");
                             String author = document.getString("authors");
                             String language = document.getString("language");
-//                            String numPages = document.getString("num_pages");
+                            String numPages = document.getString("num_pages");
                             String genre = document.getString("genre");
 
                             // Set retrieved information to EditText fields
                             titleEditText.setText(title);
                             authorEditText.setText(author);
                             languageEditText.setText(language);
-//                            numPagesEditText.setText(numPages);
+                            numPagesEditText.setText(numPages);
                             genreEditText.setText(genre);
                         }
                     } else {

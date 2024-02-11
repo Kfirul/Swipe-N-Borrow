@@ -123,7 +123,7 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
         if (query.length() > 0) {
             for (int i = 0; i < libraryArrayList.size(); i++) {
                 if (libraryArrayList.get(i).toUpperCase().contains(query.toUpperCase()))
-                       {
+                {
 
                     searchList.add(libraryArrayList.get(i));
                 }

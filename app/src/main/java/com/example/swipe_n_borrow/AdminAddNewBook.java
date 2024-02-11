@@ -114,15 +114,16 @@ public class AdminAddNewBook extends Fragment {
                 String author = authorEditText.getText().toString().trim();
                 String language = languageEditText.getText().toString().trim();
                 String genre = genreEditText.getText().toString().trim();
+                String numPages = numPagesEditText.getText().toString().trim();
 
                 if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language) || TextUtils.isEmpty(genre)) {
                     Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                int numPages;
+
                 try {
-                    numPages = Integer.parseInt(numPagesEditText.getText().toString().trim());
+                    int tempNumPages = Integer.parseInt(numPagesEditText.getText().toString().trim());
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Invalid number of pages", Toast.LENGTH_SHORT).show();
                     return;
@@ -134,6 +135,11 @@ public class AdminAddNewBook extends Fragment {
                 adminBooksCollection.add(book)
                         .addOnSuccessListener(documentReference -> {
                             Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
+                            titleEditText.setText("");
+                            authorEditText.setText("");
+                            languageEditText.setText("");
+                            numPagesEditText.setText("");
+                            genreEditText.setText("");
 
                             // Set the book ID in the Book object
 

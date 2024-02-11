@@ -142,6 +142,8 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     String genre = document.getString("genre");
                     String language = document.getString("language");
                     String author = document.getString("authors");
+                    String numberOfPages = document.getString("num_pages");
+
 
                     // Create a Book object using the retrieved data
                     Book book = new Book();
@@ -149,6 +151,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     book.setGenre(genre);
                     book.setLanguage(language);
                     book.setAuthors(author);
+                    book.setNum_pages(numberOfPages);
 
 
                     // Add the book to the list
@@ -212,16 +215,16 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                 .addOnFailureListener(e -> {
                     // Handle failure, for example, log an error message
                     Log.e("FirestoreError", "Error adding book to borrowedBooksAdmin collection: " + e.getMessage(), e);
-                })
-                .addOnCompleteListener(task -> {
-                    // Remove the book from searchList on the main thread
-                    runOnUiThread(() -> {
-                        searchList.remove(book);
-
-                        // Notify the adapter that the dataset has changed
-                        recyclerView.getAdapter().notifyDataSetChanged();
-                    });
                 });
+//                .addOnCompleteListener(task -> {
+//                    // Remove the book from searchList on the main thread
+//                    runOnUiThread(() -> {
+//                        searchList.remove(book);
+//
+//                        // Notify the adapter that the dataset has changed
+//                        recyclerView.getAdapter().notifyDataSetChanged();
+//                    });
+//                });
 
     }
 

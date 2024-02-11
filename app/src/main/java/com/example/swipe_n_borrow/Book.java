@@ -5,7 +5,7 @@ public class Book {
     private String title;
     private String authors;
     private String language;
-    private int num_pages;
+    private String num_pages;
     private String genre;
 
     @Override
@@ -25,7 +25,7 @@ public class Book {
         // Default constructor required by Firebase
     }
 
-    public Book(String title, String authors, String language, int num_pages, String genre) {
+    public Book(String title, String authors, String language, String num_pages, String genre) {
 //        this.bookID = bookID;
         this.title = title;
         this.authors = authors;
@@ -67,11 +67,11 @@ public class Book {
         this.language = language;
     }
 
-    public int getNum_pages() {
+    public String getNum_pages() {
         return num_pages;
     }
 
-    public void setNum_pages(int num_pages) {
+    public void setNum_pages(String num_pages) {
         this.num_pages = num_pages;
     }
     public String getGenre() {
