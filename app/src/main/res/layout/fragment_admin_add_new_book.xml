@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="15dp"
-    tools:context=".AdminAddNewBook1">
+    tools:context=".AdminAddNewBook">
 
     <TextView
         android:text="Add Book"

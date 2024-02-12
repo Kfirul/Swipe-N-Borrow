@@ -23,7 +23,7 @@ public class UserHome extends AppCompatActivity {
 
 
 
-        ViewPagerAdapter4 adapter = new ViewPagerAdapter4(this);
+        ViewPagerAdapterUser adapter = new ViewPagerAdapterUser(this);
         viewPager2.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {

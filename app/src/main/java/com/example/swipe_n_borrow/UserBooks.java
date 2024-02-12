@@ -91,12 +91,10 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
         searchView.setIconified(false);
         searchView.clearFocus();
 
-        setBooksFirebase();
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapterUser bookAdapterUser = new BookAdapterUser(getActivity(), bookArrayList,this);
+        BookAdapterUser bookAdapterUser = new BookAdapterUser(getActivity(), new ArrayList<>(),this);
         recyclerView.setAdapter(bookAdapterUser);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -112,6 +110,8 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                 return false;
             }
         });
+
+        setBooksFirebase();
 
         return view;
     }
@@ -132,11 +132,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
             searchList.addAll(bookArrayList);
         }
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        BookAdapterUser bookAdapterUser = new BookAdapterUser(getActivity(), bookArrayList,this);
-        recyclerView.setAdapter(bookAdapterUser);
+        recyclerView.setAdapter(new BookAdapterUser(getActivity(), searchList, this));
     }
 
     public void setBooksFirebase() {
@@ -167,6 +163,8 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
 
                 // Now you can use the bookArrayList with the created Book objects
                 // Display the books or perform other actions as needed
+                recyclerView.setAdapter(new BookAdapterUser(getActivity(), bookArrayList, this));
+
             } else {
                 // Handle the failure to retrieve data from Firestore
                 Exception e = task.getException();

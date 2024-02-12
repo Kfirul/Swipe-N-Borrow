@@ -36,8 +36,8 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
     private String mParam2;
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private ArrayList<String> libraryArrayList = new ArrayList<>();
-    private ArrayList<String> searchList;
+    private ArrayList<Library> libraryArrayList = new ArrayList<>();
+    private ArrayList<Library> searchList;
 
     public UserLibrarySearch() {
         // Required empty public constructor
@@ -76,7 +76,7 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
         Intent intent = new Intent(getActivity(), SearchBookUser.class);
         intent.putExtra("selectedLibrary", library);
         startActivity(intent);
-        getActivity().finish();
+//        getActivity().finish();
     }
 
     @Override
@@ -88,17 +88,13 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
         searchView = view.findViewById(R.id.searchView);
         searchView.setIconified(false);
         searchView.clearFocus();
-// Inflate the item layout to access its components
-        View itemLayout = inflater.inflate(R.layout.library_file_user, container, false);
-
-        setBooksFirebase();
 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        LibraryAdapterUser bookAdapterUser = new LibraryAdapterUser(getActivity(), libraryArrayList,this);
-        recyclerView.setAdapter(bookAdapterUser);
+        LibraryAdapterUser libraryAdapterUser = new LibraryAdapterUser(getActivity(), new ArrayList<>(),this);
+        recyclerView.setAdapter(libraryAdapterUser);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -113,6 +109,7 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
                 return false;
             }
         });
+        setBooksFirebase();
 
 
         return view;
@@ -122,9 +119,9 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
         searchList = new ArrayList<>();
         if (query.length() > 0) {
             for (int i = 0; i < libraryArrayList.size(); i++) {
-                if (libraryArrayList.get(i).toUpperCase().contains(query.toUpperCase()))
+                if (libraryArrayList.get(i).getLibrary().toUpperCase().contains(query.toUpperCase()) ||
+                        libraryArrayList.get(i).getAddress().toUpperCase().contains(query.toUpperCase()))
                 {
-
                     searchList.add(libraryArrayList.get(i));
                 }
             }
@@ -132,22 +129,23 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
             searchList.addAll(libraryArrayList);
         }
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        LibraryAdapterUser bookAdapterUser = new LibraryAdapterUser(getActivity(), searchList,this);
-        recyclerView.setAdapter(bookAdapterUser);
+        recyclerView.setAdapter(new LibraryAdapterUser(getActivity(), searchList, this));
     }
 
     public void setBooksFirebase() {
 
         CollectionReference adminsCollection = FirebaseFirestore.getInstance().collection("Admins");
+        libraryArrayList.clear();
 
         adminsCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
+
                     // Get the book title
-                    String library = document.getString("library");
+                    String libraryName = document.getString("library");
+                    String libraryAddress = document.getString("address");
+
+                    Library library = new Library(libraryName,libraryAddress);
 
 
                     // Add the book to the list
@@ -156,6 +154,7 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
 
                 // Now you can use the bookArrayList with the created Book objects
                 // Display the books or perform other actions as needed
+                recyclerView.setAdapter(new LibraryAdapterUser(getActivity(), libraryArrayList, this));
             } else {
                 // Handle the failure to retrieve data from Firestore
                 Exception e = task.getException();
@@ -163,4 +162,5 @@ public class UserLibrarySearch extends Fragment implements LibraryAdapterUser.On
             }
         });
     }
+
 }

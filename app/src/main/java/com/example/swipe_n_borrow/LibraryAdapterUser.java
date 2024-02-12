@@ -10,15 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class LibraryAdapterUser extends RecyclerView.Adapter<LibraryAdapterUser.MyHolder> {
     private Context context;
-    private ArrayList<String> arrayList;
+    private ArrayList<Library> arrayList;
     private LayoutInflater layoutInflater;
     private OnSelectButtonClickListener onSelectButtonClickListener;
 
-    public LibraryAdapterUser(Context context, ArrayList<String> arrayList, OnSelectButtonClickListener listener) {
+    public LibraryAdapterUser(Context context, ArrayList<Library> arrayList, OnSelectButtonClickListener listener) {
         this.context = context;
         this.arrayList = arrayList;
         this.layoutInflater = LayoutInflater.from(context);
@@ -34,7 +36,8 @@ public class LibraryAdapterUser extends RecyclerView.Adapter<LibraryAdapterUser.
 
     @Override
     public void onBindViewHolder(@NonNull LibraryAdapterUser.MyHolder holder, int position) {
-        holder.library.setText(arrayList.get(position));
+        holder.library.setText(arrayList.get(position).getLibrary());
+        holder.address.setText(arrayList.get(position).getAddress());
     }
 
     @Override
@@ -48,11 +51,14 @@ public class LibraryAdapterUser extends RecyclerView.Adapter<LibraryAdapterUser.
 
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView library;
+        TextView address;
         Button selectButton;
 
         public MyHolder(View itemView) {
             super(itemView);
             library = itemView.findViewById(R.id.txt);
+            address = itemView.findViewById(R.id.txt2);
+
             selectButton = itemView.findViewById(R.id.BTN_Select);
 
             // Set click listener for selectButton
@@ -63,11 +69,12 @@ public class LibraryAdapterUser extends RecyclerView.Adapter<LibraryAdapterUser.
                     if (onSelectButtonClickListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            onSelectButtonClickListener.onSelectButtonClick(arrayList.get(position));
+                            onSelectButtonClickListener.onSelectButtonClick(arrayList.get(position).getLibrary());
                         }
                     }
                 }
             });
         }
+
     }
 }

@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class ViewPagerAdapter3 extends FragmentStateAdapter {
-    public ViewPagerAdapter3(@NonNull FragmentActivity fragmentActivity) {
+public class ViewPagerAdapterUser extends FragmentStateAdapter {
+    public ViewPagerAdapterUser(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -15,12 +15,12 @@ public class ViewPagerAdapter3 extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new AdminProfile();
+                return new UserProfile();
             case 1:
-                 return new AdminAddNewBook();
+                return new UserLibrarySearch();
 
             default:
-                return new AdminBooks();
+                return new UserBooks();
         }
     }
 

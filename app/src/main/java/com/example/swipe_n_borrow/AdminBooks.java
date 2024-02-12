@@ -82,9 +82,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_books, container, false);
 
         recyclerView = view.findViewById(R.id.recycleView);
@@ -92,12 +90,11 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         searchView.setIconified(false);
         searchView.clearFocus();
 
-        setBooksFirebase();
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookArrayList,this);
+        // Initialize the adapter with an empty list
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), new ArrayList<>(), this);
         recyclerView.setAdapter(bookAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -114,18 +111,18 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
             }
         });
 
+        // Fetch and set books from Firebase
+        setBooksFirebase();
+
         return view;
     }
 
     private void performSearch(String query) {
         searchList = new ArrayList<>();
         if (query.length() > 0) {
-            for (int i = 0; i < bookArrayList.size(); i++) {
-                if (bookArrayList.get(i).getTitle().toUpperCase().contains(query.toUpperCase())
-                        || bookArrayList.get(i).getGenre().toUpperCase().contains(query.toUpperCase())) {
-                    Book book = new Book();
-                    book.setTitle(bookArrayList.get(i).getTitle());
-                    book.setGenre(bookArrayList.get(i).getGenre());
+            for (Book book : bookArrayList) {
+                if (book.getTitle().toUpperCase().contains(query.toUpperCase()) ||
+                        book.getGenre().toUpperCase().contains(query.toUpperCase())) {
                     searchList.add(book);
                 }
             }
@@ -133,12 +130,10 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
             searchList.addAll(bookArrayList);
         }
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), searchList,this);
-        recyclerView.setAdapter(bookAdapter);
+        // Update the adapter with the search results
+        recyclerView.setAdapter(new BookAdapter(getActivity(), searchList, this));
     }
+
 
     public void setBooksFirebase() {
         String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -146,15 +141,17 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
 
         adminBooksCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                bookArrayList.clear(); // Clear the list before adding new data
+
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    // Get the book title
+                    // Get the book details
                     String title = document.getString("title");
                     String genre = document.getString("genre");
                     String language = document.getString("language");
                     String numberOfPages = document.getString("num_pages");
                     String author = document.getString("authors");
 
-                    // Create a Book object using the retrieved data
+                    // Create a Book object
                     Book book = new Book();
                     book.setTitle(title);
                     book.setGenre(genre);
@@ -166,8 +163,8 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     bookArrayList.add(book);
                 }
 
-                // Now you can use the bookArrayList with the created Book objects
-                // Display the books or perform other actions as needed
+                // Update the adapter with the fetched data
+                recyclerView.setAdapter(new BookAdapter(getActivity(), bookArrayList, this));
             } else {
                 // Handle the failure to retrieve data from Firestore
                 Exception e = task.getException();
@@ -175,6 +172,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
             }
         });
     }
+
 
 
 }

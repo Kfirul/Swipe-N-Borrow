@@ -24,7 +24,7 @@ public class AdminHome extends AppCompatActivity {
 
 
 
-        ViewPagerAdapter3 adapter = new ViewPagerAdapter3(this);
+        ViewPagerAdapterAdmin adapter = new ViewPagerAdapterAdmin(this);
         viewPager2.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {

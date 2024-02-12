@@ -32,16 +32,6 @@ public class AdminAddNewBook extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText titleEditText;
-    private EditText authorEditText;
-    private EditText languageEditText;
-    private EditText numPagesEditText;
-    private EditText genreEditText;
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    private Button buttonAddBook;
-    private FirebaseAuth mAuth;
 
 
     public AdminAddNewBook() {
@@ -141,14 +131,7 @@ public class AdminAddNewBook extends Fragment {
                             numPagesEditText.setText("");
                             genreEditText.setText("");
 
-                            // Set the book ID in the Book object
 
-
-                            // You can add additional actions here, e.g., navigate to another fragment
-                            // FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                            // fragmentTransaction.replace(R.id.fragmentContainer, new YourFragment());
-                            // fragmentTransaction.addToBackStack(null);
-                            // fragmentTransaction.commit();
                         })
                         .addOnFailureListener(e ->
                                 Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
