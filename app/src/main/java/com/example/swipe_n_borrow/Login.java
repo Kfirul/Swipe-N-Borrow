@@ -28,7 +28,7 @@ public class Login extends AppCompatActivity {
     Button buttonLog;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    TextView textView;
+    TextView textView, forgotPasswordButton; // Added TextView for forgot password
     FirebaseFirestore fstore;
     String currentLoginId;
 
@@ -42,6 +42,7 @@ public class Login extends AppCompatActivity {
             finish();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class Login extends AppCompatActivity {
         buttonLog =findViewById(R.id.BTN_Login);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.RegisterNow);
+        forgotPasswordButton = findViewById(R.id.BTN_ForgotPassword); // Initializing forgotPasswordButton
         fstore = FirebaseFirestore.getInstance();
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,12 +115,35 @@ public class Login extends AppCompatActivity {
                                     Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
-
-
                         });
-
             }
         });
 
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = editTextEmail.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Enter your email to reset password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                mAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                progressBar.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Reset password email sent", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed to send reset email! Check your email address.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
     }
 }
