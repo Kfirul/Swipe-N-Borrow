@@ -76,9 +76,7 @@ You are welcome to contribute :
 |                 **Started App Logo**                  |                 **Splash Screen**                 |
 
 
-## UML Diagram
 
-![UML.png](Screenshots/UML.png)
 
 ## Final Notes
 
