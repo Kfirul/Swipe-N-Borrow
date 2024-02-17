@@ -2,19 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:background="@drawable/registerbg">
+    >
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="380dp"
         android:layout_height="639dp"
         android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/termsTextView"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Administrator Terms and Conditions\n\n
+            android:layout_margin="30dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="20dp">
+
+            <TextView
+                android:id="@+id/termsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Administrator Terms and Conditions\n\n
 
 1. Account Security:\n
 
@@ -64,7 +73,10 @@ Notifications regarding system updates, policy changes, or other relevant inform
 By continuing to use the administrator account in the application, administrators agree to abide by these terms and conditions.\n
 
 "
-            android:textSize="18sp" />
+                android:textSize="18sp" />
+
+        </androidx.cardview.widget.CardView>
+
     </ScrollView>
 
     <LinearLayout
@@ -74,10 +86,10 @@ By continuing to use the administrator account in the application, administrator
         android:layout_below="@id/scrollView"
         android:layout_alignParentBottom="true">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:text="Back"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
