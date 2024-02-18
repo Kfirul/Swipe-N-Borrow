@@ -121,6 +121,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
     }
 
     private void fetchBooksForAdmin(String adminId) {
+        bookArrayList.clear();
         CollectionReference adminBooksCollection = FirebaseFirestore.getInstance().collection("Admins").document(adminId).collection("books");
 
         adminBooksCollection.get().addOnCompleteListener(task -> {
@@ -183,6 +184,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error adding book to borrowedBooksAdmin collection: " + e.getMessage(), e);
                 });
+//
     }
 
     private void deleteBookFromAdminCollection(String adminId, Book book) {

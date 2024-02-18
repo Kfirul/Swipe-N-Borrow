@@ -22,7 +22,6 @@ public class UserHome extends AppCompatActivity {
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
 
 
-
         ViewPagerAdapterUser adapter = new ViewPagerAdapterUser(this);
         viewPager2.setAdapter(adapter);
 
