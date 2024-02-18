@@ -81,6 +81,14 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         startActivity(intent);
     }
 
+    public void onRemoveButtonClick(Book book) {
+        // Handle the "Remove" button click for the selected book
+        // Example: Remove the book from the list or perform any other action
+        // You can access the book details using the 'book' parameter
+        // For example, book.getTitle(), book.getGenre(), etc.
+        // You can also use this information to identify the specific book that was clicked.
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_books, container, false);
@@ -94,7 +102,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         recyclerView.setLayoutManager(layoutManager);
 
         // Initialize the adapter with an empty list
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), new ArrayList<>(), this);
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), new ArrayList<>(), this::onSelectButtonClick,this::onRemoveButtonClick);
         recyclerView.setAdapter(bookAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -131,7 +139,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         }
 
         // Update the adapter with the search results
-        recyclerView.setAdapter(new BookAdapter(getActivity(), searchList, this));
+        recyclerView.setAdapter(new BookAdapter(getActivity(), searchList, this::onSelectButtonClick,this::onRemoveButtonClick));
     }
 
 
@@ -166,7 +174,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                 }
 
                 // Update the adapter with the fetched data
-                recyclerView.setAdapter(new BookAdapter(getActivity(), bookArrayList, this));
+                recyclerView.setAdapter(new BookAdapter(getActivity(), bookArrayList, this::onSelectButtonClick,this::onRemoveButtonClick));
             } else {
                 // Handle the failure to retrieve data from Firestore
                 Exception e = task.getException();

@@ -159,6 +159,7 @@ public class EditBookAdmin extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             // Retrieve book information from Firestore
                             String title = document.getString("title");
