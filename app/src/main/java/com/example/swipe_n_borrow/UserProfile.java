@@ -131,11 +131,24 @@ public class UserProfile extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentId = user.getUid();
 
-        DocumentReference reference;
-        CollectionReference borrowsNumberReference;
-        CollectionReference AvailableBooksReference;
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
+        CollectionReference adminsCollection = firestore.collection("Admins");
+
+        adminsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int librariesCount = task.getResult().size();
+                    bookNumber.setText(String.valueOf(librariesCount));
+                } else {
+                    bookNumber.setText("Null");
+                }
+            }
+        });
+
+        DocumentReference reference;
+        CollectionReference borrowsNumberReference;
         reference = firestore.collection("Users").document(currentId);
         borrowsNumberReference = reference.collection("borrowedBooksUser");
 
