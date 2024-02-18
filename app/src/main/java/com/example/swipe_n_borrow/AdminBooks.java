@@ -150,6 +150,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     String language = document.getString("language");
                     String numberOfPages = document.getString("num_pages");
                     String author = document.getString("authors");
+                    String belongs = document.getString("belongs");
 
                     // Create a Book object
                     Book book = new Book();
@@ -158,6 +159,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     book.setLanguage(language);
                     book.setNum_pages(numberOfPages);
                     book.setAuthors(author);
+                    book.setBelongs(belongs);
 
                     // Add the book to the list
                     bookArrayList.add(book);
@@ -172,7 +174,4 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
             }
         });
     }
-
-
-
 }

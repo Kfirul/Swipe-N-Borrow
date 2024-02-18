@@ -7,6 +7,7 @@ public class Book {
     private String language;
     private String num_pages;
     private String genre;
+    private String belongs = "";
 
     @Override
     public String toString() {
@@ -43,6 +44,13 @@ public class Book {
 //        this.bookID = bookID;
 //    }
 
+    public String getBelongs() {
+        return belongs;
+    }
+
+    public void setBelongs(String belongs) {
+        this.belongs = belongs;
+    }
     public String getTitle() {
         return title;
     }

@@ -131,6 +131,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     String language = document.getString("language");
                     String author = document.getString("authors");
                     String numberOfPages = document.getString("num_pages");
+                    String belongs = document.getString("belongs");
 
                     Book book = new Book();
                     book.setTitle(title);
@@ -138,6 +139,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     book.setLanguage(language);
                     book.setAuthors(author);
                     book.setNum_pages(numberOfPages);
+                    book.setBelongs(belongs);
 
                     bookArrayList.add(book);
                 }

@@ -148,14 +148,17 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     String language = document.getString("language");
                     String numberOfPages = document.getString("num_pages");;
                     String author = document.getString("authors");
+                    String belongs = document.getString("belongs");
 
                     // Create a Book object using the retrieved data
+
                     Book book = new Book();
                     book.setTitle(title);
                     book.setGenre(genre);
                     book.setLanguage(language);
                     book.setNum_pages(numberOfPages);
                     book.setAuthors(author);
+                    book.setBelongs(belongs);
 
                     // Add the book to the list
                     bookArrayList.add(book);

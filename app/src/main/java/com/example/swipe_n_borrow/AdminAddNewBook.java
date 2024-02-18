@@ -98,8 +98,6 @@ public class AdminAddNewBook extends Fragment {
         buttonAddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 String title = titleEditText.getText().toString().trim();
                 String author = authorEditText.getText().toString().trim();
                 String language = languageEditText.getText().toString().trim();
@@ -111,31 +109,49 @@ public class AdminAddNewBook extends Fragment {
                     return;
                 }
 
-
                 try {
-                    int tempNumPages = Integer.parseInt(numPagesEditText.getText().toString().trim());
+                    Book book = new Book(title, author, language, numPages, genre);
+
+                    String adminId = mAuth.getCurrentUser().getUid();
+                    FirebaseFirestore.getInstance()
+                            .collection("Admins")
+                            .document(adminId)
+                            .get()
+                            .addOnSuccessListener(documentSnapshot -> {
+                                if (documentSnapshot.exists()) {
+                                    String libraryName = documentSnapshot.getString("library");
+
+                                    if (libraryName != null) {
+                                        book.setBelongs(libraryName);
+
+                                        // Add the book to the admin's collection of books
+                                        adminBooksCollection.add(book)
+                                                .addOnSuccessListener(documentReference -> {
+                                                    Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
+                                                    titleEditText.setText("");
+                                                    authorEditText.setText("");
+                                                    languageEditText.setText("");
+                                                    numPagesEditText.setText("");
+                                                    genreEditText.setText("");
+                                                })
+                                                .addOnFailureListener(e ->
+                                                        Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                    } else {
+                                        // Handle the case where libraryName is null
+                                        Toast.makeText(getActivity(), "Error: Library name is null", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    // Handle the case where the document does not exist
+                                    Toast.makeText(getActivity(), "Error: Admin document does not exist", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(getActivity(), "Error fetching admin document: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Invalid number of pages", Toast.LENGTH_SHORT).show();
-                    return;
                 }
-
-                Book book = new Book(title, author, language, numPages, genre);
-
-                // Add the book to the admin's collection of books
-                adminBooksCollection.add(book)
-                        .addOnSuccessListener(documentReference -> {
-                            Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
-                            titleEditText.setText("");
-                            authorEditText.setText("");
-                            languageEditText.setText("");
-                            numPagesEditText.setText("");
-                            genreEditText.setText("");
-
-
-                        })
-                        .addOnFailureListener(e ->
-                                Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             }
+
         });
 
         return view;
