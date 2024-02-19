@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Use the {@link AdminBooks#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonClickListener{
+public class AdminBorrowedBooks extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,13 +36,15 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
     private String mParam1;
     private String mParam2;
 
-    private SearchView searchView;
     private RecyclerView recyclerView;
-    private ArrayList<Book> bookArrayList = new ArrayList<>();
-    private ArrayList<Book> searchList;
+    private SearchView searchView;
+
+    private ArrayList<BorrowBook> bookArrayList = new ArrayList<>();
+    private ArrayList<BorrowBook> searchList;
 
 
-    public AdminBooks() {
+
+    public AdminBorrowedBooks() {
         // Required empty public constructor
     }
 
@@ -55,8 +57,8 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
      * @return A new instance of fragment page3.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdminBooks newInstance(String param1, String param2) {
-        AdminBooks fragment = new AdminBooks();
+    public static AdminBorrowedBooks newInstance(String param1, String param2) {
+        AdminBorrowedBooks fragment = new AdminBorrowedBooks();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,26 +75,12 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         }
     }
 
-    public void onSelectButtonClick(Book book) {
-        // Handle the button click for the selected library
-        // Example: Open a new activity or perform any other action
-        Intent intent = new Intent(getActivity(), EditBookAdmin.class);
-        intent.putExtra("bookTitle", book.getTitle());
-        startActivity(intent);
-    }
 
-    public void onRemoveButtonClick(Book book) {
-        // Handle the "Remove" button click for the selected book
-        // Example: Remove the book from the list or perform any other action
-        // You can access the book details using the 'book' parameter
-        // For example, book.getTitle(), book.getGenre(), etc.
-        // You can also use this information to identify the specific book that was clicked.
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_books, container, false);
-
         recyclerView = view.findViewById(R.id.recycleView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setIconified(false);
@@ -102,8 +90,9 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         recyclerView.setLayoutManager(layoutManager);
 
         // Initialize the adapter with an empty list
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), new ArrayList<>(), this::onSelectButtonClick,this::onRemoveButtonClick);
-        recyclerView.setAdapter(bookAdapter);
+        BookAdapterAdminBorrow bookAdapterAdminBorrow = new BookAdapterAdminBorrow(getActivity(), new ArrayList<>());
+        recyclerView.setAdapter(bookAdapterAdminBorrow);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -125,17 +114,12 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         return view;
     }
 
-    public void onResume() {
-        super.onResume();
-        setBooksFirebase();
-    }
-
     private void performSearch(String query) {
         searchList = new ArrayList<>();
         if (query.length() > 0) {
-            for (Book book : bookArrayList) {
-                if (book.getTitle().toUpperCase().contains(query.toUpperCase()) ||
-                        book.getGenre().toUpperCase().contains(query.toUpperCase())) {
+            for (BorrowBook book : bookArrayList) {
+                if (book.getTitleBook().toUpperCase().contains(query.toUpperCase()) ||
+                        book.getUserName().toUpperCase().contains(query.toUpperCase())) {
                     searchList.add(book);
                 }
             }
@@ -144,13 +128,12 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         }
 
         // Update the adapter with the search results
-        recyclerView.setAdapter(new BookAdapter(getActivity(), searchList, this::onSelectButtonClick,this::onRemoveButtonClick));
+        recyclerView.setAdapter(new BookAdapterAdminBorrow(getActivity(), searchList));
     }
-
 
     public void setBooksFirebase() {
         String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        CollectionReference adminBooksCollection = FirebaseFirestore.getInstance().collection("Admins").document(adminId).collection("books");
+        CollectionReference adminBooksCollection = FirebaseFirestore.getInstance().collection("Admins").document(adminId).collection("borrowedBooksAdmin");
 
         adminBooksCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -159,32 +142,49 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     // Get the book details
                     String title = document.getString("title");
-                    String genre = document.getString("genre");
-                    String language = document.getString("language");
-                    String numberOfPages = document.getString("num_pages");
-                    String author = document.getString("authors");
-                    String belongs = document.getString("belongs");
 
                     // Create a Book object
-                    Book book = new Book();
-                    book.setTitle(title);
-                    book.setGenre(genre);
-                    book.setLanguage(language);
-                    book.setNum_pages(numberOfPages);
-                    book.setAuthors(author);
-                    book.setBelongs(belongs);
+                    BorrowBook borrowBook = new BorrowBook();
+                    borrowBook.setTitleBook(title);
 
                     // Add the book to the list
-                    bookArrayList.add(book);
+                    bookArrayList.add(borrowBook);
                 }
 
+
+                // Iterate through the list and fetch additional user details
+                for (BorrowBook borrowBook : bookArrayList) {
+                    fetchUserDetails(borrowBook);
+                }
                 // Update the adapter with the fetched data
-                recyclerView.setAdapter(new BookAdapter(getActivity(), bookArrayList, this::onSelectButtonClick,this::onRemoveButtonClick));
+                recyclerView.setAdapter(new BookAdapterAdminBorrow(getActivity(), bookArrayList));
+
             } else {
                 // Handle the failure to retrieve data from Firestore
                 Exception e = task.getException();
                 Log.e("FirestoreError", "Error retrieving data from Firestore: " + e.getMessage(), e);
             }
         });
+    }
+
+    private void fetchUserDetails(BorrowBook borrowBook) {
+        CollectionReference userBooksCollection = FirebaseFirestore.getInstance().collection("Users");
+
+        userBooksCollection
+                .whereArrayContains("borrowedBooksUser", borrowBook.getTitleBook())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String name = document.getString("fullName");
+                            String email = document.getString("email");
+
+                            // Set the user details in the BorrowBook object
+                            borrowBook.setUserName(name);
+                            borrowBook.setUserEmail(email);
+
+                        }
+                    }
+                });
     }
 }

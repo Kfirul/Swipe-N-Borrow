@@ -18,14 +18,16 @@ public class ViewPagerAdapterAdmin extends FragmentStateAdapter {
                 return new AdminProfile();
             case 1:
                  return new AdminAddNewBook();
+            case 2:
+                return new AdminBooks();
 
             default:
-                return new AdminBooks();
+                return new AdminBorrowedBooks();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }
