@@ -15,14 +15,14 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="92dp"
+            android:layout_height="95dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:scaleType="fitXY"
-            android:src="@drawable/house">
+            android:src="@drawable/libraryse">
 
         </ImageView>
 
@@ -35,6 +35,7 @@
             android:layout_marginTop="5dp"
             android:singleLine="true"
             android:text="Library Name"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="15dp"/>
 
@@ -53,23 +54,20 @@
             />
 
 
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BTN_Select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/BTN_Select"
             android:layout_below="@+id/txt2"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:singleLine="true"
             android:text="Select"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            >
+            android:textSize="15dp">
 
-        </Button>
+        </androidx.appcompat.widget.AppCompatButton>
 
     </RelativeLayout>
 
