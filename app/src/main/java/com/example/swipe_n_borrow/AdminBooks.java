@@ -12,13 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import java.util.Date;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -141,6 +144,11 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         // Update the adapter with the search results
         recyclerView.setAdapter(new BookAdapter(getActivity(), searchList, this::onSelectButtonClick,this::onRemoveButtonClick));
     }
+    public void onResume() {
+        super.onResume();
+        // Refresh the data when the fragment is resumed
+        setBooksFirebase();
+    }
 
 
     public void setBooksFirebase() {
@@ -159,6 +167,13 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     String numberOfPages = document.getString("num_pages");
                     String author = document.getString("authors");
                     String belongs = document.getString("belongs");
+                    Timestamp timestamp = document.getTimestamp("returnDate"); // Assuming the timestamp field is named "timestampField"
+
+                    // Convert timestamp to Date
+                    Date date = null;
+                    if (timestamp != null) {
+                        date = timestamp.toDate();
+                    }
 
                     // Create a Book object
                     Book book = new Book();
@@ -168,17 +183,16 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     book.setNum_pages(numberOfPages);
                     book.setAuthors(author);
                     book.setBelongs(belongs);
+                    book.setDate(date); // Set the date field
 
                     // Add the book to the list
                     bookArrayList.add(book);
                 }
 
                 // Update the adapter with the fetched data
-                recyclerView.setAdapter(new BookAdapter(getActivity(), bookArrayList, this::onSelectButtonClick,this::onRemoveButtonClick));
+                recyclerView.getAdapter().notifyDataSetChanged();
             } else {
-                // Handle the failure to retrieve data from Firestore
-                Exception e = task.getException();
-                Log.e("FirestoreError", "Error retrieving data from Firestore: " + e.getMessage(), e);
+                Log.e("FirestoreError", "Snapshot is null");
             }
         });
     }

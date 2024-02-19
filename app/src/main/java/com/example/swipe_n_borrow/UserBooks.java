@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -142,16 +144,22 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
         userBooksCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    // Get the book title
+                    // Get the book details
                     String title = document.getString("title");
                     String genre = document.getString("genre");
                     String language = document.getString("language");
-                    String numberOfPages = document.getString("num_pages");;
+                    String numberOfPages = document.getString("num_pages");
                     String author = document.getString("authors");
                     String belongs = document.getString("belongs");
+                    Timestamp timestamp = document.getTimestamp("returnDate"); // Assuming the timestamp field is named "timestampField"
 
-                    // Create a Book object using the retrieved data
+                    // Convert timestamp to Date
+                    Date date = null;
+                    if (timestamp != null) {
+                        date = timestamp.toDate();
+                    }
 
+                    // Create a Book object
                     Book book = new Book();
                     book.setTitle(title);
                     book.setGenre(genre);
@@ -159,6 +167,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     book.setNum_pages(numberOfPages);
                     book.setAuthors(author);
                     book.setBelongs(belongs);
+                    book.setDate(date); // Set the date field
 
                     // Add the book to the list
                     bookArrayList.add(book);

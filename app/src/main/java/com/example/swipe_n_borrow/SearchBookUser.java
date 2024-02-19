@@ -13,12 +13,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SearchBookUser extends AppCompatActivity implements BookAdapterUserBorrow.OnSelectButtonClickListener {
 
@@ -127,21 +130,32 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
         adminBooksCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
+                    // Get the book details
                     String title = document.getString("title");
                     String genre = document.getString("genre");
                     String language = document.getString("language");
-                    String author = document.getString("authors");
                     String numberOfPages = document.getString("num_pages");
+                    String author = document.getString("authors");
                     String belongs = document.getString("belongs");
+                    Timestamp timestamp = document.getTimestamp("returnDate"); // Assuming the timestamp field is named "timestampField"
 
+                    // Convert timestamp to Date
+                    Date date = null;
+                    if (timestamp != null) {
+                        date = timestamp.toDate();
+                    }
+
+                    // Create a Book object
                     Book book = new Book();
                     book.setTitle(title);
                     book.setGenre(genre);
                     book.setLanguage(language);
-                    book.setAuthors(author);
                     book.setNum_pages(numberOfPages);
+                    book.setAuthors(author);
                     book.setBelongs(belongs);
+                    book.setDate(date); // Set the date field
 
+                    // Add the book to the list
                     bookArrayList.add(book);
                 }
 
@@ -155,6 +169,12 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
 
     @Override
     public void onSelectButtonClick(Book book) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.WEEK_OF_YEAR, 3);
+        Date borrowingDate = calendar.getTime();
+        // Set the borrowing date to the book object
+        book.setDate(borrowingDate);
+
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference borrowedBooksUserCollection = FirebaseFirestore.getInstance()
                 .collection("Users")
@@ -179,6 +199,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                 .addOnSuccessListener(documentReference -> {
                     Log.d("Firestore", "Book added to borrowedBooksAdmin collection for admin: " + adminId);
                     deleteBookFromAdminCollection(adminId, book);
+
                     setBooksFirebase();
                 })
                 .addOnFailureListener(e -> {

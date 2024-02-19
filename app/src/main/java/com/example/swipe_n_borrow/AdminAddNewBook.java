@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AdminAddNewBook#newInstance} factory method to
@@ -123,7 +125,8 @@ public class AdminAddNewBook extends Fragment {
 
                                     if (libraryName != null) {
                                         book.setBelongs(libraryName);
-
+                                        Date currentDate = new Date();
+                                        book.setDate(currentDate);
                                         // Add the book to the admin's collection of books
                                         adminBooksCollection.add(book)
                                                 .addOnSuccessListener(documentReference -> {

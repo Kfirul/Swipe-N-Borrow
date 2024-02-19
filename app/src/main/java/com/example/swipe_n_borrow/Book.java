@@ -1,5 +1,7 @@
 package com.example.swipe_n_borrow;
 
+import java.util.Date;
+
 public class Book {
     //    private int bookID;
     private String title;
@@ -8,6 +10,8 @@ public class Book {
     private String num_pages;
     private String genre;
     private String belongs = "";
+
+    private Date date;
 
     @Override
     public String toString() {
@@ -50,6 +54,13 @@ public class Book {
 
     public void setBelongs(String belongs) {
         this.belongs = belongs;
+    }
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     public String getTitle() {
         return title;
