@@ -79,11 +79,6 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
     }
 
     public void onSelectButtonClick(Book book) {
-//        // Handle the button click for the selected library
-//        // Example: Open a new activity or perform any other action
-//        Intent intent = new Intent(getActivity(), EditBookAdmin.class);
-//        startActivity(intent);
-            // Assuming you have the book object that the user wants to return
 
         // Add the book to admin's books collection
         CollectionReference adminsCollection = FirebaseFirestore.getInstance().collection("Admins");
@@ -158,6 +153,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                             document.getReference().delete()
                                     .addOnSuccessListener(aVoid -> {
                                         Log.d("Firestore", "Book deleted from user books collection.");
+                                        setBooksFirebase();
                                     })
                                     .addOnFailureListener(e -> {
                                         Log.e("FirestoreError", "Error deleting book from user books collection: " + e.getMessage(), e);
@@ -216,6 +212,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     Book book = new Book();
                     book.setTitle(bookArrayList.get(i).getTitle());
                     book.setGenre(bookArrayList.get(i).getGenre());
+                    book.setDate(bookArrayList.get(i).getDate());
                     searchList.add(book);
                 }
             }
@@ -227,6 +224,8 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
     }
 
     public void setBooksFirebase() {
+        bookArrayList.clear();
+
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference userBooksCollection = FirebaseFirestore.getInstance().collection("Users").document(userId).collection("borrowedBooksUser");
 
@@ -240,7 +239,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     String numberOfPages = document.getString("num_pages");
                     String author = document.getString("authors");
                     String belongs = document.getString("belongs");
-                    Timestamp timestamp = document.getTimestamp("returnDate"); // Assuming the timestamp field is named "timestampField"
+                    Timestamp timestamp = document.getTimestamp("date");
 
                     // Convert timestamp to Date
                     Date date = null;
@@ -273,6 +272,5 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
             }
         });
     }
-
 
 }

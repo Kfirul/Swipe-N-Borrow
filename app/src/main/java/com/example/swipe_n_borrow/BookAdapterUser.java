@@ -9,13 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHolder> {
     private Context context;
     private ArrayList<Book> arrayList;
     private LayoutInflater layoutInflater;
-    private OnSelectButtonClickListener onSelectButtonClickListener;  // Add this interface
+    private OnSelectButtonClickListener onSelectButtonClickListener;
 
     public BookAdapterUser(Context context, ArrayList<Book> arrayList, OnSelectButtonClickListener listener) {
         this.context = context;
@@ -35,6 +38,16 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bookTitle.setText(arrayList.get(position).getTitle());
         holder.bookGenre.setText(arrayList.get(position).getGenre());
+        // Convert Date to a formatted String
+        String formattedDate = formatDate(arrayList.get(position).getDate());
+        holder.bookDate.setText("Return Until: " + formattedDate);
+    }
+
+    private String formatDate(Date date) {
+        // You can use SimpleDateFormat or any other date formatting method
+        // This is just an example, adjust the pattern as needed
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(date);
     }
 
     @Override
@@ -43,12 +56,13 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, bookGenre;
+        TextView bookTitle, bookGenre,bookDate;
 
         public MyHolder(View itemView) {
             super(itemView);
             bookTitle = itemView.findViewById(R.id.txt);
             bookGenre = itemView.findViewById(R.id.txt2);
+            bookDate = itemView.findViewById(R.id.txt3);
 
             // Set click listener for selectButton
             itemView.findViewById(R.id.BTN_Return).setOnClickListener(new View.OnClickListener() {
