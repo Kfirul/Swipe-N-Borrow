@@ -20,7 +20,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Date;
 
 public class AdminProfile extends Fragment {
 
@@ -29,7 +32,7 @@ public class AdminProfile extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private TextView profilelName, profileAddress, phonenumber ,profileLibrary ,borrowsNumber ,bookNumber;
+    private TextView profilelName, profileAddress, phonenumber, profileLibrary, borrowsNumber, bookNumber, latesNumber;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -78,6 +81,7 @@ public class AdminProfile extends Fragment {
         profileLibrary = getActivity().findViewById(R.id.profileLibrary);
         borrowsNumber = getActivity().findViewById(R.id.borrowsNumber);
         bookNumber = getActivity().findViewById(R.id.bookNumber);
+        latesNumber = getActivity().findViewById(R.id.latesNumber);
     }
 
     @Override
@@ -126,10 +130,11 @@ public class AdminProfile extends Fragment {
         if (user != null) {
             String currentId = user.getUid();
 
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
             DocumentReference reference;
             CollectionReference borrowsNumberReference;
             CollectionReference AvailableBooksReference;
-            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
             reference = firestore.collection("Admins").document(currentId);
             borrowsNumberReference = firestore.collection("Admins").document(currentId).collection("borrowedBooksAdmin");
@@ -146,6 +151,7 @@ public class AdminProfile extends Fragment {
                     }
                 }
             });
+
             borrowsNumberReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -154,6 +160,20 @@ public class AdminProfile extends Fragment {
                         borrowsNumber.setText(String.valueOf(borrowsCount));
                     } else {
                         borrowsNumber.setText("Null");
+                    }
+                }
+            });
+
+            // Counting late borrows
+            Query lateBorrowsQuery = borrowsNumberReference.whereLessThan("date", new Date());
+            lateBorrowsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        int lateBorrowsCount = task.getResult().size();
+                        latesNumber.setText(String.valueOf(lateBorrowsCount)); // Update latesNumber TextView
+                    } else {
+                        latesNumber.setText("Null");
                     }
                 }
             });
@@ -184,3 +204,4 @@ public class AdminProfile extends Fragment {
         }
     }
 }
+

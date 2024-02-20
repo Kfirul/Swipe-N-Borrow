@@ -23,7 +23,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +46,7 @@ public class UserProfile extends Fragment {
 
     private Button logOut, EditUser;
     private LinearLayout bookListLayout;
-    private TextView textViewAddress, textViewFullName, textViewPhoneNumber, borrowsNumber, bookNumber;
+    private TextView textViewAddress, textViewFullName, textViewPhoneNumber, borrowsNumber, bookNumber, latesNumber;
 
 
 
@@ -87,6 +90,7 @@ public class UserProfile extends Fragment {
         textViewPhoneNumber = getActivity().findViewById(R.id.phoneNumber);
         borrowsNumber = getActivity().findViewById(R.id.borrowsNumber);
         bookNumber = getActivity().findViewById(R.id.bookNumber);
+        latesNumber = getActivity().findViewById(R.id.latesNumber);
     }
 
     @Override
@@ -148,11 +152,11 @@ public class UserProfile extends Fragment {
         });
 
         DocumentReference reference;
-        CollectionReference borrowsNumberReference;
+        CollectionReference borrowedBooksReference;
         reference = firestore.collection("Users").document(currentId);
-        borrowsNumberReference = reference.collection("borrowedBooksUser");
+        borrowedBooksReference = reference.collection("borrowedBooksUser");
 
-        borrowsNumberReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        borrowedBooksReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -164,7 +168,21 @@ public class UserProfile extends Fragment {
             }
         });
 
-        reference=firestore.collection("Users").document(currentId);
+        // Counting late borrows
+        Query lateBorrowsQuery = borrowedBooksReference.whereLessThan("date", new Date());
+        lateBorrowsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int lateBorrowsCount = task.getResult().size();
+                    latesNumber.setText(String.valueOf(lateBorrowsCount));
+                } else {
+                    latesNumber.setText("Null");
+                }
+            }
+        });
+
+        reference = firestore.collection("Users").document(currentId);
 
         reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
@@ -180,13 +198,14 @@ public class UserProfile extends Fragment {
                     textViewFullName.setText(nameResult);
                     textViewPhoneNumber.setText(phoneResult);
 
-                }else{
+                } else {
                     textViewAddress.setText("Null");
                     textViewFullName.setText("Null");
                     textViewPhoneNumber.setText("Null");
                 }
             }
         });
-
     }
+
+
 }
