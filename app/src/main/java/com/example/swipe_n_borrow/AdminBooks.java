@@ -87,6 +87,31 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
         // You can access the book details using the 'book' parameter
         // For example, book.getTitle(), book.getGenre(), etc.
         // You can also use this information to identify the specific book that was clicked.
+        String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        CollectionReference userBooksCollection = FirebaseFirestore.getInstance()
+                .collection("Admins")
+                .document(adminId)
+                .collection("books");
+
+        userBooksCollection.whereEqualTo("title", book.getTitle())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            document.getReference().delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d("Firestore", "Book deleted from admin books collection.");
+                                        setBooksFirebase();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("FirestoreError", "Error deleting book from admin books collection: " + e.getMessage(), e);
+                                    });
+                        }
+                    } else {
+                        Exception e = task.getException();
+                        Log.e("FirestoreError", "Error getting documents: " + e.getMessage(), e);
+                    }
+                });
     }
 
     @Override
