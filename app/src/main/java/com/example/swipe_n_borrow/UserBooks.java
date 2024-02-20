@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,8 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
     private RecyclerView recyclerView;
     private ArrayList<Book> bookArrayList = new ArrayList<>();
     private ArrayList<Book> searchList;
+
+    String adminId;
 
 
     public UserBooks() {
@@ -80,7 +83,93 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
 //        // Example: Open a new activity or perform any other action
 //        Intent intent = new Intent(getActivity(), EditBookAdmin.class);
 //        startActivity(intent);
-    }
+            // Assuming you have the book object that the user wants to return
+
+        // Add the book to admin's books collection
+        CollectionReference adminsCollection = FirebaseFirestore.getInstance().collection("Admins");
+
+        adminsCollection.whereEqualTo("library", book.getBelongs())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String adminId = document.getId();
+                            Log.d("Firestore", "Admin ID: " + adminId);
+
+                            // Now that you have adminId, you can proceed with the next Firestore operations
+
+                            // Add the book to admin's books collection
+                            CollectionReference adminBooksCollection = FirebaseFirestore.getInstance()
+                                    .collection("Admins")
+                                    .document(adminId)
+                                    .collection("books");
+
+                            adminBooksCollection.add(book)
+                                    .addOnSuccessListener(documentReference -> {
+                                        Toast.makeText(requireActivity(), "Book return successfully.", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(requireActivity(), "Failed to return book.", Toast.LENGTH_SHORT).show();
+                                        Log.e("FirestoreError", "Error borrowing book: " + e.getMessage(), e);
+                                    });
+
+                            // Delete the book from admin's borrowedBooksAdmin collection
+                            CollectionReference adminBorrowedBooksCollection = FirebaseFirestore.getInstance()
+                                    .collection("Admins")
+                                    .document(adminId)
+                                    .collection("borrowedBooksAdmin");
+
+                            adminBorrowedBooksCollection.whereEqualTo("title", book.getTitle())
+                                    .get()
+                                    .addOnCompleteListener(deleteTask -> {
+                                        if (deleteTask.isSuccessful()) {
+                                            for (QueryDocumentSnapshot deleteDocument : deleteTask.getResult()) {
+                                                deleteDocument.getReference().delete()
+                                                        .addOnSuccessListener(aVoid -> {
+                                                            Log.d("Firestore", "Book deleted from admin's borrowed books collection.");
+                                                        })
+                                                        .addOnFailureListener(deleteException -> {
+                                                            Log.e("FirestoreError", "Error deleting book from admin's borrowed books collection: " + deleteException.getMessage(), deleteException);
+                                                        });
+                                            }
+                                        } else {
+                                            Log.e("FirestoreError", "Error getting documents for delete: " + deleteTask.getException());
+                                        }
+                                    });
+                        }
+                    } else {
+                        Exception e = task.getException();
+                        Log.e("FirestoreError", "Error retrieving data from Firestore: " + e.getMessage(), e);
+                    }
+                });
+
+        // delete the book from user's collection
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            CollectionReference userBooksCollection = FirebaseFirestore.getInstance()
+                    .collection("Users")
+                    .document(userId)
+                    .collection("borrowedBooksUser");
+
+        userBooksCollection.whereEqualTo("title", book.getTitle())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            document.getReference().delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d("Firestore", "Book deleted from user books collection.");
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("FirestoreError", "Error deleting book from user books collection: " + e.getMessage(), e);
+                                    });
+                        }
+                    } else {
+                        Exception e = task.getException();
+                        Log.e("FirestoreError", "Error getting documents: " + e.getMessage(), e);
+                    }
+                });
+
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
