@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
         holder.bookTitle.setText(arrayList.get(position).getTitleBook());
         holder.userName.setText("At The User: " +arrayList.get(position).getUserName());
         holder.userEmail.setText("Email's User: "+ arrayList.get(position).getUserEmail());
+        holder.dateBorrow.setText(" Date Borrow : "+ arrayList.get(position).getDateBorrow());
 
     }
 
@@ -45,15 +47,14 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, userName,userEmail;
+        TextView bookTitle, userName,userEmail , dateBorrow;;
 
         public MyHolder(View itemView) {
             super(itemView);
             bookTitle = itemView.findViewById(R.id.txt);
             userName = itemView.findViewById(R.id.txt2);
             userEmail = itemView.findViewById(R.id.txt3);
-
-
+            dateBorrow = itemView.findViewById(R.id.txt4);
         }
     }
 

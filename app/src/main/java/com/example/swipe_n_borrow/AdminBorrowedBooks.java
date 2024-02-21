@@ -13,12 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -183,23 +187,40 @@ public class AdminBorrowedBooks extends Fragment {
                                     .get()
                                     .addOnCompleteListener(bookTask -> {
                                         if (bookTask.isSuccessful() && !bookTask.getResult().isEmpty()) {
-                                            // User has borrowed the book, get user details
-                                            String name = userDocument.getString("fullName");
-                                            String email = userDocument.getString("email");
 
-                                            // Set the user details in the BorrowBook object
-                                            borrowBook.setUserName(name);
-                                            borrowBook.setUserEmail(email);
+                                            for (QueryDocumentSnapshot bookDocument : bookTask.getResult()) {
+                                                Timestamp timestamp = bookDocument.getTimestamp("date"); // Get the Timestamp
+                                                Date date = timestamp != null ? timestamp.toDate() : null; // Convert to Date
 
-                                            Log.e("Hereeeeeeeeee", "Hereeeeeeeeeeeeeeeeeeeeeeeee" + borrowBook.getUserName());
+                                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                                                String formattedDate = date != null ? sdf.format(date) : "N/A";
+
+                                                String name = userDocument.getString("fullName");
+                                                String email = userDocument.getString("email");
+
+
+                                                // Set the user details in the BorrowBook object
+                                                borrowBook.setUserName(name);
+                                                borrowBook.setUserEmail(email);
+                                                borrowBook.setDateBorrow(formattedDate);
+
+                                                Log.d("BookInfo", "Name: " + name + ", Email: " + email + ", Date: " + timestamp);
+
+                                                // Update the adapter with the fetched data
+                                                getActivity().runOnUiThread(() -> recyclerView.getAdapter().notifyDataSetChanged());
+                                            }
                                         }
                                     });
                         }
                     } else {
                         Log.e("FirestoreError", "Error fetching users: " + task.getException());
                     }
+
+
                 });
     }
+
+
 
 
 
