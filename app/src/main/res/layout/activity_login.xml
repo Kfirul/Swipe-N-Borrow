@@ -63,7 +63,18 @@
                 android:layout_height="match_parent"
                 android:visibility="gone" />
 
-    <Button
+            <TextView
+                android:id="@+id/forgetPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password"
+                android:layout_marginLeft="150dp"
+                android:gravity="center"
+                android:text="Forget Password?"
+                android:textColor="@color/black"
+                 />
+
+            <Button
         android:id="@+id/BTN_Login"
         android:text="@string/login2"
         android:layout_width="match_parent"
@@ -72,15 +83,6 @@
         android:layout_marginTop="20dp"
         />
 
-    <Button
-        android:id="@+id/BTN_ForgotPassword"
-        android:text="Forgot Password?"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#006400"
-        android:layout_marginTop="10dp"
-        />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <TextView

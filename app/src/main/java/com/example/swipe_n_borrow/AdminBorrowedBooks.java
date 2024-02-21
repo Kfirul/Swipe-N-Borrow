@@ -146,16 +146,12 @@ public class AdminBorrowedBooks extends Fragment {
                     // Create a Book object
                     BorrowBook borrowBook = new BorrowBook();
                     borrowBook.setTitleBook(title);
+                    fetchUserDetails(borrowBook);
 
                     // Add the book to the list
                     bookArrayList.add(borrowBook);
                 }
 
-
-                // Iterate through the list and fetch additional user details
-                for (BorrowBook borrowBook : bookArrayList) {
-                    fetchUserDetails(borrowBook);
-                }
                 // Update the adapter with the fetched data
                 recyclerView.setAdapter(new BookAdapterAdminBorrow(getActivity(), bookArrayList));
 
@@ -168,23 +164,39 @@ public class AdminBorrowedBooks extends Fragment {
     }
 
     private void fetchUserDetails(BorrowBook borrowBook) {
-        CollectionReference userBooksCollection = FirebaseFirestore.getInstance().collection("Users");
-
-        userBooksCollection
-                .whereArrayContains("borrowedBooksUser", borrowBook.getTitleBook())
+        FirebaseFirestore.getInstance().collection("Users")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String name = document.getString("fullName");
-                            String email = document.getString("email");
+                        for (QueryDocumentSnapshot userDocument : task.getResult()) {
+                            String userId = userDocument.getId();
 
-                            // Set the user details in the BorrowBook object
-                            borrowBook.setUserName(name);
-                            borrowBook.setUserEmail(email);
+                            // Check if the user's borrowedBooksUser collection contains the book
+                            FirebaseFirestore.getInstance().collection("Users")
+                                    .document(userId)
+                                    .collection("borrowedBooksUser")
+                                    .whereEqualTo("title", borrowBook.getTitleBook())
+                                    .get()
+                                    .addOnCompleteListener(bookTask -> {
+                                        if (bookTask.isSuccessful() && !bookTask.getResult().isEmpty()) {
+                                            // User has borrowed the book, get user details
+                                            String name = userDocument.getString("fullName");
+                                            String email = userDocument.getString("email");
 
+                                            // Set the user details in the BorrowBook object
+                                            borrowBook.setUserName(name);
+                                            borrowBook.setUserEmail(email);
+
+                                            Log.e("Hereeeeeeeeee", "Hereeeeeeeeeeeeeeeeeeeeeeeee" + borrowBook.getUserName());
+                                        }
+                                    });
                         }
+                    } else {
+                        Log.e("FirestoreError", "Error fetching users: " + task.getException());
                     }
                 });
     }
+
+
+
 }

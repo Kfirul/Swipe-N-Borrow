@@ -65,11 +65,24 @@
             android:textColor="@color/black"
             android:textSize="15dp"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt4"
+            android:layout_toRightOf="@+id/img"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/txt3"
+            android:singleLine="true"
+            android:text="Library Belongs"
+            android:textColor="@color/black"
+            android:textSize="15dp"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/BTN_Return"
-            android:layout_below="@+id/txt3"
+            android:layout_below="@+id/txt4"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"

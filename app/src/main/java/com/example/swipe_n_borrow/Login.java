@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
         buttonLog =findViewById(R.id.BTN_Login);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.RegisterNow);
-        forgotPasswordButton = findViewById(R.id.BTN_ForgotPassword); // Initializing forgotPasswordButton
+        forgotPasswordButton = findViewById(R.id.forgetPassword); // Initializing forgotPasswordButton
         fstore = FirebaseFirestore.getInstance();
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

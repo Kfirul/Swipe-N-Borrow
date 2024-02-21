@@ -82,11 +82,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
     }
 
     public void onRemoveButtonClick(Book book) {
-        // Handle the "Remove" button click for the selected book
-        // Example: Remove the book from the list or perform any other action
-        // You can access the book details using the 'book' parameter
-        // For example, book.getTitle(), book.getGenre(), etc.
-        // You can also use this information to identify the specific book that was clicked.
+
         String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference userBooksCollection = FirebaseFirestore.getInstance()
                 .collection("Admins")

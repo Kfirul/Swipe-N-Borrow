@@ -31,7 +31,6 @@ public class Book {
     }
 
     public Book(String title, String authors, String language, String num_pages, String genre) {
-//        this.bookID = bookID;
         this.title = title;
         this.authors = authors;
         this.language = language;
@@ -40,13 +39,6 @@ public class Book {
     }
 
 
-//    public int getBookID() {
-//        return bookID;
-//    }
-//
-//    public void setBookID(int bookID) {
-//        this.bookID = bookID;
-//    }
 
     public String getBelongs() {
         return belongs;

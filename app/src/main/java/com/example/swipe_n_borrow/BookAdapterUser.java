@@ -38,6 +38,8 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bookTitle.setText(arrayList.get(position).getTitle());
         holder.bookGenre.setText(arrayList.get(position).getGenre());
+        holder.libraryBelongs.setText("Return To: " + arrayList.get(position).getBelongs());
+
         // Convert Date to a formatted String
         String formattedDate = formatDate(arrayList.get(position).getDate());
         holder.bookDate.setText("Return Until: " + formattedDate);
@@ -56,13 +58,14 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, bookGenre,bookDate;
+        TextView bookTitle, bookGenre,bookDate, libraryBelongs;
 
         public MyHolder(View itemView) {
             super(itemView);
             bookTitle = itemView.findViewById(R.id.txt);
             bookGenre = itemView.findViewById(R.id.txt2);
             bookDate = itemView.findViewById(R.id.txt3);
+            libraryBelongs = itemView.findViewById(R.id.txt4);
 
             // Set click listener for selectButton
             itemView.findViewById(R.id.BTN_Return).setOnClickListener(new View.OnClickListener() {
