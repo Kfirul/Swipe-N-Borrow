@@ -120,6 +120,10 @@ public class AdminBorrowedBooks extends Fragment {
             for (BorrowBook book : bookArrayList) {
                 if (book.getTitleBook().toUpperCase().contains(query.toUpperCase()) ||
                         book.getUserName().toUpperCase().contains(query.toUpperCase())) {
+                    BorrowBook newBook = new BorrowBook();
+                    newBook.setTitleBook(book.getTitleBook());
+                    newBook.setUserName(book.getUserName());
+                    newBook.setUserEmail(book.getUserEmail());
                     searchList.add(book);
                 }
             }

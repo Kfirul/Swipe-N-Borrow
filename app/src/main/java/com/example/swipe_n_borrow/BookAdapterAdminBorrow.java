@@ -27,15 +27,15 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.book_borrow_admin, parent, false);
+        View view = layoutInflater.inflate(R.layout.book_file_borrow_admin, parent, false);
         return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bookTitle.setText(arrayList.get(position).getTitleBook());
-        holder.userName.setText(arrayList.get(position).getUserName());
-        holder.userEmail.setText(arrayList.get(position).getUserEmail());
+        holder.userName.setText("At The User: " +arrayList.get(position).getUserName());
+        holder.userEmail.setText("Email's User: "+ arrayList.get(position).getUserEmail());
 
     }
 
