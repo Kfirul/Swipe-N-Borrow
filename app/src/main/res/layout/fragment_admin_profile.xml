@@ -1,28 +1,150 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/purple_white_background"
+    android:background="@drawable/homebg"
     tools:context=".AdminProfile">
 
+    <!-- User data Section -->
 
-    <!-- Books Section -->
+    <!-- Books data Section -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="401dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/white_background"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="NotSibling">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/greetingTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Hey there,"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/profilelName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="User Name"
+                android:textAlignment="center"
+                android:textColor="@color/maingreenapp"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Manager and Library Information Section -->
+        <LinearLayout
+            android:id="@+id/dasd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <!-- Manager Name Section -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="The Manager of"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Library Name Section -->
+            <TextView
+                android:id="@+id/profileLibrary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Library Name"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/booksSection">
+
+            <!-- Full Name Section -->
+            <TextView
+                android:id="@+id/profileAddress"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="0.3"
+                android:drawableLeft="@drawable/adress"
+                android:text="Full Name"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/phonenumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.7"
+                android:drawableLeft="@drawable/baseline_add_call_24"
+                android:text="phone"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Buttons Section -->
+
     <LinearLayout
         android:id="@+id/booksSection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="500dp"
         android:background="@drawable/white_background"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.094"
         tools:ignore="NotSibling">
 
-        <!-- Books Number Section -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,23 +161,22 @@
                 android:gravity="center"
                 android:text="27"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/maingreenapp"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/bookNumberTitle"
+                android:id="@+id/LibNumber"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="Available Books"
+                android:text="Libraries Available"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/grey"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Borrowed Books Section -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -70,9 +191,9 @@
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="25"
+                android:text="27"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/maingreenapp"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
@@ -83,13 +204,14 @@
                 android:gravity="center"
                 android:text="Borrowed Books"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/grey"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Late Borrows Section -->
         <LinearLayout
+            android:id="@+id/phoneSection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -105,7 +227,7 @@
                 android:gravity="center"
                 android:text="27"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/maingreenapp"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
@@ -116,121 +238,12 @@
                 android:gravity="center"
                 android:text="Late Borrows"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/grey"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Full Name Section -->
-    <LinearLayout
-        android:id="@+id/fullNameSection"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/booksSection">
-
-        <!-- Full Name Section -->
-        <TextView
-            android:id="@+id/titlefullName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="Full Name"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/profilelName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="name"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
-
-    <!-- Second Full Name Section -->
-    <LinearLayout
-        android:id="@+id/fullNameSection2"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullNameSection">
-
-        <!-- Full Name Section -->
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="Address"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/profileAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="address"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
-
-    <!-- Phone Number Section -->
-    <LinearLayout
-        android:id="@+id/phoneSection"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullNameSection2">
-
-        <!-- Phone Number Section -->
-        <TextView
-            android:id="@+id/titlephonenumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="Phone Number"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/phonenumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="phone number"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
-
-    <!-- Second Phone Number Section -->
     <LinearLayout
         android:id="@+id/library"
         android:layout_width="380dp"
@@ -239,47 +252,9 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneSection">
+        app:layout_constraintTop_toBottomOf="@+id/booksSection">
 
-        <!-- Phone Number Section -->
-        <TextView
-            android:id="@+id/libraryname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="Library Name"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/profileLibrary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:text="library name"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
-
-    <!-- Rest of Your Code -->
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/editButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -289,7 +264,7 @@
             android:text="Edit Profile"
             android:textSize="18sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/logOut"
             android:layout_width="0dp"
             android:layout_height="60dp"

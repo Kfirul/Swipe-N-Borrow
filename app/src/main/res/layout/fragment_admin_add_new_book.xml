@@ -6,10 +6,28 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@drawable/registerbg"
     android:padding="15dp"
     tools:context=".AdminAddNewBook">
 
-    <TextView
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+
+        <TextView
         android:text="Add Book"
         android:textSize="35sp"
         android:textStyle="bold"
@@ -23,6 +41,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bookTitle"
             android:hint="Title"
+            android:drawableLeft="@drawable/book_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -32,6 +52,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/author"
             android:hint="Author"
+            android:drawableLeft="@drawable/author_sign_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -41,6 +63,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/language"
             android:hint="Language"
+            android:drawableLeft="@drawable/language_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,6 +74,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/numPages"
             android:hint="Number Of Pages"
+            android:drawableLeft="@drawable/pages_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,6 +85,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/genre"
             android:hint="Genre"
+            android:drawableLeft="@drawable/comedy_and_tragedy_masks_couple_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,13 +96,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/BTN_Add_Book"
         android:text="Add Book"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#006400"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/cardview_shadow_start_color"
         />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

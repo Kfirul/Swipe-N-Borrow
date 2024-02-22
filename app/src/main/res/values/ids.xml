@@ -6,4 +6,12 @@
     <item name="languageEditText" type="id" />
     <item name="numPagesEditText" type="id" />
     <item name="genreEditText" type="id" />
+    <item name="bookNumberTitle" type="id"/>
+    <item name="fullNameSection" type="id"/>
+    <item name="fullNameSection2" type="id"/>
+    <item name="titlefullName" type="id"/>
+    <item name="libraryname" type="id"/>
+    <item name="titlephonenumber" type="id"/>
+
+
 </resources>
