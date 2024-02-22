@@ -35,9 +35,9 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bookTitle.setText(arrayList.get(position).getTitleBook());
-        holder.userName.setText("At The User: " +arrayList.get(position).getUserName());
-        holder.userEmail.setText("Email's User: "+ arrayList.get(position).getUserEmail());
-        holder.dateBorrow.setText(" Date Borrow : "+ arrayList.get(position).getDateBorrow());
+        holder.userName.setText("Borrwed by: " +arrayList.get(position).getUserName());
+        holder.userEmail.setText("User's  Email: "+ arrayList.get(position).getUserEmail());
+        holder.dateBorrow.setText(" Return Untill : "+ arrayList.get(position).getDateBorrow());
 
     }
 

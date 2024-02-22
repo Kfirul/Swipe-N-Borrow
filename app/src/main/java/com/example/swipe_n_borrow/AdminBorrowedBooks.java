@@ -139,6 +139,11 @@ public class AdminBorrowedBooks extends Fragment {
         recyclerView.setAdapter(new BookAdapterAdminBorrow(getActivity(), searchList));
     }
 
+    public void onResume() {
+        super.onResume();
+        setBooksFirebase();
+    }
+
     public void setBooksFirebase() {
         String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference adminBooksCollection = FirebaseFirestore.getInstance().collection("Admins").document(adminId).collection("borrowedBooksAdmin");
