@@ -138,6 +138,8 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     String author = document.getString("authors");
                     String belongs = document.getString("belongs");
                     Timestamp timestamp = document.getTimestamp("returnDate"); // Assuming the timestamp field is named "timestampField"
+                    String imageURL = document.getString("imageURL");
+
 
                     // Convert timestamp to Date
                     Date date = null;
@@ -154,6 +156,7 @@ public class SearchBookUser extends AppCompatActivity implements BookAdapterUser
                     book.setAuthors(author);
                     book.setBelongs(belongs);
                     book.setDate(date); // Set the date field
+                    book.setImageURL(imageURL);
 
                     // Add the book to the list
                     bookArrayList.add(book);

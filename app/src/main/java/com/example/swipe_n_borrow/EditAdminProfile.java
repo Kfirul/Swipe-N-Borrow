@@ -2,6 +2,8 @@ package com.example.swipe_n_borrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,63 +76,75 @@ public class EditAdminProfile extends AppCompatActivity {
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                String fullName, phoneNumber, address, library;
-                fullName = String.valueOf(editTextFullName.getText());
-                phoneNumber = String.valueOf(editTextPhoneNumber.getText());
-                address = String.valueOf(editTextAddress.getText());
-                library = String.valueOf(editTextLibrary.getText());
 
-                if (!isAllDigits(phoneNumber) && !phoneNumber.isEmpty() || (!(phoneNumber.length() == 10) && !phoneNumber.isEmpty())) {
-                    Toast.makeText(EditAdminProfile.this, "Phone Number must be a 10-digit number.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+                new AlertDialog.Builder(EditAdminProfile.this)
+                        .setTitle("Confirm Edit")
+                        .setMessage("Are you sure you want to edit your profile?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                if (!(phoneNumber.startsWith("05")) && !phoneNumber.isEmpty()) {
-                    Toast.makeText(EditAdminProfile.this, "Phone Number is not legal, must start with 05.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+                                progressBar.setVisibility(View.VISIBLE);
+                                String fullName, phoneNumber, address, library;
+                                fullName = String.valueOf(editTextFullName.getText());
+                                phoneNumber = String.valueOf(editTextPhoneNumber.getText());
+                                address = String.valueOf(editTextAddress.getText());
+                                library = String.valueOf(editTextLibrary.getText());
 
-                // Update the profile information in Firestore
-                String adminId = mAuth.getCurrentUser().getUid();
-                Map<String, Object> updates = new HashMap<>();
+                                if (!isAllDigits(phoneNumber) && !phoneNumber.isEmpty() || (!(phoneNumber.length() == 10) && !phoneNumber.isEmpty())) {
+                                    Toast.makeText(EditAdminProfile.this, "Phone Number must be a 10-digit number.", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                    return;
+                                }
 
-                if (!fullName.isEmpty()) {
-                    updates.put("fullName", fullName);
-                }
+                                if (!(phoneNumber.startsWith("05")) && !phoneNumber.isEmpty()) {
+                                    Toast.makeText(EditAdminProfile.this, "Phone Number is not legal, must start with 05.", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                    return;
+                                }
 
-                if (!phoneNumber.isEmpty()) {
-                    updates.put("phoneNumber", phoneNumber);
-                }
+                                // Update the profile information in Firestore
+                                String adminId = mAuth.getCurrentUser().getUid();
+                                Map<String, Object> updates = new HashMap<>();
 
-                if (!address.isEmpty()) {
-                    updates.put("address", address);
-                }
+                                if (!fullName.isEmpty()) {
+                                    updates.put("fullName", fullName);
+                                }
 
-                if (!library.isEmpty()) {
-                    updates.put("library", library);
-                }
+                                if (!phoneNumber.isEmpty()) {
+                                    updates.put("phoneNumber", phoneNumber);
+                                }
 
-                if (!updates.isEmpty()) {
-                    db.collection("Admins").document(adminId)
-                            .update(updates)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(EditAdminProfile.this, "Profile updated successfully.", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // You can add more logic here, such as finishing the activity or navigating to another screen.
+                                if (!address.isEmpty()) {
+                                    updates.put("address", address);
+                                }
+
+                                if (!library.isEmpty()) {
+                                    updates.put("library", library);
+                                }
+
+                                if (!updates.isEmpty()) {
+                                    db.collection("Admins").document(adminId)
+                                            .update(updates)
+                                            .addOnSuccessListener(aVoid -> {
+                                                Toast.makeText(EditAdminProfile.this, "Profile updated successfully.", Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.GONE);
+                                                // You can add more logic here, such as finishing the activity or navigating to another screen.
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(EditAdminProfile.this, "Failed to update profile.", Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.GONE);
+                                                // Handle the failure, for example, display an error message.
+                                            });
+                                } else {
+                                    // No updates were provided
+                                    Toast.makeText(EditAdminProfile.this, "No changes were made.", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            }
                             })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(EditAdminProfile.this, "Failed to update profile.", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // Handle the failure, for example, display an error message.
-                            });
-                } else {
-                    // No updates were provided
-                    Toast.makeText(EditAdminProfile.this, "No changes were made.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                }
+                                    .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
     }

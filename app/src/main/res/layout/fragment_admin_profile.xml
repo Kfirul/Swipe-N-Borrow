@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="User Name"
+                android:text="Admin Name"
                 android:textAlignment="center"
                 android:textColor="@color/maingreenapp"
                 android:textSize="26sp"
@@ -170,7 +170,7 @@
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="Libraries Available"
+                android:text="Books Available"
                 android:textAlignment="center"
                 android:textColor="@color/grey"
                 android:textSize="18sp"
@@ -250,9 +250,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/booksSection">
+        app:layout_constraintTop_toBottomOf="@+id/booksSection"
+        app:layout_constraintVertical_bias="0.8">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/editButton"

@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +46,18 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
         // Convert Date to a formatted String
         String formattedDate = formatDate(arrayList.get(position).getDate());
         holder.bookDate.setText("Return Until: " + formattedDate);
+
+        String imageURL = arrayList.get(position).getImageURL();
+        if (imageURL != null && !imageURL.isEmpty()) {
+            Picasso.get()
+                    .load(imageURL)
+                    .placeholder(R.drawable.bookse) // Placeholder image while loading
+                    .into(holder.imageView);
+        } else {
+            // Set a default placeholder if the imageURL is not available
+            holder.imageView.setImageResource(R.drawable.bookse);
+        }
+
     }
 
     private String formatDate(Date date) {
@@ -58,7 +73,8 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, bookGenre,bookDate, libraryBelongs;
+        TextView bookTitle, bookGenre,bookDate, libraryBelongs ,bookAuthor , bookLanguage ,bookNumPage;
+        ImageView imageView;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -66,6 +82,9 @@ public class BookAdapterUser extends RecyclerView.Adapter<BookAdapterUser.MyHold
             bookGenre = itemView.findViewById(R.id.txt2);
             bookDate = itemView.findViewById(R.id.txt3);
             libraryBelongs = itemView.findViewById(R.id.txt4);
+            imageView = itemView.findViewById(R.id.img3);
+
+
 
             // Set click listener for selectButton
             itemView.findViewById(R.id.BTN_Return).setOnClickListener(new View.OnClickListener() {

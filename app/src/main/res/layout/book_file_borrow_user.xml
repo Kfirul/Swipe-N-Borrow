@@ -14,9 +14,9 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/img"
-            android:layout_width="83dp"
-            android:layout_height="76dp"
+            android:id="@+id/bookImage"
+            android:layout_width="113dp"
+            android:layout_height="191dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -27,46 +27,93 @@
         </ImageView>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_toRightOf="@+id/img"
-            android:layout_height="wrap_content"
             android:id="@+id/txt"
+            android:layout_width="277dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/bookImage"
             android:singleLine="true"
             android:text="Book Title"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="15dp"/>
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             android:id="@+id/txt2"
-            android:layout_toRightOf="@+id/img"
+            android:layout_width="276dp"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt"
+            android:layout_marginStart="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/txt"
+            android:layout_toEndOf="@+id/bookImage"
             android:singleLine="true"
             android:text="Book Genre"
             android:textColor="@color/black"
-            android:textSize="15dp"/>
+            android:textSize="15sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/txt13"
+            android:layout_width="276dp"
             android:layout_height="wrap_content"
-            android:id="@+id/BTN_Borrow"
             android:layout_below="@+id/txt2"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginStart="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:singleLine="true"
+            android:text="Book author"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt6"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt13"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:singleLine="true"
+            android:text="Book language"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt7"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt6"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:singleLine="true"
+            android:text="Book numPage"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BTN_Borrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt2"
+            android:layout_alignStart="@+id/txt2"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="89dp"
+            android:layout_marginEnd="73dp"
             android:singleLine="true"
             android:text="Borrow"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            >
+            android:textSize="15dp">
 
         </androidx.appcompat.widget.AppCompatButton>
 

@@ -1,5 +1,7 @@
 package com.example.swipe_n_borrow;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,7 +35,6 @@ public class AdminAddNewBook extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
 
 
     public AdminAddNewBook() {
@@ -72,16 +73,17 @@ public class AdminAddNewBook extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_add_new_book, container, false);
 
-         EditText titleEditText;
-         EditText authorEditText;
-         EditText languageEditText;
-         EditText numPagesEditText;
-         EditText genreEditText;
+        EditText titleEditText;
+        EditText authorEditText;
+        EditText languageEditText;
+        EditText numPagesEditText;
+        EditText genreEditText;
+        EditText imageURLEditText;
 
-         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-         Button buttonAddBook;
-         FirebaseAuth mAuth;
+        Button buttonAddBook;
+        FirebaseAuth mAuth;
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -90,6 +92,7 @@ public class AdminAddNewBook extends Fragment {
         languageEditText = view.findViewById(R.id.language);
         numPagesEditText = view.findViewById(R.id.numPages);
         genreEditText = view.findViewById(R.id.genre);
+        imageURLEditText = view.findViewById(R.id.imageURL);
 
         buttonAddBook = view.findViewById(R.id.BTN_Add_Book);
 
@@ -100,61 +103,78 @@ public class AdminAddNewBook extends Fragment {
         buttonAddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = titleEditText.getText().toString().trim();
-                String author = authorEditText.getText().toString().trim();
-                String language = languageEditText.getText().toString().trim();
-                String genre = genreEditText.getText().toString().trim();
-                String numPages = numPagesEditText.getText().toString().trim();
 
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language) || TextUtils.isEmpty(genre)) {
-                    Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Confirm")
+                        .setMessage("Are you sure you want to add this book?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                try {
-                    Book book = new Book(title, author, language, numPages, genre);
+                                String title = titleEditText.getText().toString().trim();
+                                String author = authorEditText.getText().toString().trim();
+                                String language = languageEditText.getText().toString().trim();
+                                String genre = genreEditText.getText().toString().trim();
+                                String numPages = numPagesEditText.getText().toString().trim();
+                                String imageURL = imageURLEditText.getText().toString().trim();
 
-                    String adminId = mAuth.getCurrentUser().getUid();
-                    FirebaseFirestore.getInstance()
-                            .collection("Admins")
-                            .document(adminId)
-                            .get()
-                            .addOnSuccessListener(documentSnapshot -> {
-                                if (documentSnapshot.exists()) {
-                                    String libraryName = documentSnapshot.getString("library");
-
-                                    if (libraryName != null) {
-                                        book.setBelongs(libraryName);
-                                        Date currentDate = new Date();
-                                        book.setDate(currentDate);
-                                        // Add the book to the admin's collection of books
-                                        adminBooksCollection.add(book)
-                                                .addOnSuccessListener(documentReference -> {
-                                                    Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
-                                                    titleEditText.setText("");
-                                                    authorEditText.setText("");
-                                                    languageEditText.setText("");
-                                                    numPagesEditText.setText("");
-                                                    genreEditText.setText("");
-                                                })
-                                                .addOnFailureListener(e ->
-                                                        Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                                    } else {
-                                        // Handle the case where libraryName is null
-                                        Toast.makeText(getActivity(), "Error: Library name is null", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    // Handle the case where the document does not exist
-                                    Toast.makeText(getActivity(), "Error: Admin document does not exist", Toast.LENGTH_SHORT).show();
+                                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(language) || TextUtils.isEmpty(genre)) {
+                                    Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
-                            })
-                            .addOnFailureListener(e ->
-                                    Toast.makeText(getActivity(), "Error fetching admin document: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), "Invalid number of pages", Toast.LENGTH_SHORT).show();
-                }
-            }
 
+                                try {
+                                    Book book = new Book(title, author, language, numPages, genre );
+
+                                    String adminId = mAuth.getCurrentUser().getUid();
+                                    FirebaseFirestore.getInstance()
+                                            .collection("Admins")
+                                            .document(adminId)
+                                            .get()
+                                            .addOnSuccessListener(documentSnapshot -> {
+                                                if (documentSnapshot.exists()) {
+                                                    String libraryName = documentSnapshot.getString("library");
+
+                                                    if (libraryName != null) {
+                                                        book.setBelongs(libraryName);
+                                                        Date currentDate = new Date();
+                                                        book.setDate(currentDate);
+                                                        book.setImageURL(imageURL);
+                                                        // Add the book to the admin's collection of books
+                                                        adminBooksCollection.add(book)
+                                                                .addOnSuccessListener(documentReference -> {
+                                                                    Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
+                                                                    titleEditText.setText("");
+                                                                    authorEditText.setText("");
+                                                                    languageEditText.setText("");
+                                                                    numPagesEditText.setText("");
+                                                                    genreEditText.setText("");
+                                                                    imageURLEditText.setText("");
+
+                                                                })
+                                                                .addOnFailureListener(e ->
+                                                                        Toast.makeText(getActivity(), "Error adding book: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                                    } else {
+                                                        // Handle the case where libraryName is null
+                                                        Toast.makeText(getActivity(), "Error: Library name is null", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                } else {
+                                                    // Handle the case where the document does not exist
+                                                    Toast.makeText(getActivity(), "Error: Admin document does not exist", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(e ->
+                                                    Toast.makeText(getActivity(), "Error fetching admin document: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                } catch (NumberFormatException e) {
+                                    Toast.makeText(getActivity(), "Invalid number of pages", Toast.LENGTH_SHORT).show();
+                                }
+
+                                Toast.makeText(getActivity(), "Book added successfully!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
         });
 
         return view;

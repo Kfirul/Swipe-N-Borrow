@@ -2,6 +2,8 @@ package com.example.swipe_n_borrow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,7 +76,15 @@ public class EditUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String fullName, phoneNumber, address;
+
+                new AlertDialog.Builder(EditUserProfile.this)
+                        .setTitle("Confirm Edit")
+                        .setMessage("Are you sure you want to edit your profile?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                String fullName, phoneNumber, address;
                 fullName = String.valueOf(editTextFullName.getText());
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
                 address = String.valueOf(editTextAddress.getText());
@@ -125,6 +135,11 @@ public class EditUserProfile extends AppCompatActivity {
                     Toast.makeText(EditUserProfile.this, "No changes were made.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
     }

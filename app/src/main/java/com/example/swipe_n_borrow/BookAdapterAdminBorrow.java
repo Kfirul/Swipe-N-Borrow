@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,17 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
         holder.userName.setText("Borrwed by: " +arrayList.get(position).getUserName());
         holder.userEmail.setText("User's  Email: "+ arrayList.get(position).getUserEmail());
         holder.dateBorrow.setText(" Return Untill : "+ arrayList.get(position).getDateBorrow());
+        String imageURL = arrayList.get(position).getImageURL();
+        if (imageURL != null && !imageURL.isEmpty()) {
+            Picasso.get()
+                    .load(imageURL)
+                    .placeholder(R.drawable.bookse) // Placeholder image while loading
+                    .into(holder.imageView);
+        } else {
+            // Set a default placeholder if the imageURL is not available
+            holder.imageView.setImageResource(R.drawable.bookse);
+        }
+
 
     }
 
@@ -47,7 +61,8 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, userName,userEmail , dateBorrow;;
+        TextView bookTitle, userName,userEmail , dateBorrow;
+        ImageView imageView;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -55,6 +70,7 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
             userName = itemView.findViewById(R.id.txt2);
             userEmail = itemView.findViewById(R.id.txt3);
             dateBorrow = itemView.findViewById(R.id.txt4);
+            imageView = itemView.findViewById(R.id.img);
         }
     }
 

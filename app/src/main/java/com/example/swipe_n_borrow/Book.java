@@ -1,5 +1,7 @@
 package com.example.swipe_n_borrow;
 
+import android.widget.ImageView;
+
 import java.util.Date;
 
 public class Book {
@@ -10,8 +12,10 @@ public class Book {
     private String num_pages;
     private String genre;
     private String belongs = "";
-
     private Date date;
+
+    private String imageURL;
+
 
     @Override
     public String toString() {
@@ -73,7 +77,6 @@ public class Book {
     public String getLanguage() {
         return language;
     }
-
     public void setLanguage(String language) {
         this.language = language;
     }
@@ -81,18 +84,23 @@ public class Book {
     public String getNum_pages() {
         return num_pages;
     }
-
     public void setNum_pages(String num_pages) {
         this.num_pages = num_pages;
     }
     public String getGenre() {
         return genre;
     }
-
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 }
 
 

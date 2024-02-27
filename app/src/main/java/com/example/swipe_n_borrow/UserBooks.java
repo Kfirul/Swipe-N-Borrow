@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
@@ -241,6 +242,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     String author = document.getString("authors");
                     String belongs = document.getString("belongs");
                     Timestamp timestamp = document.getTimestamp("date");
+                    String imageURL = document.getString("imageURL");
 
                     // Convert timestamp to Date
                     Date date = null;
@@ -257,6 +259,8 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     book.setAuthors(author);
                     book.setBelongs(belongs);
                     book.setDate(date); // Set the date field
+                    book.setImageURL(imageURL);
+
 
                     // Add the book to the list
                     bookArrayList.add(book);

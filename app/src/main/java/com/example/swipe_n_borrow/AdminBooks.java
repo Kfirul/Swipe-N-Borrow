@@ -1,8 +1,10 @@
 package com.example.swipe_n_borrow;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,32 +85,45 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
 
     public void onRemoveButtonClick(Book book) {
 
-        String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        CollectionReference userBooksCollection = FirebaseFirestore.getInstance()
-                .collection("Admins")
-                .document(adminId)
-                .collection("books");
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Confirm Remove")
+                .setMessage("Are you sure you want to remove this book?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
-        userBooksCollection.whereEqualTo("title", book.getTitle())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            document.getReference().delete()
-                                    .addOnSuccessListener(aVoid -> {
-                                        Log.d("Firestore", "Book deleted from admin books collection.");
-                                        setBooksFirebase();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Log.e("FirestoreError", "Error deleting book from admin books collection: " + e.getMessage(), e);
-                                    });
-                        }
-                    } else {
-                        Exception e = task.getException();
-                        Log.e("FirestoreError", "Error getting documents: " + e.getMessage(), e);
+
+                        String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        CollectionReference userBooksCollection = FirebaseFirestore.getInstance()
+                                .collection("Admins")
+                                .document(adminId)
+                                .collection("books");
+
+                        userBooksCollection.whereEqualTo("title", book.getTitle())
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            document.getReference().delete()
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        Log.d("Firestore", "Book deleted from admin books collection.");
+                                                        setBooksFirebase();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e("FirestoreError", "Error deleting book from admin books collection: " + e.getMessage(), e);
+                                                    });
+                                        }
+                                    } else {
+                                        Exception e = task.getException();
+                                        Log.e("FirestoreError", "Error getting documents: " + e.getMessage(), e);
+                                    }
+                                });
                     }
-                });
-    }
+})
+        .setNegativeButton(android.R.string.no, null)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .show();
+        }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -185,6 +200,8 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     String numberOfPages = document.getString("num_pages");
                     String author = document.getString("authors");
                     String belongs = document.getString("belongs");
+                    String imageURL = document.getString("imageURL");
+
 
                     // Create a Book object
                     Book book = new Book();
@@ -194,6 +211,7 @@ public class AdminBooks extends Fragment implements BookAdapter.OnSelectButtonCl
                     book.setNum_pages(numberOfPages);
                     book.setAuthors(author);
                     book.setBelongs(belongs);
+                    book.setImageURL(imageURL);
 
                     // Add the book to the list
                     bookArrayList.add(book);

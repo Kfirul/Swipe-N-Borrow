@@ -7,6 +7,7 @@ public class BorrowBook {
     private String titleBook = "";
     private String userName = "";
     private String userEmail = "";
+    private String imageURL = "";  // Add this line for the imageURL property
 
     public String getDateBorrow() {
         return dateBorrow;
@@ -16,7 +17,7 @@ public class BorrowBook {
         this.dateBorrow = dateBorrow;
     }
 
-    private String dateBorrow ;
+    private String dateBorrow;
 
     public String getTitleBook() {
         return titleBook;
@@ -42,12 +43,21 @@ public class BorrowBook {
         this.userEmail = userEmail;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     public BorrowBook(String titleBook, String userName, String userEmail) {
         this.titleBook = titleBook;
         this.userName = userName;
         this.userEmail = userEmail;
     }
-    public BorrowBook(){
+
+    public BorrowBook() {
 
     }
 }

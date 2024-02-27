@@ -1,7 +1,9 @@
 package com.example.swipe_n_borrow;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,7 +75,13 @@ public class EditBookAdmin extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
 
-                String title, author, language, numPages, genre;
+                new AlertDialog.Builder(EditBookAdmin.this)
+                        .setTitle("Confirm Edit")
+                        .setMessage("Are you sure you want to edit this book?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String title, author, language, numPages, genre;
                 title = String.valueOf(titleEditText.getText());
                 author = String.valueOf(authorEditText.getText());
                 language = String.valueOf(languageEditText.getText());
@@ -143,6 +151,11 @@ public class EditBookAdmin extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
+            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
     }

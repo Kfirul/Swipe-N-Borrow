@@ -7,16 +7,23 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="15dp"
+    android:background="@drawable/homebg"
     tools:context=".EditBookAdmin">
 
-    <TextView
-        android:text="Edit Book"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="25dp"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="8dp">
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -24,6 +31,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleEditText"
             android:hint="Title"
+            android:drawableLeft="@drawable/book_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -34,6 +43,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/authorEditText"
             android:hint="Author"
+            android:drawableLeft="@drawable/author_sign_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +55,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/languageEditText"
             android:hint="Language"
+            android:drawableLeft="@drawable/language_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -54,6 +67,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/numPagesEditText"
             android:hint="Number of Pages"
+            android:drawableLeft="@drawable/pages_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,6 +79,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/genreEditText"
             android:hint="Genre"
+            android:drawableLeft="@drawable/comedy_and_tragedy_masks_couple_svgrepo_com"
+            android:background="@drawable/custom_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,21 +91,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/BTN_Edit"
         android:text="Edit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple_700"
         android:layout_marginTop="20dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:backgroundTint="@color/purple_700"
         android:layout_gravity="center"
         android:onClick="goBack" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

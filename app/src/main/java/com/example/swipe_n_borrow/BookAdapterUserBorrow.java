@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,19 @@ public class BookAdapterUserBorrow extends RecyclerView.Adapter<BookAdapterUserB
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bookTitle.setText(arrayList.get(position).getTitle());
         holder.bookGenre.setText(arrayList.get(position).getGenre());
+        holder.bookAuthor.setText(arrayList.get(position).getAuthors());
+        holder.bookLanguage.setText(arrayList.get(position).getLanguage());
+        holder.bookNumPage.setText(arrayList.get(position).getNum_pages());
+        String imageURL = arrayList.get(position).getImageURL();
+        if (imageURL != null && !imageURL.isEmpty()) {
+            Picasso.get()
+                    .load(imageURL)
+                    .placeholder(R.drawable.bookse) // Placeholder image while loading
+                    .into(holder.imageView);
+        } else {
+            // Set a default placeholder if the imageURL is not available
+            holder.imageView.setImageResource(R.drawable.bookse);
+        }
     }
 
     @Override
@@ -45,12 +61,17 @@ public class BookAdapterUserBorrow extends RecyclerView.Adapter<BookAdapterUserB
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, bookGenre;
+        TextView bookTitle, bookGenre , bookAuthor , bookLanguage ,bookNumPage;
+        ImageView imageView;
 
         public MyHolder(View itemView) {
             super(itemView);
             bookTitle = itemView.findViewById(R.id.txt);
             bookGenre = itemView.findViewById(R.id.txt2);
+            imageView = itemView.findViewById(R.id.bookImage);
+            bookAuthor = itemView.findViewById(R.id.txt13);
+            bookLanguage = itemView.findViewById(R.id.txt6);
+            bookNumPage = itemView.findViewById(R.id.txt7);
 
             // Set click listener for selectButton
             itemView.findViewById(R.id.BTN_Borrow).setOnClickListener(new View.OnClickListener() {
