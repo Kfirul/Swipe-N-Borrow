@@ -39,10 +39,10 @@ public class BookAdapterUserBorrow extends RecyclerView.Adapter<BookAdapterUserB
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bookTitle.setText(arrayList.get(position).getTitle());
-        holder.bookGenre.setText(arrayList.get(position).getGenre());
-        holder.bookAuthor.setText(arrayList.get(position).getAuthors());
-        holder.bookLanguage.setText(arrayList.get(position).getLanguage());
-        holder.bookNumPage.setText(arrayList.get(position).getNum_pages());
+        holder.bookGenre.setText("Genre:" +arrayList.get(position).getGenre());
+        holder.bookAuthor.setText("Author: "+arrayList.get(position).getAuthors());
+        holder.bookLanguage.setText("Language: "+ arrayList.get(position).getLanguage());
+        holder.bookNumPage.setText("Pages: "+ arrayList.get(position).getNum_pages());
         String imageURL = arrayList.get(position).getImageURL();
         if (imageURL != null && !imageURL.isEmpty()) {
             Picasso.get()
