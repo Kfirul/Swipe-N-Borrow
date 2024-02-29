@@ -8,7 +8,7 @@ public class BorrowBook {
     private String userName = "";
     private String userEmail = "";
     private String userAddres = "";
-    private String imageURL = "";  // Add this line for the imageURL property
+    private String imageURL = "";
 
     public String getDateBorrow() {
         return dateBorrow;

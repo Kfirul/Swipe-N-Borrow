@@ -129,6 +129,7 @@ public class AdminBorrowedBooks extends Fragment {
                     newBook.setUserName(book.getUserName());
                     newBook.setUserEmail(book.getUserEmail());
                     newBook.setUserAddress(book.getUserAddress());
+                    newBook.setImageURL(book.getImageURL());
 
                     searchList.add(book);
                 }
@@ -157,10 +158,12 @@ public class AdminBorrowedBooks extends Fragment {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     // Get the book details
                     String title = document.getString("title");
+                    String img = document.getString("imageURL");
 
                     // Create a Book object
                     BorrowBook borrowBook = new BorrowBook();
                     borrowBook.setTitleBook(title);
+                    borrowBook.setImageURL(img);
                     fetchUserDetails(borrowBook);
 
                     // Add the book to the list
@@ -205,6 +208,7 @@ public class AdminBorrowedBooks extends Fragment {
                                                 String name = userDocument.getString("fullName");
                                                 String email = userDocument.getString("email");
                                                 String address = userDocument.getString("address");
+//                                                String img = userDocument.getString("imageURL");
 
 
                                                 // Set the user details in the BorrowBook object
@@ -212,6 +216,7 @@ public class AdminBorrowedBooks extends Fragment {
                                                 borrowBook.setUserEmail(email);
                                                 borrowBook.setUserAddress(address);
                                                 borrowBook.setDateBorrow(formattedDate);
+//                                                borrowBook.setImageURL(img);
 
                                                 Log.d("BookInfo", "Name: " + name + ", Email: " + email + ", Date: " + timestamp);
 
