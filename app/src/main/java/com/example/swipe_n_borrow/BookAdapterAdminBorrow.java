@@ -40,6 +40,7 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
         holder.bookTitle.setText(arrayList.get(position).getTitleBook());
         holder.userName.setText("Borrwed by: " +arrayList.get(position).getUserName());
         holder.userEmail.setText("User's  Email: "+ arrayList.get(position).getUserEmail());
+        holder.userAddress.setText("User's  Address: "+ arrayList.get(position).getUserAddress());
         holder.dateBorrow.setText(" Return Untill : "+ arrayList.get(position).getDateBorrow());
         String imageURL = arrayList.get(position).getImageURL();
         if (imageURL != null && !imageURL.isEmpty()) {
@@ -61,7 +62,7 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView bookTitle, userName,userEmail , dateBorrow;
+        TextView bookTitle, userName,userEmail , dateBorrow, userAddress;
         ImageView imageView;
 
         public MyHolder(View itemView) {
@@ -69,7 +70,8 @@ public class BookAdapterAdminBorrow extends RecyclerView.Adapter<BookAdapterAdmi
             bookTitle = itemView.findViewById(R.id.txt);
             userName = itemView.findViewById(R.id.txt2);
             userEmail = itemView.findViewById(R.id.txt3);
-            dateBorrow = itemView.findViewById(R.id.txt4);
+            userAddress = itemView.findViewById(R.id.txt4);
+            dateBorrow = itemView.findViewById(R.id.txt5);
             imageView = itemView.findViewById(R.id.img);
         }
     }

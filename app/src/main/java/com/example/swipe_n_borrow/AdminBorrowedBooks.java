@@ -128,6 +128,8 @@ public class AdminBorrowedBooks extends Fragment {
                     newBook.setTitleBook(book.getTitleBook());
                     newBook.setUserName(book.getUserName());
                     newBook.setUserEmail(book.getUserEmail());
+                    newBook.setUserAddress(book.getUserAddress());
+
                     searchList.add(book);
                 }
             }
@@ -202,11 +204,13 @@ public class AdminBorrowedBooks extends Fragment {
 
                                                 String name = userDocument.getString("fullName");
                                                 String email = userDocument.getString("email");
+                                                String address = userDocument.getString("address");
 
 
                                                 // Set the user details in the BorrowBook object
                                                 borrowBook.setUserName(name);
                                                 borrowBook.setUserEmail(email);
+                                                borrowBook.setUserAddress(address);
                                                 borrowBook.setDateBorrow(formattedDate);
 
                                                 Log.d("BookInfo", "Name: " + name + ", Email: " + email + ", Date: " + timestamp);
