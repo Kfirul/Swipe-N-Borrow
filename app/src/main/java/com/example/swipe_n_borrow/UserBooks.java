@@ -215,6 +215,7 @@ public class UserBooks extends Fragment implements BookAdapterUser.OnSelectButto
                     book.setGenre(bookArrayList.get(i).getGenre());
                     book.setDate(bookArrayList.get(i).getDate());
                     book.setBelongs(bookArrayList.get(i).getBelongs());
+                    book.setImageURL(bookArrayList.get(i).getImageURL());
                     searchList.add(book);
                 }
             }
