@@ -53,9 +53,9 @@ You are welcome to contribute :
 |:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
 |                  **Log In Page**                  |            **User Registration Page**             |            **Admin Registration Page**            |
 
-| ![Screenshot_5.png](Screenshots/Screenshot_5.png) | ![Screenshot_9.png](Screenshots/Screenshot_9.png) | ![Screenshot_10.png](Screenshots/Screenshot_10.png) |
-|:-------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
-|                **User Home Page**                 |                **Admin Home Page**                |                  **Add Book Page**                  |
+| ![Screenshot_15.png](Screenshots/Screenshot_15.png) | ![Screenshot_9.png](Screenshots/Screenshot_9.png) | ![Screenshot_10.png](Screenshots/Screenshot_10.png) |
+|:---------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
+|                 **User Home Page**                  |                **Admin Home Page**                |                  **Add Book Page**                  |
 
 | ![Screenshot_12.png](Screenshots/Screenshot_12.png) | ![Screenshot_13.png](Screenshots/Screenshot_13.png) | ![Screenshot_14.png](Screenshots/Screenshot_14.png) |
 |:---------------------------------------------------:|:---------------------------------------------------:|:---------------------------------------------------:|
