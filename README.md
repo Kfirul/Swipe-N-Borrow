@@ -53,17 +53,17 @@ You are welcome to contribute :
 |:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
 |                  **Log In Page**                  |            **User Registration Page**             |            **Admin Registration Page**            |
 
-| ![UserHomePage.png](Screenshots/UserHomePage.png) | ![AdminHome.png](Screenshots/AdminHome.png) | ![AdminAddBook.png](Screenshots/AdminAddBook.png) |
-|:-------------------------------------------------:|:-------------------------------------------:|:-------------------------------------------------:|
-|                **User Home Page**                 |             **Admin Home Page**             |                 **Add Book Page**                 |
+| ![Screenshot_5.png](Screenshots/Screenshot_5.png) | ![Screenshot_9.png](Screenshots/Screenshot_9.png) | ![Screenshot_10.png](Screenshots/Screenshot_10.png) |
+|:-------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
+|                **User Home Page**                 |                **Admin Home Page**                |                  **Add Book Page**                  |
 
-| ![AdminEditProfile.png](Screenshots/AdminEditProfile.png) | ![EditProfileUser.png](Screenshots/EditProfileUser.png) | ![BookSearch.png](Screenshots%2FBookSearch.png) |
-|:---------------------------------------------------------:|:-------------------------------------------------------:|:-----------------------------------------------:|
-|                **Admin Edit Profile Page**                |               **User Edit Profile Page**                |              **Book Search Page**               |
+| ![Screenshot_11.png](Screenshots/Screenshot_11.png) | ![Screenshot_6.png](Screenshots/Screenshot_6.png) | ![BookSearch.png](Screenshots%2FBookSearch.png) |
+|:---------------------------------------------------:|:-------------------------------------------------:|:-----------------------------------------------:|
+|             **Admin Edit Profile Page**             |            **User Edit Profile Page**             |              **Book Search Page**               |
 
-| ![BooksOfUser.png](Screenshots/BooksOfUser.png) | ![BorrowBookPage.png](Screenshots%2FBorrowBookPage.png) | ![ChooseRegisterType.png](Screenshots%2FChooseRegisterType.png) |
-|:-----------------------------------------------:|:-------------------------------------------------------:|:---------------------------------------------------------------:|
-|             **User Book List Page**             |                  **User Borrow Book**                   |                    **Choose Register Type**                     |
+| ![Screenshot_6.png](Screenshots/Screenshot_6.png) | ![Screenshot_7.png](Screenshots/Screenshot_7.png) | ![Screenshot_8.png](Screenshots/Screenshot_8.png) |
+|:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
+|              **User Book List Page**              |               **User Borrow Book**                |             **Choose Register Type**              |
 
 
 | ![Slider1.png](Screenshots/Slider1.png) | ![Slider2.png](Screenshots/Slider2.png) | ![Slider3.png](Screenshots/Slider3.png) |
