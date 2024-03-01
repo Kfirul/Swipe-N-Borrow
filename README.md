@@ -57,13 +57,17 @@ You are welcome to contribute :
 |:-------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
 |                **User Home Page**                 |                **Admin Home Page**                |                  **Add Book Page**                  |
 
-| ![Screenshot_11.png](Screenshots/Screenshot_11.png) | ![Screenshot_6.png](Screenshots/Screenshot_6.png) | ![BookSearch.png](Screenshots%2FBookSearch.png) |
+| ![Screenshot_12.png](Screenshots/Screenshot_12.png) | ![Screenshot_13.png](Screenshots/Screenshot_13.png) | ![Screenshot_14.png](Screenshots/Screenshot_14.png) |
+|:---------------------------------------------------:|:---------------------------------------------------:|:---------------------------------------------------:|
+|              **Admin Book List Page**               |              **User Borrow Book Page**              |              **Admin Edit Book Page**               |
+
+| ![Screenshot_11.png](Screenshots/Screenshot_11.png) | ![Screenshot_2.png](Screenshots/Screenshot_2.png) | ![BookSearch.png](Screenshots%2FBookSearch.png) |
 |:---------------------------------------------------:|:-------------------------------------------------:|:-----------------------------------------------:|
 |             **Admin Edit Profile Page**             |            **User Edit Profile Page**             |              **Book Search Page**               |
 
 | ![Screenshot_6.png](Screenshots/Screenshot_6.png) | ![Screenshot_7.png](Screenshots/Screenshot_7.png) | ![Screenshot_8.png](Screenshots/Screenshot_8.png) |
 |:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
-|              **User Book List Page**              |               **User Borrow Book**                |             **Choose Register Type**              |
+|              **User Book List Page**              |             **User Borrow Book Page**             |             **Choose Register Type**              |
 
 
 | ![Slider1.png](Screenshots/Slider1.png) | ![Slider2.png](Screenshots/Slider2.png) | ![Slider3.png](Screenshots/Slider3.png) |
