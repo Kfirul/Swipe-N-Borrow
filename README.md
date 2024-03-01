@@ -59,7 +59,7 @@ You are welcome to contribute :
 
 | ![Screenshot_12.png](Screenshots/Screenshot_12.png) | ![Screenshot_13.png](Screenshots/Screenshot_13.png) | ![Screenshot_14.png](Screenshots/Screenshot_14.png) |
 |:---------------------------------------------------:|:---------------------------------------------------:|:---------------------------------------------------:|
-|              **Admin Book List Page**               |              **User Borrow Book Page**              |              **Admin Edit Book Page**               |
+|              **Admin Book List Page**               |              **Admin Borrowed Books Page**              |              **Admin Edit Book Page**               |
 
 | ![Screenshot_11.png](Screenshots/Screenshot_11.png) | ![Screenshot_2.png](Screenshots/Screenshot_2.png) | ![Screenshot_20.png](Screenshots/Screenshot_20.png) |
 |:---------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
