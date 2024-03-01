@@ -51,7 +51,7 @@ You are welcome to contribute :
 
 | ![Screenshot_1.png](Screenshots/Screenshot_1.png) | ![Screenshot_3.png](Screenshots/Screenshot_3.png) | ![Screenshot_4.png](Screenshots/Screenshot_4.png) |
 |:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
-|                  **Log In Page**                  |            **User Registration Page**             |            **Admin Registration Page**            |
+|                  **Log-In Page**                  |            **User Registration Page**             |            **Admin Registration Page**            |
 
 | ![Screenshot_15.png](Screenshots/Screenshot_15.png) | ![Screenshot_9.png](Screenshots/Screenshot_9.png) | ![Screenshot_10.png](Screenshots/Screenshot_10.png) |
 |:---------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
