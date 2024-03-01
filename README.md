@@ -61,9 +61,9 @@ You are welcome to contribute :
 |:---------------------------------------------------:|:---------------------------------------------------:|:---------------------------------------------------:|
 |              **Admin Book List Page**               |              **User Borrow Book Page**              |              **Admin Edit Book Page**               |
 
-| ![Screenshot_11.png](Screenshots/Screenshot_11.png) | ![Screenshot_2.png](Screenshots/Screenshot_2.png) | ![BookSearch.png](Screenshots%2FBookSearch.png) |
-|:---------------------------------------------------:|:-------------------------------------------------:|:-----------------------------------------------:|
-|             **Admin Edit Profile Page**             |            **User Edit Profile Page**             |              **Book Search Page**               |
+| ![Screenshot_11.png](Screenshots/Screenshot_11.png) | ![Screenshot_2.png](Screenshots/Screenshot_2.png) | ![Screenshot_20.png](Screenshots/Screenshot_20.png) |
+|:---------------------------------------------------:|:-------------------------------------------------:|:---------------------------------------------------:|
+|             **Admin Edit Profile Page**             |            **User Edit Profile Page**             |           **Book Search in library Page**           |
 
 | ![Screenshot_6.png](Screenshots/Screenshot_6.png) | ![Screenshot_7.png](Screenshots/Screenshot_7.png) | ![Screenshot_8.png](Screenshots/Screenshot_8.png) |
 |:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
