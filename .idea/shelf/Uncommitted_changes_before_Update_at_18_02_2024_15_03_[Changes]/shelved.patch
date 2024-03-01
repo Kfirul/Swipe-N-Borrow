@@ -1,0 +1,36 @@
+Index: app/src/main/java/com/example/swipe_n_borrow/Book.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.swipe_n_borrow;\r\n\r\npublic class Book {\r\n    //    private int bookID;\r\n    private String title;\r\n    private String authors;\r\n    private String language;\r\n    private String num_pages;\r\n    private String genre;\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Book{\" +\r\n//                \"bookID=\" + bookID +\r\n                \", title='\" + title + '\\'' +\r\n                \", authors='\" + authors + '\\'' +\r\n                \", language=\" + language +\r\n                \",num_pages=\" + num_pages +\r\n                \",genre=\" + genre +\r\n                '}';\r\n    }\r\n\r\n    // Constructors\r\n    public Book() {\r\n        // Default constructor required by Firebase\r\n    }\r\n\r\n    public Book(String title, String authors, String language, String num_pages, String genre) {\r\n//        this.bookID = bookID;\r\n        this.title = title;\r\n        this.authors = authors;\r\n        this.language = language;\r\n        this.num_pages = num_pages;\r\n        this.genre = genre;\r\n    }\r\n\r\n\r\n//    public int getBookID() {\r\n//        return bookID;\r\n//    }\r\n//\r\n//    public void setBookID(int bookID) {\r\n//        this.bookID = bookID;\r\n//    }\r\n\r\n    public String getTitle() {\r\n        return title;\r\n    }\r\n\r\n    public void setTitle(String title) {\r\n        this.title = title;\r\n    }\r\n\r\n    public String getAuthors() {\r\n        return authors;\r\n    }\r\n\r\n    public void setAuthors(String authors) {\r\n        this.authors = authors;\r\n    }\r\n\r\n    public String getLanguage() {\r\n        return language;\r\n    }\r\n\r\n    public void setLanguage(String language) {\r\n        this.language = language;\r\n    }\r\n\r\n    public String getNum_pages() {\r\n        return num_pages;\r\n    }\r\n\r\n    public void setNum_pages(String num_pages) {\r\n        this.num_pages = num_pages;\r\n    }\r\n    public String getGenre() {\r\n        return genre;\r\n    }\r\n\r\n    public void setGenre(String genre) {\r\n        this.genre = genre;\r\n    }\r\n\r\n}\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/swipe_n_borrow/Book.java b/app/src/main/java/com/example/swipe_n_borrow/Book.java
+--- a/app/src/main/java/com/example/swipe_n_borrow/Book.java	
++++ b/app/src/main/java/com/example/swipe_n_borrow/Book.java	
+@@ -8,6 +8,10 @@
+     private String num_pages;
+     private String genre;
+ 
++    private String belongs ="";
++
++
++
+     @Override
+     public String toString() {
+         return "Book{" +
+@@ -43,6 +47,14 @@
+ //        this.bookID = bookID;
+ //    }
+ 
++    public String getBelongs() {
++        return belongs;
++    }
++
++    public void setBelongs(String belongs) {
++        this.belongs = belongs;
++    }
++
+     public String getTitle() {
+         return title;
+     }
